@@ -87,5 +87,11 @@ Un vecteur est complètement invariable.
  réel.
 \end_layout
 
+\begin_layout Standard
+Quelques vecteurs remarquables sont définis comme variables statiques constantes.
+ Parmi ceux-ci notamment le vecteur nulle (Null) et les vecteurs unitaires
+ i, j, k selon respectivement les axes x, y et z.
+\end_layout
+
 \end_body
 \end_document

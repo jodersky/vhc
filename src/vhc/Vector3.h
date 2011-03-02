@@ -89,16 +89,16 @@ public:
 	};
 
 	/** Null vector. (0,0,0) */
-	static Vector3 Null;
+	static const Vector3 Null;
 
 	/** X-axis unit vector. (1, 0, 0) */
-	static Vector3 i;
+	static const Vector3 i;
 
 	/** Y-axis unit vector. (0, 1, 0) */
-	static Vector3 j;
+	static const Vector3 j;
 
 	/** Z-axis unit vector. (0, 0, 1) */
-	static Vector3 k;
+	static const Vector3 k;
 
 };
 
