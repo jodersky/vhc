@@ -1,0 +1,91 @@
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Réponses aux questions
+\end_layout
+
+\begin_layout Section*
+Question P1.1
+\end_layout
+
+\begin_layout Standard
+Un vecteur est représenté par la classe `Vector3'.
+ Cette classe comprend trois champs privés du type double: x, y et z corresponda
+nt aux composantes du vecteur.
+ Ces champs peuvent être accédés respectivement par les méthodes publiques
+ getX(), getY() et getZ().
+ Les méthodes 
+\begin_inset Quotes eld
+\end_inset
+
+opérateurs
+\begin_inset Quotes erd
+\end_inset
+
+ sur les vecteurs (par exemple l'addition, la norme, etc...) sont toutes publiques.
+\end_layout
+
+\begin_layout Standard
+Ces méthodes s'appuient entre-elles, par exemple la méthode `opposée' retourne
+ le vecteur multiplié par moins un et la méthode `soustraction' additionne
+ l'opposé.
+ Ces appels consécutifs diminuent la performance d'une façon minimale mais
+ évitent un duplicage de code considérable.
+\end_layout
+
+\begin_layout Standard
+Un vecteur est complètement invariable.
+ C'est-à-dire qu'une fois un vecteur initialisé, on ne peut plus changer
+ ses composantes (pas de méthodes `set').
+ De même, tous les opérations internes du sens mathématique (qui renvoyent
+ un vecteur), renvoyent une nouvelle instance d'un vecteur.
+ En aucun cas l'instance d'un vecteur n'est modifiée! Ceci facilite énormément
+ le raisonement sur toute variable de type vecteur.
+ De plus, l'invariance d'un vecteur paraît naturelle, comme celle d'un nombre
+ réel.
+\end_layout
+
+\end_body
+\end_document
