@@ -11,6 +11,7 @@
 #include <iostream>
 #include <sstream>
 #include <math.h>
+#include <stdexcept>
 
 namespace vhc {
 
@@ -75,7 +76,10 @@ public:
 	double getLength() const {return sqrt(dot(*this));};
 
 	/** Unit vector parallel to this vector. */
-	Vector3 getUnit() const {return (*this) / getLength();};
+	Vector3 getUnit() const {
+		if (getLength() != 0.0) return (*this) / getLength();
+		else throw std::domain_error("Unit vector.");
+	};
 
 	/** Returns a string representation of this vector. */
 	std::string toString() const {
