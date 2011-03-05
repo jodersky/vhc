@@ -4,7 +4,7 @@
 \begin_header
 \textclass article
 \use_default_options true
-\language english
+\language french
 \inputencoding auto
 \font_roman default
 \font_sans default
@@ -46,12 +46,31 @@
 Réponses aux questions
 \end_layout
 
+\begin_layout Author
+J.
+ Odersky 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ C.
+ Vázquez
+\end_layout
+
 \begin_layout Section*
 Question P1.1
 \end_layout
 
 \begin_layout Standard
-Un vecteur est représenté par la classe `Vector3'.
+Un vecteur est représenté par la classe `Vector3D'.
  Cette classe comprend trois champs privés du type double: x, y et z corresponda
 nt aux composantes du vecteur.
  Ces champs peuvent être accédés respectivement par les méthodes publiques
