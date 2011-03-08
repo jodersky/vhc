@@ -15,89 +15,102 @@
 
 namespace vhc {
 
-/** A three-dimensional vector. Instances of this class are completely immutable, i.e. the
- *  values (x, y, z), once initialised, cannot be changed anymore.
- *  This highly facilitates reasoning about code using vectors.
+/** Un vecteur de dimension trois. Les instances de cette classes sont completement
+ *  invariables, c'est-a-dire un vecteur une fois initialise, ses composantes ne
+ *  peuvent plus etres modifies.
+ *  Le fait qu'un vecteur ne possede pas d'etat, facilite le raisonement et parait
+ *  surtout naturelle.
+ *  Ainsi, chaque operation sur un vecteur retourne une nouvelle instance. La
+ *  performance perdue ainsi est minimale pour une classe ne contenant que trois
+ *  champs.
  */
 class Vector3D {
 	friend std::ostream& operator<< (std::ostream& output, const Vector3D& v);
 
 private:
+	/** Composante x. */
 	double x;
+
+	/** Composante y. */
 	double y;
+
+	/** Composante z. */
 	double z;
 
 public:
 
-	/** Creates a new instance of <code>Vector3D</code>.
-	 *  @param x x value of this vector
-	 *  @param y y value of this vector
-	 *  @param z z value of this vector
+	/** Cree une nouvelle instance de <code>Vector3D</code>.
+	 *  @param x 1e composante
+	 *  @param y 2e composante
+	 *  @param z 3e composante
 	 */
-	Vector3D(double x, double y, double z) {this->x = x; this->y = y; this->z = z;};
+	Vector3D(double _x, double _y, double _z) : x(_x), y(_y), z(_z) {};
 
-	/** Returns the x value of this vector. */
+	/** Retourne la composante x de ce vecteur. */
 	double getX() const {return x;};
 
-	/** Returns the y value of this vector. */
+	/** Retourne la composante y de ce vecteur. */
 	double getY() const {return y;};
 
-	/** Returns the z value of this vector. */
+	/** Retourne la composante z de ce vecteur. */
 	double getZ() const {return z;};
 
-	/** Tests if this vector and vector <code>v</code> are equal, i.e. have the same coordinates. */
+	/** Verifie si ce vecteur et le vecteur <code>v</code> sont eqaux, i.e. qu'ils ont les memes composantes. */
 	bool operator== (const Vector3D& v) const {return x == v.x && y == v.y && z == v.z;};
 
-	/** Tests if this vector and vector <code>v</code> are different, i.e. have different coordinates. */
+	/** Verifie si ce vecteur et le vecteur <code>v</code> sont differents, i.e. qu'ils ont des composantes differentes. */
 	bool operator!= (const Vector3D& v) const {return !((*this) == (v));};
 
-	/** Vector addition. Returns a new vector resulting of adding this vector to vector <code>v</code>. */
+	/** Addition de vecteurs. Retourne un nouveau vecteur resultant de l'addition de ce vecteur avec <code>v</code>. */
 	Vector3D operator+ (const Vector3D& v) const {return Vector3D(x + v.x, y + v.y, z + v.z);};
 
-	/** Scalar multipication. Returns a new vector resulting of multiplying this vector by <code>n</code>. */
+	/** Multiplication scalaire. Retourne un nouveau vecteur resultant de la multiplication de ce vecteur par <code>n</code>. */
 	Vector3D operator* (double n) const {return Vector3D(x * n, y * n, z * n);};
 
-	/** Returns the opposite of this vector. */
+	/** Retourne l'oppose de ce vecteur. */
 	Vector3D operator-() const {return (*this) * (-1.0);};
 
-	/** Vector subtraction. Returns a new vector resulting of adding this vector to the opposite of vector <code>v</code>. */
+	/** Soustraction de vecteurs. Retourne un nouveau vecteur resultant de la soustraction de ce vecteur avec <code>v</code>. */
 	Vector3D operator- (const Vector3D& v) const {return (*this) + -v;};
 
-	/** Scalar division. Returns a new vector resulting of multiplying this vector by the inverse of <code>n</code>. */
+	/** Division scalaire. Retourne un nouveau vecteur resultant de la division de ce vecteur par <code>n</code>. */
 	Vector3D operator/ (double n) const {return (*this) * (1.0 / n) ;};
 
-	/** Dot product. Returns the dot product of this vector and vector <code>v</code>. */
+	/** Produit scalaire. Retourne le produit scalaire de ce vecteur avec le vecteur <code>v</code>. */
 	double dot(const Vector3D& v) const {return x * v.x + y * v.y + z * v.z;};
 
-	/** Cross product. Returns the right-handed cross product of this vector and vector <code>v</code>. */
+	/** Produit vectoriel. Retourne le produit vectoriel directe (main droite) de ce vecteur avec le vecteur <code>v</code>.
+	 *  Nous avons decide de ne pas utiliser l'operateur `^' pour representer le produit vectoriel car sa precedence est plus
+	 *  basse que toutes autres operations binaires sur les vecteurs.
+	 */
 	Vector3D cross(const Vector3D& v) const {return Vector3D(y * v.z - v.y * z, v.x * z - x * v.z, x * v.y - v.x * y);};
 
-	/** Length of this vector. */
-	double getLength() const {return sqrt(dot(*this));};
-
-	/** Unit vector parallel to this vector. */
-	Vector3D getUnit() const {
+	/** Vecteur unitaire de ce vecteur. */
+	Vector3D operator~() const {
 		if (getLength() != 0.0) return (*this) / getLength();
 		else throw std::domain_error("Unit vector.");
 	};
 
-	/** Returns a string representation of this vector. */
+	/** Retourne la norme du vecteur. */
+	double getNorm() const {return sqrt(dot(*this));};
+
+	/** Retourne une representation en chaine de ce vecteur. */
 	std::string toString() const {
 		std::stringstream s;
 		s << "Vector3D(" << x << ", " << y << ", " << z << ")";
 		return s.str();
 	};
 
-	/** Null vector. (0,0,0) */
+	/** Vecteur nulle. (0,0,0) */
 	static const Vector3D Null;
 
-	/** X-axis unit vector. (1, 0, 0) */
+	/** Vecteur unitaire, d'axe x. (1, 0, 0) */
 	static const Vector3D i;
 
-	/** Y-axis unit vector. (0, 1, 0) */
+	/** Vecteur unitaire, d'axe y. (0, 1, 0) */
 	static const Vector3D j;
 
-	/** Z-axis unit vector. (0, 0, 1) */
+	/** Vecteur unitaire, d'axe z. (0, 0, 1) */
 	static const Vector3D k;
 
 };

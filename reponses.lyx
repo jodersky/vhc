@@ -6,9 +6,9 @@
 \use_default_options true
 \language french
 \inputencoding auto
-\font_roman default
+\font_roman charter
 \font_sans default
-\font_typewriter default
+\font_typewriter cmtt
 \font_default_family default
 \font_sc false
 \font_osf false
@@ -20,12 +20,16 @@
 \spacing single
 \use_hyperref false
 \papersize default
-\use_geometry false
+\use_geometry true
 \use_amsmath 1
 \use_esint 1
 \cite_engine basic
 \use_bibtopic false
 \paperorientation portrait
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -110,6 +114,71 @@ Un vecteur est complètement invariable.
 Quelques vecteurs remarquables sont définis comme variables statiques constantes.
  Parmi ceux-ci notamment le vecteur nulle (Null) et les vecteurs unitaires
  i, j, k selon respectivement les axes x, y et z.
+\end_layout
+
+\begin_layout Section*
+Question P3.1
+\end_layout
+
+\begin_layout Standard
+Nous n'avons pas rajouté un constructeur de copie.
+ Comme la classe `Vector3D' est invariable et ne contient pas de pointeurs
+ ou références sur d'autres objets mutables, elle n'a pas d'état et donc
+ l'utilisation du constructeur de copie par défaut suffit.
+\end_layout
+
+\begin_layout Section*
+Question P3.2
+\end_layout
+
+\begin_layout Section*
+Question P3.3
+\end_layout
+
+\begin_layout Subsection*
+a)
+\end_layout
+
+\begin_layout Standard
+En ajoutant un constructeur par coordonnées sphériques, les attributs de
+ la classe ne devraient pas forcémant être changées.
+ Il serait toute à fait envisageable, de garder les coordonnées carthésiennes
+ comme attributs et d'assigner leurs valeurs equilvalentes en coordonnées
+ sphériques par le nouveau constructeur.
+\end_layout
+
+\begin_layout Subsection*
+b)
+\end_layout
+
+\begin_layout Standard
+La surcharge serait une difficulté majeur pour créer un constructeur par
+ coordonnées sphériques.
+ Etant donné qu'un tel constructeur prendrait comme paramètres deux angles
+ et une longueur, représentés par trois doubles, il serait en conflit avec
+ le constructeur de coordonnées carthésiennes.
+ Il serait alors impossible d'avoir les deux constructeurs dans une classe.
+\end_layout
+
+\begin_layout Standard
+Néanmoins, une solution alternative serait d'implémenter une méthode statique
+ qui prendrait comme paramètres des coordonnées sphériques et qui renverait
+ un vecteur ayant des coordonnées carthésiennes équivalentes (par exemple
+ 
+\family typewriter
+Vector3D Vector3D::fromSpherical(double phi, double theta, double r)
+\family default
+).
+\end_layout
+
+\begin_layout Section*
+Question P3.4
+\end_layout
+
+\begin_layout Standard
+La méthode `affiche()' d'un vecteur a été implémenté sous forme de l'opérateur
+ `<<' de `std::ostream'.
+ La méthode `compare' est équivalent à l'opérateur `=='.
 \end_layout
 
 \end_body

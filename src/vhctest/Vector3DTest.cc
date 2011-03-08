@@ -25,6 +25,15 @@ using namespace vhc;
 bool printTest();
 
 int main() {
+
+	Vector3D u = Vector3D(1,2,3);
+	Vector3D v = u;
+	cout << "1) u:" << u << endl;
+	cout << "1) v:" << v << endl;
+	u = Vector3D(1,2,5);
+	cout << "2) u:" << u << endl;
+	cout << "2) v:" << v << endl;
+
 	cout << "Vector3D: running tests..." << endl;
 	cout << flush;
 

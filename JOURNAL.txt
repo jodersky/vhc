@@ -1,3 +1,5 @@
 [26/02/2011 jakob] Creation de la classe `Vector3', essais divers.
 [01/03/2011] Discussion sur la structure du projet, conventions de style de code, mise en place d'un serveur SVN: https://svn.epfl.ch/svn/virtual-hadron-collider/.
 [02/03/2011 jakob] Repondu a la premiere question. Amelioration de la classe `Vector3'.
+[08/03/2011] Installation de linux et configuration de l'environement de developpement sur le portable de Christian.
+[08/03/2011] Traduction des commentaires en francais. Desormais, tout identificateur restera en anglais mais tous les commentaires seront ecris en francais.
