@@ -87,9 +87,11 @@ public:
 
 	/** Vecteur unitaire de ce vecteur. */
 	Vector3D operator~() const {
-		if (getLength() != 0.0) return (*this) / getLength();
+		if (getNorm() != 0.0) return (*this) / getNorm();
 		else throw std::domain_error("Unit vector.");
 	};
+
+	Vector3D getUnit() const {return ~(*this);}
 
 	/** Retourne la norme du vecteur. */
 	double getNorm() const {return sqrt(dot(*this));};

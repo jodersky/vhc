@@ -8,6 +8,8 @@
 
 #include <iostream>
 #include <assert.h>
+#include <iomanip>
+#include <limits>
 //TODO change relative include
 #include "../vhc/Vector3D.h"
 
@@ -25,20 +27,9 @@ using namespace vhc;
 bool printTest();
 
 int main() {
-
-	Vector3D u = Vector3D(1,2,3);
-	Vector3D v = u;
-	cout << "1) u:" << u << endl;
-	cout << "1) v:" << v << endl;
-	u = Vector3D(1,2,5);
-	cout << "2) u:" << u << endl;
-	cout << "2) v:" << v << endl;
-
-	cout << "Vector3D: running tests..." << endl;
-	cout << flush;
-
 	//equality test
 	assert(Vector3D(1, 2, 3) == Vector3D(1, 2, 3));
+	assert(Vector3D(1, 2.4, 3) != Vector3D(1, 2, 3));
 
 	//addition test
 	assert(Vector3D(1, -0.9, 57683) + Vector3D(-1, 0.9, -57683) == Vector3D::Null);
@@ -46,25 +37,16 @@ int main() {
 	//addition, mutliplication test
 	assert(Vector3D(4, 0, 16) / 4 == -Vector3D(0.25, 0, 1) * -4);
 
-	//print test
-	//assert(printTest());
-
 	//length test
-	assert(Vector3D(0,3,4).getLength() == 5);
-	assert(Vector3D(0.0, 3.0, 4.0).getUnit().getLength() == 1);
+	assert(Vector3D(0,3,4).getNorm() == 5);
 
-	//unit test
-	Vector3D a = Vector3D(0, 3, 4).getUnit();
-	Vector3D b = Vector3D(0, 0.6, 0.8);
-
-	cout << "unit: " << a << " std: " << b << endl;
-	cout << "x: " << (a.getX() == b.getX()) << endl;
-	cout << "y: " << (a.getY() == b.getY()) << endl;
-	cout << "z: " << (a.getZ() == b.getZ()) << endl;
-
-
-	assert((Vector3D(0, 3.0, 4.0).getUnit()) == Vector3D(0, 0.6, 0.8));
-
+	bool caught = false;
+	try {
+		~Vector3D::Null;
+	} catch (domain_error& ex) {
+		caught = true;
+	};
+	assert(caught == true);
 
 	cout << "Vector3D: tests completed successfully" << endl;
 
