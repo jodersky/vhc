@@ -1,2 +1,2 @@
-/** Namespace containing all classes and objects from the project 'Virtual Hadron Collider'. */
+/** Espace de nom contenant tout code relatif au projet `Virtual Hadron Collider'. */
 namespace vhc {};
