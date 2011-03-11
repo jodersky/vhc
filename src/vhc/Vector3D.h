@@ -25,7 +25,6 @@ namespace vhc {
  *  champs.
  */
 class Vector3D {
-	friend std::ostream& operator<< (std::ostream& output, const Vector3D& v);
 
 private:
 	/** Composante x. */
@@ -116,6 +115,10 @@ public:
 	static const Vector3D k;
 
 };
+
+std::ostream& operator<< (std::ostream& output, const Vector3D& v);
+
+Vector3D operator* (double n, const Vector3D& v);
 
 } // namespace
 

@@ -22,4 +22,8 @@ ostream& operator<< (ostream& output, const Vector3D& v) {
 	return output;
 }
 
+Vector3D operator* (double n, const Vector3D& v) {
+	return v * n;
+}
+
 }

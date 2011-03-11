@@ -18,6 +18,17 @@ private:
 	Vector3D position;
 
 public:
+/*
+	Vector3D getPosition();
+
+	Vector3D getVelocity();
+
+	Vector3D getEnergy();
+
+	Vector3D getGamma();
+
+	Vector3D getMomentum();
+*/
 	Particle(): position(0, 0, 0) {};
 	virtual ~Particle();
 };
