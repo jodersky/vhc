@@ -11,7 +11,7 @@
 #include <iomanip>
 #include <limits>
 //TODO change relative include
-#include "../vhc/Vector3D.h"
+#include "Vector3D.h"
 
 using namespace std;
 using namespace vhc;

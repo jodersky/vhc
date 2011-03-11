@@ -561,17 +561,10 @@
 				</scannerConfigBuildInfo>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 			<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
-				<buildTargets>
-					<target name="qmake" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-						<buildCommand>qmake</buildCommand>
-						<buildArguments>-project</buildArguments>
-						<buildTarget>qmake.pro</buildTarget>
-						<stopOnError>true</stopOnError>
-						<useDefaultCommand>false</useDefaultCommand>
-						<runAllBuilders>false</runAllBuilders>
-					</target>
-				</buildTargets>
+				<buildTargets/>
 			</storageModule>
 		</cconfiguration>
 		<cconfiguration id="cdt.managedbuild.config.gnu.cross.exe.release.368302453">
@@ -1132,17 +1125,10 @@
 				</scannerConfigBuildInfo>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 			<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
-				<buildTargets>
-					<target name="qmake" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-						<buildCommand>qmake</buildCommand>
-						<buildArguments>-project</buildArguments>
-						<buildTarget>qmake.pro</buildTarget>
-						<stopOnError>true</stopOnError>
-						<useDefaultCommand>false</useDefaultCommand>
-						<runAllBuilders>false</runAllBuilders>
-					</target>
-				</buildTargets>
+				<buildTargets/>
 			</storageModule>
 		</cconfiguration>
 	</storageModule>
