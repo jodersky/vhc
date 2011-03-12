@@ -1,0 +1,322 @@
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter courier
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Structure du projet et makefiles
+\end_layout
+
+\begin_layout Part*
+Structure
+\end_layout
+
+\begin_layout Standard
+Le dosier du projet, nommé `vhc' (pour `Virtual Hadron Collider'), est structuré
+ de la manière suivante:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+vhc
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- bin
+\end_layout
+
+\begin_layout Plain Layout
+
+|   |-- main
+\end_layout
+
+\begin_layout Plain Layout
+
+|   `-- test
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- doc
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- Doxyfile
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- JOURNAL.txt
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- Makefile
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- reponses.lyx
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- REPONSES.pdf
+\end_layout
+
+\begin_layout Plain Layout
+
+`-- src
+\end_layout
+
+\begin_layout Plain Layout
+
+    |-- main
+\end_layout
+
+\begin_layout Plain Layout
+
+    `-- test
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+vhc
+\end_layout
+
+\begin_layout Standard
+Le répertoire principale (dit `de base') du projet est est `vhc'.
+ Dans celui-ci se trouvent les fichiers expliqués dans la description officielle
+ du projet.
+ Notamment:
+\end_layout
+
+\begin_layout Itemize
+JOURNAL
+\end_layout
+
+\begin_layout Itemize
+REPONSES
+\end_layout
+
+\begin_layout Itemize
+README
+\end_layout
+
+\begin_layout Itemize
+Makefile
+\end_layout
+
+\begin_layout Standard
+Il contient de plus le fichier `Doxyfile' utilisé pour générer de la documentati
+on du code source.
+\end_layout
+
+\begin_layout Section*
+src
+\end_layout
+
+\begin_layout Standard
+Ce répertoire contient tout le code source, donc les fichiers les plus important
+s du projet! Le code source est lui-meme reparti dans les sous-répertoires
+ suivantes:
+\end_layout
+
+\begin_layout Itemize
+main
+\begin_inset Newline newline
+\end_inset
+
+Contient le code source principale, c'est à dire tout les fichiers sources
+ du simulateur.
+\begin_inset Newline newline
+\end_inset
+
+Exemples: Vector3D.cc, Vector3D.h, Particle.cc, etc...
+\end_layout
+
+\begin_layout Itemize
+test
+\begin_inset Newline newline
+\end_inset
+
+Contient le code source des tests.
+ Les fichiers tests contenant une fonction `main' devraient se terminer
+ avec `Test'.
+\begin_inset Newline newline
+\end_inset
+
+Exemples: Vector3DTest.cc, etc...
+\end_layout
+
+\begin_layout Section*
+doc
+\end_layout
+
+\begin_layout Standard
+Contient de la documentation générée automatiquement par un outil comme
+ `doxygen'.
+\end_layout
+
+\begin_layout Standard
+Remarque: n'est pas sous contrôle de version.
+\end_layout
+
+\begin_layout Section*
+bin
+\end_layout
+
+\begin_layout Standard
+Contient les fichiers binaires (i.e.
+ executables, objets, librairies etc...) compilés du code source.
+ La structure de ce répertoire est identique a celle de `src', c'est-à-dire
+ que les tests seront compilés dans `bin/test/' et les sources principaux
+ dans `bin/main/'.
+\end_layout
+
+\begin_layout Standard
+Remarque: n'est pas sous contrôle de version.
+\end_layout
+
+\begin_layout Part*
+Makefiles
+\end_layout
+
+\begin_layout Standard
+Afin d'automatiser le processus de compilation, un Makefile est présent
+ dans le répertoire de base.
+ A cause de la compléxité du répertoire source, le Makefile est récursif.
+ Cela signifie que ce Makefile ne fait que de déléguer les commandes à deux
+ makefiles contenus dans les répertoires src/main et src/test.
+ Ainsi, lorsqu'on ajoute/supprime des fichiers des répertoires précédents,
+ il suffit de modifier le Makefile contenu dans le répertoire respectif.
+ En général, il ne faut pas modifer le Makefile de base.
+\end_layout
+
+\begin_layout Standard
+Pour plus d'informations voir les commantaires des Makefiles.
+\end_layout
+
+\begin_layout Section*
+Commandes
+\end_layout
+
+\begin_layout Standard
+Voici quelques commandes pour le Makefile principal.
+\end_layout
+
+\begin_layout Itemize
+build
+\begin_inset Newline newline
+\end_inset
+
+compile les sources principaux
+\end_layout
+
+\begin_layout Itemize
+test-build
+\begin_inset Newline newline
+\end_inset
+
+compile les tests
+\end_layout
+
+\begin_layout Itemize
+doc
+\begin_inset Newline newline
+\end_inset
+
+génère la documentation
+\end_layout
+
+\begin_layout Itemize
+all
+\begin_inset Newline newline
+\end_inset
+
+lance un build, test-build et doc
+\end_layout
+
+\begin_layout Itemize
+clean
+\begin_inset Newline newline
+\end_inset
+
+supprime le répertoire bin pour une compilation 
+\begin_inset Quotes eld
+\end_inset
+
+propre
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Compilation
+\end_layout
+
+\begin_layout Itemize
+Les fichiers source principaux sont compilés et regroupés dans une librairie
+ statique.
+ Cette libraire s'appelle `libvhc.a'.
+\end_layout
+
+\begin_layout Itemize
+Les tests sont compilés en éxécutables et reliés (linked) avec la librairie
+ statique `libvhc.a'
+\end_layout
+
+\end_body
+\end_document

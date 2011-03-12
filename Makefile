@@ -29,21 +29,27 @@ export BINDIR = $(BASEDIR)/bin
 # LDFLAGS  += -pg                     # pour profiler
 # CXXFLAGS += -O2                     # pour optimiser la vitesse
 
-.PHONY: all checkdirs build clean
+.PHONY: all checkdirs build clean doc
 
-all: checkdirs build test-build
+all: checkdirs build test-build doc
 
 # Compile les fichiers source principales
-build:
+build: checkdirs
 	@echo "Building main sources..."
 	make all -C $(SRCDIR)/main
 	@echo "Done building main sources."
 
 # Compile les tests
-test-build:
+test-build: checkdirs build
 	@echo "Building test sources..."
 	make all -C $(SRCDIR)/test
 	@echo "Done building test sources."
+
+# Genere la documentation
+doc:
+	@echo "Building doc..."
+	doxygen Doxyfile
+	@echo "Done building doc."
 
 # Verifie l'existance du repertoire de sortie
 checkdirs: $(BINDIR)
