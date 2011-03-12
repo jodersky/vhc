@@ -35,12 +35,15 @@ all: checkdirs build test-build
 
 # Compile les fichiers source principales
 build:
-	@echo $(BINDIR)
-	make all -C $(SRCDIR)/vhc
+	@echo "Building main sources..."
+	make all -C $(SRCDIR)/main
+	@echo "Done building main sources."
 
 # Compile les tests
 test-build:
-	make all -C $(SRCDIR)/vhctest
+	@echo "Building test sources..."
+	make all -C $(SRCDIR)/test
+	@echo "Done building test sources."
 
 # Verifie l'existance du repertoire de sortie
 checkdirs: $(BINDIR)
