@@ -31,7 +31,7 @@ export BINDIR = $(BASEDIR)/bin
 
 .PHONY: all checkdirs build clean doc
 
-all: checkdirs build test-build doc test
+all: checkdirs build test-build
 
 # Compile les fichiers source principales
 build: checkdirs

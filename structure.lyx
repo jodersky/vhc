@@ -37,6 +37,7 @@
 \tracking_changes false
 \output_changes false
 \author "" 
+\author "" 
 \end_header
 
 \begin_body
@@ -272,19 +273,19 @@ compile les tests
 \end_layout
 
 \begin_layout Itemize
+all
+\begin_inset Newline newline
+\end_inset
+
+lance un build, test-build
+\end_layout
+
+\begin_layout Itemize
 doc
 \begin_inset Newline newline
 \end_inset
 
 génère la documentation
-\end_layout
-
-\begin_layout Itemize
-all
-\begin_inset Newline newline
-\end_inset
-
-lance un build, test-build et doc
 \end_layout
 
 \begin_layout Itemize
@@ -301,6 +302,14 @@ propre
 \end_inset
 
 
+\end_layout
+
+\begin_layout Itemize
+test
+\begin_inset Newline newline
+\end_inset
+
+lance tous les tests
 \end_layout
 
 \begin_layout Section*
