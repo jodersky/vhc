@@ -2,9 +2,9 @@
 #                         Makefile recursif                             #
 #=======================================================================#
 # Les variables suivantes sont definis dans un makefile plus haut.      #
-# BASEDIR	repertoire de base du projet                                #
-# SRCDIR	repertoire contenant le code source                         #
-# BINDIR	repertoire ou sont places toutes objets compiles            #
+# BASEDIR   repertoire de base du projet                                #
+# SRCDIR    repertoire contenant le code source                         #
+# BINDIR    repertoire ou sont places toutes objets compiles            #
 #=======================================================================#
 # ==> indique des champs modifiables aisement                           #
 #=======================================================================#

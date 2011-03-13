@@ -39,9 +39,9 @@ private:
 public:
 
 	/** Cree une nouvelle instance de <code>Vector3D</code>.
-	 *  @param x 1e composante
-	 *  @param y 2e composante
-	 *  @param z 3e composante
+	 *  @param _x 1e composante
+	 *  @param _y 2e composante
+	 *  @param _z 3e composante
 	 */
 	Vector3D(double _x, double _y, double _z) : x(_x), y(_y), z(_z) {};
 

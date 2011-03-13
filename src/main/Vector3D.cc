@@ -17,7 +17,7 @@ Vector3D const Vector3D::i = Vector3D(1.0, 0.0, 0.0);
 Vector3D const Vector3D::j = Vector3D(0.0, 1.0, 0.0);
 Vector3D const Vector3D::k = Vector3D(0.0, 0.0, 1.0);
 
-ostream& operator<< (ostream& output, const Vector3D& v) {
+std::ostream& operator<< (ostream& output, const Vector3D& v) {
 	output << v.toString();
 	return output;
 }

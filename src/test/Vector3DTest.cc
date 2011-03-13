@@ -33,6 +33,8 @@ int main() {
 	//length test
 	assert(Vector3D(0,3,4).getNorm() == 5);
 
+	//assert(false);
+
 	bool caught = false;
 	try {
 		~Vector3D::Null;

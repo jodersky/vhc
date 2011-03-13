@@ -2,9 +2,9 @@
 #                         Makefile principale                           #
 #=======================================================================#
 # Les variables suivantes sont definis pour des makefiles plus bas.     #
-# BASEDIR	repertoire de base du projet                                #
-# SRCDIR	repertoire contenant le code source                         #
-# BINDIR	repertoire ou sont places toutes objets compiles            #
+# BASEDIR   repertoire de base du projet                                #
+# SRCDIR    repertoire contenant le code source                         #
+# BINDIR    repertoire ou sont places toutes objets compiles            #
 #########################################################################
 
 
@@ -31,7 +31,7 @@ export BINDIR = $(BASEDIR)/bin
 
 .PHONY: all checkdirs build clean doc
 
-all: checkdirs build test-build doc
+all: checkdirs build test-build doc test
 
 # Compile les fichiers source principales
 build: checkdirs
@@ -40,7 +40,7 @@ build: checkdirs
 	@echo "Done building main sources."
 
 # Compile les tests
-test-build: checkdirs build
+test-build: build
 	@echo "Building test sources..."
 	make all -C $(SRCDIR)/test
 	@echo "Done building test sources."
@@ -60,3 +60,9 @@ $(BINDIR):
 
 clean:
 	@rm -rf $(BINDIR)
+
+# Lance les tests
+test: test-build
+	./testr.sh $(BINDIR)/test
+
+	

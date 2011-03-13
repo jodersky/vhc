@@ -3,3 +3,6 @@
 [02/03/2011 jakob] Repondu a la premiere question. Amelioration de la classe `Vector3'.
 [08/03/2011] Installation de linux et configuration de l'environement de developpement sur le portable de Christian.
 [08/03/2011] Traduction des commentaires en francais. Desormais, tout identificateur restera en anglais mais tous les commentaires seront ecris en francais.
+[10/03/2011 jakob] Definition de la classe particule.
+[12/03/2011 jakob] Mise en place d'un systeme de makefiles recursifs. Le makefile principale appelle des makefiles dans les differents repertoires source. Voir document "structure.pdf" pour plus de detailles.
+[13/03/2011 jakob] Creation d'un systeme de test automatise. Les fichiers test compiles sont executes par un script shell et leur valeur de retour. Ce script est aussi appele par make, via la command `make test'.
