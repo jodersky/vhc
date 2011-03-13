@@ -18,7 +18,8 @@ LOCALDIR = test
 # ==> Rajouter ici les tests a compiler, i.e. les noms des fichiers tests _sans_ extension
 # Si un objet X necessite une compilation non-standard (i.e. pas de regle du style X: X.cc X.h), rajouter cet objet
 # en fin de BINS ne suffit pas. Il faut de plus creer une nouvelle regle.
-BINS = Vector3DTest
+LOCALBINS = Vector3DTest
+BINS=$(addprefix $(BINDIR)/$(LOCALDIR)/,$(LOCALBINS))
 
 # Inclure les headers de main (source principale)
 CXXFLAGS += -I $(SRCDIR)/main/
@@ -33,5 +34,5 @@ $(BINDIR)/$(LOCALDIR):
 	@mkdir -p $@
 
 # Regle implicite pour les fichiers sans extension (i.e. pour les executables)
-%: %.cc
-	$(CXX) $(CXXFLAGS) $< -static -L$(BINDIR)/main -lvhc -o $(BINDIR)/$(LOCALDIR)/$@
+$(BINDIR)/$(LOCALDIR)/%: %.cc
+	$(CXX) $(CXXFLAGS) $< -static -L$(BINDIR)/main -lvhc -o $@
