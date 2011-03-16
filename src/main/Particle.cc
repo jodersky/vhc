@@ -10,8 +10,4 @@
 namespace vhc {
 
 
-Particle::~Particle() {
-	// TODO Auto-generated destructor stub
-}
-
 }

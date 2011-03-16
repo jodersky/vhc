@@ -12,6 +12,7 @@
 #include <sstream>
 #include <math.h>
 #include <stdexcept>
+#include "Printable.h"
 
 namespace vhc {
 
@@ -24,7 +25,7 @@ namespace vhc {
  *  performance perdue ainsi est minimale pour une classe ne contenant que trois
  *  champs.
  */
-class Vector3D {
+class Vector3D: public Printable {
 
 private:
 	/** Composante x. */
@@ -115,8 +116,6 @@ public:
 	static const Vector3D k;
 
 };
-
-std::ostream& operator<< (std::ostream& output, const Vector3D& v);
 
 Vector3D operator* (double n, const Vector3D& v);
 

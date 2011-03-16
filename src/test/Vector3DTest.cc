@@ -5,7 +5,6 @@
  *      Author: Jakob Odersky
  */
 
-
 #include <iostream>
 #include <assert.h>
 #include <iomanip>
