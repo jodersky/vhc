@@ -12,7 +12,7 @@
 
 using namespace vhc;
 using namespace std;
-
+/** lance le test*/
 int main() {
 	Particle p(Vector3D::Null, 0, 0);
 	cout << p << endl;

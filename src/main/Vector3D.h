@@ -88,9 +88,9 @@ public:
 	/** Vecteur unitaire de ce vecteur. */
 	Vector3D operator~() const {
 		if (getNorm() != 0.0) return (*this) / getNorm();
-		else throw std::domain_error("Unit vector.");
+		else throw std::domain_error("Zero vector does not have a unit vector.");
 	};
-
+	/** retourne le vecteur unitaire */
 	Vector3D getUnit() const {return ~(*this);}
 
 	/** Retourne la norme du vecteur. */
@@ -103,7 +103,11 @@ public:
 		return s.str();
 	};
 
-	/** Vecteur nulle. (0,0,0) */
+	/** Retourne le produit mixte de 3 vecteurs (Le vecteur fait un produit scalaire
+	 * 	avec le produit vectoriel de deux vecteurs passés en argument)*/
+	double tripleproduct(const Vector3D& v, const Vector3D& w) const;
+
+	/** Vecteur nul. (0,0,0) */
 	static const Vector3D Null;
 
 	/** Vecteur unitaire, d'axe x. (1, 0, 0) */
