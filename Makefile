@@ -29,9 +29,9 @@ export BINDIR = $(BASEDIR)/bin
 # LDFLAGS  += -pg                     # pour profiler
 # CXXFLAGS += -O2                     # pour optimiser la vitesse
 
-.PHONY: all checkdirs build clean doc
+.PHONY: all checkdirs build test-build doc test clean
 
-all: checkdirs build test-build
+all: checkdirs build test-build doc test
 
 # Compile les fichiers source principales
 build: checkdirs

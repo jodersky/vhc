@@ -48,6 +48,5 @@ if [ $FAILED -eq 0 ];then
 else
 	echo "[${red}error${nc}] Some tests FAILED."
 fi
-tput sgr0
 
 

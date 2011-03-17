@@ -3,6 +3,9 @@
 \begin_document
 \begin_header
 \textclass article
+\begin_preamble
+\usepackage{color}
+\end_preamble
 \use_default_options true
 \language french
 \inputencoding auto
@@ -136,19 +139,18 @@ Question P3.3
 \end_layout
 
 \begin_layout Subsection*
-a)
+a
 \end_layout
 
 \begin_layout Standard
 En ajoutant un constructeur par coordonnées sphériques, les attributs de
  la classe ne devraient pas forcémant être changées.
  Il serait toute à fait envisageable, de garder les coordonnées carthésiennes
- comme attributs et d'assigner leurs valeurs equilvalentes en coordonnées
- sphériques par le nouveau constructeur.
+ comme attributs et de convertir les coordonnées sphériques avec le constructeur.
 \end_layout
 
 \begin_layout Subsection*
-b)
+b
 \end_layout
 
 \begin_layout Standard
@@ -162,7 +164,15 @@ La surcharge serait une difficulté majeur pour créer un constructeur par
 
 \begin_layout Standard
 Néanmoins, une solution alternative serait d'implémenter une méthode statique
- qui prendrait comme paramètres des coordonnées sphériques et qui renverait
+ (
+\begin_inset Quotes eld
+\end_inset
+
+factory method
+\begin_inset Quotes erd
+\end_inset
+
+) qui prendrait comme paramètres des coordonnées sphériques et qui renverait
  un vecteur ayant des coordonnées carthésiennes équivalentes (par exemple
  
 \family typewriter
@@ -179,6 +189,120 @@ Question P3.4
 La méthode `affiche()' d'un vecteur a été implémenté sous forme de l'opérateur
  `<<' de `std::ostream'.
  La méthode `compare' est équivalent à l'opérateur `=='.
+\end_layout
+
+\begin_layout Section*
+Question P5.1
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+color{red}{Réponse incohérente! La question conçernant l'énergie me perturbe...}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Les membres d'une particule representant le facteur gamma
+\begin_inset Formula $\gamma$
+\end_inset
+
+ et l'énergie
+\begin_inset Formula $E$
+\end_inset
+
+ peuvent être implémentés soit sous forme d'attributs soit sous forme de
+ méthodes.
+ Il y a des avantages et inconvénients pour chaque forme.
+\end_layout
+
+\begin_layout Standard
+L'avantage d'un attribut est que son accès est trés rapide et ne prend (presque)
+ pas de temps de calcul.
+ Par contre, si la valeur d'un attribut est relié logiquement à la valeur
+ d'un autre attribut et que ce dernier est modifié, il faudra manuellement
+ changer le premier.
+ Par exemple, le facteur gamma étant défini par:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\gamma=\frac{1}{\sqrt{1-\left(\frac{v}{c}\right)^{2}}}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+si il est défini comme variable, il faudrait le mettre à jour à chaque fois
+ que la vitesse change.
+\end_layout
+
+\begin_layout Standard
+Contrairement à un attribut, une méthode est évaluée à chaque fois que l'on
+ l'appelle.
+ Ceci a l'avantage que si le résultat d'une méthode dépend d'une variable,
+ la variable pourra être modifiée sans considération de la méthode.
+ Ainsi, si le facteur gamma est une méthode, une mise à jour de la vitesse
+ pourra être effectuée directement sans explicitement changer 
+\begin_inset Formula $\gamma$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Dans le cas de notre projet, nous avons décidés d'implémenter l'énergie
+ sous forme d'attribut et le facteur gamma sous forme de méthode.
+ Ceci pour plusieurs raisons:
+\end_layout
+
+\begin_layout Enumerate
+Au cours de la simulation, la vitesse sera changée très fréquemment, beaucoup
+ plus que les appelles à gamma.
+ Une implémentation de gamma sous forme de méthode améliore donc la performance.
+\end_layout
+
+\begin_layout Enumerate
+Le premier argument pourrait s'appliquer également à l'énergie, or il faut
+ remarquer que l'énergie est une grandeur spécifiée durant la création d'une
+ particule et que en fait la vitesse dépend de l'énergie
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Complément mathématique: 
+\begin_inset Quotes eld
+\end_inset
+
+Aux énergies atteintes dans un accélérateur, les particules sont tellement
+ proches de la vitesse de la lumière qu'il faudrait garder au moins 7 décimales
+ pour que la vitesse permette de connaître l'énergie de façon assez précise.
+ On caractérise donc plutôt une particule en termes d'énergie totale que
+ de vitesse.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+ On pourrait alors penser à définir la vitesse comme méthode mais d'après
+ l'argument 1, ce serait complètement absurde au niveau de la performance.
 \end_layout
 
 \end_body
