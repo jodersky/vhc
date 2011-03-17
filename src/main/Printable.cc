@@ -8,11 +8,10 @@
 #include "Printable.h"
 #include <iostream>
 
-using namespace std;
-
 namespace vhc {
 
-std::ostream& operator<< (ostream& output, const Printable& p) {
+//c.f. header
+std::ostream& operator<< (std::ostream& output, const Printable& p) {
 	output << p.toString();
 	return output;
 }

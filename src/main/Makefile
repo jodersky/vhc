@@ -13,7 +13,7 @@ LOCALDIR = main
 # ==> Ajouter ici les objets a compiler
 # Si un objet necessite une compilation non-standard (i.e. pas de regle du style Foo.o : Foo.cc Foo.h), rajouter
 # cette regle.
-LOCALOBJS = Vector3D.o Particle.o Printable.o
+LOCALOBJS = Vector3D.o Particle.o Printable.o Element.o
 OBJS=$(addprefix $(BINDIR)/$(LOCALDIR)/,$(LOCALOBJS))
 .PHONY = lib
 

@@ -20,10 +20,13 @@ namespace vhc {
  *  invariables, c'est-a-dire un vecteur une fois initialise, ses composantes ne
  *  peuvent plus etres modifies.
  *  Le fait qu'un vecteur ne possede pas d'etat, facilite le raisonement et parait
- *  surtout naturelle.
+ *  surtout naturel.
  *  Ainsi, chaque operation sur un vecteur retourne une nouvelle instance. La
  *  performance perdue ainsi est minimale pour une classe ne contenant que trois
  *  champs.
+ *  Les methodes d'un vecteur sont toutes tres simples et implementes dans le header
+ *  afin d'etre developpes 'inline' durant la compilation et ainsi d'etre plus rapides.
+ *  TODO ! definir la rotation d'un vecteur autour d'un autre vecteur
  */
 class Vector3D: public Printable {
 
@@ -104,8 +107,10 @@ public:
 	};
 
 	/** Retourne le produit mixte de 3 vecteurs (Le vecteur fait un produit scalaire
-	 * 	avec le produit vectoriel de deux vecteurs passés en argument)*/
-	double tripleproduct(const Vector3D& v, const Vector3D& w) const;
+	 * 	avec le produit vectoriel de deux vecteurs passes en argument). */
+	double tripleProduct(const Vector3D& v, const Vector3D& w) const {
+		return dot(v.cross(w));
+	}
 
 	/** Vecteur nul. (0,0,0) */
 	static const Vector3D Null;
@@ -121,6 +126,7 @@ public:
 
 };
 
+/** Surcharge externe de la mutliplication scalaire. */
 Vector3D operator* (double n, const Vector3D& v);
 
 } // namespace

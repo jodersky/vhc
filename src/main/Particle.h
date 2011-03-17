@@ -9,13 +9,15 @@
 #define PARTICLE_H_
 
 #include <sstream>
+#include <math.h>
 #include "Vector3D.h"
 #include "Printable.h"
+#include "constants.h"
 
 namespace vhc {
 
 /** Classe representant une particule.
- *  TODO ajouter facteur gamma, energie, constructeur etc...*/
+ * TODO poser question sur l'energie, gamma, qdm*/
 class Particle: public Printable {
 
 private:
@@ -35,16 +37,28 @@ private:
 	/** Charge de cette particule. */
 	double charge;
 
+	double energy;
+
 public:
 
 
-	Particle(const Vector3D& position0, double mass, double charge):
-			position(position0),
+	Particle(const Vector3D& position, double mass, double charge):
+			position(position),
 			velocity(0, 0, 0),
 			force(0, 0, 0),
 			mass(mass),
 			charge(charge)
 	{};
+
+	Particle(const Vector3D& position0, double energy, const Vector3D& direction, double mass, double charge):
+		position(position),
+		velocity(0, 0, 0),
+		force(0, 0, 0),
+		mass(mass),
+		charge(charge) {
+
+		velcocity = constants::c * sqrt(1 - (mass * mass) / (energy * energy));
+	};
 
 
 	/** Retourne la position de cette particule. */
@@ -71,15 +85,20 @@ public:
 	/** Retourne la vitesse de cette particule. */
 	Vector3D getVelocity() const {return velocity;}
 
-	/** Retourne une representation en chaine de ce vecteur. */
+	//GeV
+	double getEnergy() const {return energy;}
+
+	double getGamma() const {return energy / (mass * constants::c2);}
+
+	/** Retourne une representation en chaine de cette particule. */
 	std::string toString() const {
 		std::stringstream s;
-		s << "Particle:" << "\n";
-		s << "\tPosition: " << position << "\n";
-		s << "\tVelocity: " << velocity << "\n";
-		s << "\tMass: " << mass << "\n";
-		s << "\tCharge: " << charge << "\n";
-		s << "\tForce: " << force << "\n";
+		s << "Particle:"	<< "\n";
+		s << "\tPosition: "	<< position	<< "\n";
+		s << "\tVelocity: "	<< velocity	<< "\n";
+		s << "\tMass: "		<< mass		<< "\n";
+		s << "\tCharge: "	<< charge	<< "\n";
+		s << "\tForce: "	<< force	<< "\n";
 		return s.str();
 	}
 

@@ -9,7 +9,6 @@
 #include <assert.h>
 #include <iomanip>
 #include <limits>
-//TODO change relative include
 #include "Vector3D.h"
 
 using namespace std;
@@ -31,8 +30,6 @@ int main() {
 
 	//length test
 	assert(Vector3D(0,3,4).getNorm() == 5);
-
-	//assert(false);
 
 	bool caught = false;
 	try {

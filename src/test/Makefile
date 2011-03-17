@@ -15,10 +15,14 @@
 # Nom du repertoire contenant ce makefile
 LOCALDIR = test
 
-# ==> Rajouter ici les tests a compiler, i.e. les noms des fichiers tests _sans_ extension
-# Si un objet X necessite une compilation non-standard (i.e. pas de regle du style X: X.cc X.h), rajouter cet objet
+# Tout les fichiers se terminant par 'Test' sont consideres comme
+# etant un test contenant une fonction main. Ces fichiers seront compiles
+# a un executable.
+TESTS = $(shell find *Test.*)
+
+# ==> Si un objet X necessite une compilation non-standard (i.e. pas de regle du style X: X.cc X.h), rajouter cet objet
 # en fin de BINS ne suffit pas. Il faut de plus creer une nouvelle regle.
-LOCALBINS = Vector3DTest ParticleTest
+LOCALBINS = $(patsubst %.cc,%,$(TESTS))
 BINS=$(addprefix $(BINDIR)/$(LOCALDIR)/,$(LOCALBINS))
 
 # Inclure les headers de main (source principale)

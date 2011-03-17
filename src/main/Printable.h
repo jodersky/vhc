@@ -12,6 +12,7 @@
 
 namespace vhc {
 
+/** Classes abstraite heritee par tout objet imprimable. */
 class Printable {
 
 public:
@@ -21,6 +22,7 @@ public:
 
 };
 
+/** Ajoute la representation en chaine de <code>p</code> a <code>output</code>. */
 std::ostream& operator<< (std::ostream& output, const Printable& p);
 
 }
