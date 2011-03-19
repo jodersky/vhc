@@ -16,7 +16,7 @@
 
 namespace vhc {
 
-/** Classe representant une particule.
+/** Classe représentant une particule.
  * TODO poser question sur l'energie, gamma, qdm*/
 class Particle: public Printable {
 
@@ -28,10 +28,10 @@ private:
 	/** Vitesse de cette particule. */
 	Vector3D velocity;
 
-	/** Force resultante sur cette particule. */
+	/** Force résultante sur cette particule. */
 	Vector3D force;
 
-	/** Masse de cette particlue. */
+	/** Masse de cette particule. */
 	double mass;
 
 	/** Charge de cette particule. */
@@ -57,7 +57,7 @@ public:
 		mass(mass),
 		charge(charge) {
 
-		velcocity = constants::c * sqrt(1 - (mass * mass) / (energy * energy));
+		velocity = constants::c * sqrt(1 - (mass * mass) / (energy * energy));
 	};
 
 
@@ -67,10 +67,10 @@ public:
 	/** Affecte la position de cette particule. */
 	void setPosition(const Vector3D& pos) {position = pos;}
 
-	/** Retourne la force resultante sur cette particule. */
+	/** Retourne la force résultante sur cette particule. */
 	Vector3D getForce() const {return force;}
 
-	/** Affecte la force resultante sur cette particule. */
+	/** Affecte la force résultante sur cette particule. */
 	void setForce(const Vector3D& f) {force = f;}
 
 	/** Applique une force sur cette particule. */
@@ -90,7 +90,7 @@ public:
 
 	double getGamma() const {return energy / (mass * constants::c2);}
 
-	/** Retourne une representation en chaine de cette particule. */
+	/** Retourne une représentation en chaîne de cette particule. */
 	std::string toString() const {
 		std::stringstream s;
 		s << "Particle:"	<< "\n";

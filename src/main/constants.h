@@ -13,13 +13,13 @@ namespace vhc {
 /** Contient des constantes physiques. */
 namespace constants {
 
-/** Vitesse de la lumiere dans le vide [m/s]. */
+/** Vitesse de la lumière dans le vide [m/s]. */
 const double c = 299792458;
 
-/** Vitesse de la lumiere dans le vide au caree [m/s]. */
+/** Vitesse de la lumière dans le vide au carré [m/s]. */
 const double c2 = c * c;
 
-/** Charge elementaire [C]. */
+/** Charge élémentaire [C]. */
 const double e = 1.60217653E-19;
 
 }

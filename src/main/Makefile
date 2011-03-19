@@ -1,37 +1,37 @@
 #########################################################################
-#                         Makefile recursif                             #
+#                         Makefile récursif                             #
 #=======================================================================#
-# Les variables suivantes sont definis dans un makefile plus haut.      #
-# BASEDIR   repertoire de base du projet                                #
-# SRCDIR    repertoire contenant le code source                         #
-# BINDIR    repertoire ou sont places toutes objets compiles            #
+# Les variables suivantes sont définies dans un makefile plus haut.     #
+# BASEDIR   répertoire de base du projet                                #
+# SRCDIR    répertoire contenant le code source                         #
+# BINDIR    répertoire où sont placés tous les objets compilé           #
 #########################################################################
 
-# Nom du repertoire contenant ce makefile
+# Nom du répertoire contenant ce makefile
 LOCALDIR = main
 
-# ==> Ajouter ici les objets a compiler
-# Si un objet necessite une compilation non-standard (i.e. pas de regle du style Foo.o : Foo.cc Foo.h), rajouter
-# cette regle.
+# ==> Ajouter ici les objets à compiler
+# Si un objet nécessite une compilation non-standard (i.e. pas de règle du style Foo.o : Foo.cc Foo.h), rajouter
+# cette règle.
 LOCALOBJS = Vector3D.o Particle.o Printable.o Element.o
 OBJS=$(addprefix $(BINDIR)/$(LOCALDIR)/,$(LOCALOBJS))
 .PHONY = lib
 
 all: checkdirs lib
 
-# Verifie l'existance du repertoire de sortie
+# Vérifie l'existence du répertoire de sortie
 checkdirs: $(BINDIR)/$(LOCALDIR)
 
-# Cree le repertoire de sortie
+# Crée le répertoire de sortie
 $(BINDIR)/$(LOCALDIR):
 	@mkdir -p $@
 
-# Cree une librairie statique des fichiers objets 
+# Crée une librairie statique des fichiers objets 
 lib: $(OBJS)
 	@echo "Packing library..."
 	ar rcs $(BINDIR)/$(LOCALDIR)/libvhc.a $(OBJS)
 	@echo "Done packing library."  
 
-# Regle implicite qui modifie le repertoire de destination des fichiers .o
+# Règle implicite qui modifie le répertoire de destination des fichiers .o
 $(BINDIR)/$(LOCALDIR)/%.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@

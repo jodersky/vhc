@@ -16,17 +16,18 @@
 
 namespace vhc {
 
-/** Un vecteur de dimension trois. Les instances de cette classes sont completement
- *  invariables, c'est-a-dire un vecteur une fois initialise, ses composantes ne
- *  peuvent plus etres modifies.
- *  Le fait qu'un vecteur ne possede pas d'etat, facilite le raisonement et parait
+/** Un vecteur de dimension trois. Les instances de cette classes sont complètement
+ *  invariables, c'est-à-dire qu'un vecteur une fois initialisé, ses composantes ne
+ *  peuvent plus êtres modifiées.
+ *  Le fait qu'un vecteur ne possède pas d'état, facilite le raisonnement et paraît
  *  surtout naturel.
- *  Ainsi, chaque operation sur un vecteur retourne une nouvelle instance. La
- *  performance perdue ainsi est minimale pour une classe ne contenant que trois
+ *  Ainsi, chaque opération sur un vecteur retourne une nouvelle instance. La
+ *  performance ainsi perdue est minimale pour une classe ne contenant que trois
  *  champs.
- *  Les methodes d'un vecteur sont toutes tres simples et implementes dans le header
- *  afin d'etre developpes 'inline' durant la compilation et ainsi d'etre plus rapides.
- *  TODO ! definir la rotation d'un vecteur autour d'un autre vecteur
+ *  Les méthodes d'un vecteur sont toutes très simples et implémentées dans le header,
+ *  afin d'être développées 'inline' durant la compilation, ce qui est plus rapide.
+ *  TODO ! définir la matrice de rotation d'un vecteur autour d'un autre vecteur (Faire un typedef?),
+ *  		puis une méthode de multiplication matrice-vecteur, ce serait plus joli.
  */
 class Vector3D: public Printable {
 
@@ -42,7 +43,7 @@ private:
 
 public:
 
-	/** Cree une nouvelle instance de <code>Vector3D</code>.
+	/** Crée une nouvelle instance de <code>Vector3D</code>.
 	 *  @param _x 1e composante
 	 *  @param _y 2e composante
 	 *  @param _z 3e composante
@@ -58,33 +59,33 @@ public:
 	/** Retourne la composante z de ce vecteur. */
 	double getZ() const {return z;};
 
-	/** Verifie si ce vecteur et le vecteur <code>v</code> sont eqaux, i.e. qu'ils ont les memes composantes. */
+	/** Vérifie si ce vecteur et le vecteur <code>v</code> sont éqaux, i.e. qu'ils ont les mêmes composantes. */
 	bool operator== (const Vector3D& v) const {return x == v.x && y == v.y && z == v.z;};
 
-	/** Verifie si ce vecteur et le vecteur <code>v</code> sont differents, i.e. qu'ils ont des composantes differentes. */
+	/** Vérifie si ce vecteur et le vecteur <code>v</code> sont différents, i.e. qu'ils ont des composantes différentes. */
 	bool operator!= (const Vector3D& v) const {return !((*this) == (v));};
 
-	/** Addition de vecteurs. Retourne un nouveau vecteur resultant de l'addition de ce vecteur avec <code>v</code>. */
+	/** Addition de vecteurs. Retourne un nouveau vecteur résultant de l'addition de ce vecteur avec <code>v</code>. */
 	Vector3D operator+ (const Vector3D& v) const {return Vector3D(x + v.x, y + v.y, z + v.z);};
 
-	/** Multiplication scalaire. Retourne un nouveau vecteur resultant de la multiplication de ce vecteur par <code>n</code>. */
+	/** Multiplication scalaire. Retourne un nouveau vecteur résultant de la multiplication de ce vecteur par <code>n</code>. */
 	Vector3D operator* (double n) const {return Vector3D(x * n, y * n, z * n);};
 
-	/** Retourne l'oppose de ce vecteur. */
+	/** Retourne l'opposé de ce vecteur. */
 	Vector3D operator-() const {return (*this) * (-1.0);};
 
-	/** Soustraction de vecteurs. Retourne un nouveau vecteur resultant de la soustraction de ce vecteur avec <code>v</code>. */
+	/** Soustraction de vecteurs. Retourne un nouveau vecteur résultant de la soustraction de ce vecteur avec <code>v</code>. */
 	Vector3D operator- (const Vector3D& v) const {return (*this) + -v;};
 
-	/** Division scalaire. Retourne un nouveau vecteur resultant de la division de ce vecteur par <code>n</code>. */
+	/** Division scalaire. Retourne un nouveau vecteur résultant de la division de ce vecteur par <code>n</code>. */
 	Vector3D operator/ (double n) const {return (*this) * (1.0 / n) ;};
 
 	/** Produit scalaire. Retourne le produit scalaire de ce vecteur avec le vecteur <code>v</code>. */
 	double dot(const Vector3D& v) const {return x * v.x + y * v.y + z * v.z;};
 
-	/** Produit vectoriel. Retourne le produit vectoriel directe (main droite) de ce vecteur avec le vecteur <code>v</code>.
-	 *  Nous avons decide de ne pas utiliser l'operateur `^' pour representer le produit vectoriel car sa precedence est plus
-	 *  basse que toutes autres operations binaires sur les vecteurs.
+	/** Produit vectoriel. Retourne le produit vectoriel direct (main droite) de ce vecteur avec le vecteur <code>v</code>.
+	 *  Nous avons decidé de ne pas utiliser l'operateur `^' pour représenter le produit vectoriel car sa précédence est plus
+	 *  basse que toutes autres opérations binaires sur les vecteurs.
 	 */
 	Vector3D cross(const Vector3D& v) const {return Vector3D(y * v.z - v.y * z, v.x * z - x * v.z, x * v.y - v.x * y);};
 
@@ -93,23 +94,30 @@ public:
 		if (getNorm() != 0.0) return (*this) / getNorm();
 		else throw std::domain_error("Zero vector does not have a unit vector.");
 	};
-	/** retourne le vecteur unitaire */
+	/** Retourne le vecteur unitaire */
 	Vector3D getUnit() const {return ~(*this);}
 
 	/** Retourne la norme du vecteur. */
 	double getNorm() const {return sqrt(dot(*this));};
 
-	/** Retourne une representation en chaine de ce vecteur. */
+	/** Retourne une représentation en chaîne de caractères de ce vecteur. */
 	std::string toString() const {
 		std::stringstream s;
 		s << "Vector3D(" << x << ", " << y << ", " << z << ")";
 		return s.str();
 	};
 
-	/** Retourne le produit mixte de 3 vecteurs (Le vecteur fait un produit scalaire
-	 * 	avec le produit vectoriel de deux vecteurs passes en argument). */
-	double tripleProduct(const Vector3D& v, const Vector3D& w) const {
-		return dot(v.cross(w));
+	/** Produit mixte de 3 vecteurs. Retourne le produit scalaire de ce vecteur
+	 * 	avec le produit vectoriel de deux vecteurs <code>v</code> et <code>w</code>). */
+	double tripleProduct(const Vector3D& v, const Vector3D& w) const { return dot(v.cross(w)); }
+
+	/** Rotation vectorielle. Retourne le produit de ce vecteur avec la matrice de rotation
+	 * (d'angle <code>theta</code>, de direction donnée par le vecteur <code>d</code>).
+	 * Source : http://upload.wikimedia.org/math/5/1/f/51f1345467a490f41539fdedf9c4b8da.png */
+	Vector3D rotate(const Vector3D& d,const double& theta) const {
+		return Vector3D(((~d).x*(~d).x+(1-(~d).x*(~d).x)*cos(theta))*x+((~d).x*(~d).y*(1-cos(theta))-(~d).z*sin(theta))*y+((~d).x*(~d).z*(1-sin(theta))+(~d).y*sin(theta))*z,
+						((~d).x*(~d).y*(1-cos(theta))+(~d).z*sin(theta))*x+((~d).y*(~d).y+(1-(~d).y*(~d).y)*cos(theta))*y+((~d).y*(~d).z*(1-sin(theta))-(~d).x*sin(theta))*z,
+						((~d).x*(~d).z*(1-sin(theta))-(~d).y*sin(theta))*x+((~d).y*(~d).z*(1-sin(theta))+(~d).x*sin(theta))*y+((~d).z*(~d).z+(1-(~d).z*(~d).z)*cos(theta))*z);
 	}
 
 	/** Vecteur nul. (0,0,0) */

@@ -12,17 +12,17 @@
 
 namespace vhc {
 
-/** Classes abstraite heritee par tout objet imprimable. */
+/** Classe abstraite héritée par tout objet imprimable. */
 class Printable {
 
 public:
 
-	/** Retourne une representation en chaine de cet objet imprimable. */
+	/** Retourne une représentation en chaîne de caractères de cet objet imprimable. */
 	virtual std::string toString() const = 0;
 
 };
 
-/** Ajoute la representation en chaine de <code>p</code> a <code>output</code>. */
+/** Ajoute la représentation en chaîne de <code>p</code> à <code>output</code>. */
 std::ostream& operator<< (std::ostream& output, const Printable& p);
 
 }

@@ -16,22 +16,22 @@ namespace vhc {
 class Element {
 
 private:
-	/** Empeche la copie d'elements et facilite ainsi la gestion de pointeurs.
-	 *  Pourquoi aurait-on besoin de copier un element? */
+	/** Empêche la copie d'éléments et facilite ainsi la gestion de pointeurs.
+	 *  Pourquoi aurait-on besoin de copier un élément? */
 	Element(const Element& e);
 
 protected:
 
-	/** Position du centre de la face d'entree. */
+	/** Position du centre de la face d'entrée. */
 	Vector3D entryPosition;
 
 	/** Position du centre de la face de sortie. */
 	Vector3D exitPosition;
 
-	/** Rayon de la chambre a vide. */
+	/** Rayon de la chambre à vide. */
 	double radius;
 
-	/** Pointeur sur l'element suivant. */
+	/** Pointeur sur l'élément suivant. */
 	Element *next;
 
 public:
