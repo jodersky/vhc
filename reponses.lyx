@@ -321,76 +321,127 @@ Question P6.1
 \end_layout
 
 \begin_layout Standard
-Pour représenter et oraniser les éléments, nous avons choisi dans ce projet
- de coder les éléments (magnétiques et électriques, droits et courbes) sous
- formes de classes.
+Pour représenter et organiser les 
+\family typewriter
+\size small
+Element
+\family default
+\size default
+s, nous avons choisi dans ce projet de coder les 
+\family typewriter
+\size small
+Element
+\family default
+\size default
+s 
+\family typewriter
+\size small
+[Magnetic (Straight
+\family default
+\size default
+ et 
+\family typewriter
+\size small
+Curved)
+\family default
+\size default
+ et 
+\family typewriter
+\size small
+Electric
+\family default
+\size default
+] sous formes de classes.
  Concrètement, la classe 
 \family typewriter
 \size small
 Element
 \family default
 \size default
- est la classe grand-mère, les quatre classes filles sont les classes
+ est la classe grand-mère, les trois classes filles sont les classes
 \family typewriter
 \size small
- Droit 
-\family default
-\size default
-et 
-\family typewriter
-\size small
-Courbe
+ Straight
 \family default
 \size default
 , 
 \family typewriter
 \size small
-Magnétique
+Curved
 \family default
 \size default
  et 
 \family typewriter
 \size small
-Electrique
+Magnetic
 \family default
 \size default
 .
- La classe 
+ Les trois classes petites-filles sont 
 \family typewriter
 \size small
-Magnétique
+MagneticStraight
+\family default
+\size default
+, 
+\family typewriter
+\size small
+MagneticCurved
+\family default
+\size default
+ et 
+\family typewriter
+\size small
+Electric
+\family default
+\size default
+, où 
+\family typewriter
+\size small
+MagneticStraight
 \family default
 \size default
  hérite à la fois de 
 \family typewriter
 \size small
-Droit
+Magnetic
 \family default
 \size default
  et de 
 \family typewriter
 \size small
-Courbe
+Straight
 \family default
 \size default
-, tandis que 
+, et où 
 \family typewriter
 \size small
-Electrique
+MagneticCurved
 \family default
 \size default
- n'hérite 
-\begin_inset Quotes eld
-\end_inset
-
-que
-\begin_inset Quotes erd
-\end_inset
-
- de 
+ hérite de 
 \family typewriter
 \size small
-Droit
+Magnetic
+\family default
+\size default
+ et de 
+\family typewriter
+\size small
+Curved
+\family default
+\size default
+.
+ 
+\family typewriter
+\size small
+Electric
+\family default
+\size default
+ n'hérite 'que' de 
+\family typewriter
+\size small
+Straight
 \family default
 \size default
 .
@@ -401,41 +452,44 @@ Question P6.2
 \end_layout
 
 \begin_layout Standard
-Les champs magnétiques et électriques sont représentés à l'aide :
-\end_layout
-
-\begin_layout Standard
-- d'un 
+Les champs magnétiques et électriques sont représentés à l'aide d'un 
 \family typewriter
 \size small
 Vector3D
 \family default
 \size default
- indiquant la direction du champ, pour l'instant ne dépendant pas de la
- position de la particule dans l'
+ indiquant la direction et l'intensité du champ, et nous allons nous arranger
+ pour que sa norme soit initialisée une fois pour toutes (pour garder l'intensit
+é de champ constante).
+ Ainsi, à chaque nouvelle manipulation (modification d'orientation) du 
 \family typewriter
 \size small
-Element
+Vector3D
 \family default
 \size default
-,
-\end_layout
-
-\begin_layout Standard
-- d'un 
+ 
 \family typewriter
 \size small
-double
+field
 \family default
 \size default
- indiquant la valeur constante de l'intensité de chaque champ.
+, nous ferons appel à la méthode 
+\family typewriter
+\size small
+rotate
+\family default
+\size default
+.
+ Ce faisant, puisque la rotation est une isométrie, nous pouvons définir
+ n'importe quelle orientation que pourrait prendre le champ, en nous assurant
+ d'avoir une intensité de champ constante.
 \end_layout
 
 \begin_layout Standard
 En effet, en physique on représente les lignes de champ par des lignes parrallèl
 es, continues, et nous disons que le champ a une certaine intensité, qui
  reste la même tout le long des lignes.
- Or en informatique, cela ne nous intéresse pas de représenter ces lignes.
+ Or dans ce projet, cela ne nous intéresse pas de représenter ces lignes.
  Puisque les seules interactions de ces champs avec les particules invoquent
  des vecteurs représentant l'intensité et la direction du champ à l'endroit
  où se trouve la particule par rapport à l'
@@ -450,17 +504,7 @@ Element
 Vector3D
 \family default
 \size default
-, et d'un 
-\family typewriter
-\size small
-double
-\family default
-\size default
- fournissant son intensité.
- Nous avons cependant choisi d'opérer un distinction entre norme et direction,
- en vue d'une éventuelle amélioration du code, où nous n'aurions besoin
- de l'intensité qu'une seule fois pour toutes, et nous aurions le loisir
- de modifier la direction comme bon nous semble.
+.
 \end_layout
 
 \begin_layout Section*
@@ -482,7 +526,7 @@ Vector3D
 \size default
 , puisque tous les points sont naturellement représentés par des vecteurs
  dans 
-\begin_inset Formula $\mathbb{R^{3}}$
+\begin_inset Formula $\mathbb{R}^{3}$
 \end_inset
 
 .
