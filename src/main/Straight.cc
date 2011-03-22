@@ -9,13 +9,6 @@
 
 namespace vhc {
 
-Straight::Straight() {
-	// TODO Auto-generated constructor stub
 
-}
-
-Straight::~Straight() {
-	// TODO Auto-generated destructor stub
-}
 
 }

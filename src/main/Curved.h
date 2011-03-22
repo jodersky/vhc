@@ -9,6 +9,7 @@
 #define CURVED_H_
 
 #include <math.h>
+#include "Element.h"
 #include "Vector3D.h"
 
 namespace vhc {
@@ -22,7 +23,7 @@ protected:
 
 public:
 
-	Curved(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double curvatureRadius, Element* next = NULL);
+	Curved(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double curvatureRadius, Element* next);
 };
 
 }
