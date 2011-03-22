@@ -25,7 +25,7 @@ int main() {
 	//addition test
 	assert(Vector3D(1, -0.9, 57683) + Vector3D(-1, 0.9, -57683) == Vector3D::Null);
 
-	//addition, mutliplication test
+	//addition, multiplication test
 	assert(Vector3D(4, 0, 16) / 4 == -Vector3D(0.25, 0, 1) * -4);
 
 	//length test

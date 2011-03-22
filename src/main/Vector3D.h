@@ -26,8 +26,6 @@ namespace vhc {
  *  champs.
  *  Les méthodes d'un vecteur sont toutes très simples et implémentées dans le header,
  *  afin d'être développées 'inline' durant la compilation, ce qui est plus rapide.
- *  TODO ! définir la matrice de rotation d'un vecteur autour d'un autre vecteur (Faire un typedef?),
- *  		puis une méthode de multiplication matrice-vecteur, ce serait plus joli.
  */
 class Vector3D: public Printable {
 
@@ -59,7 +57,7 @@ public:
 	/** Retourne la composante z de ce vecteur. */
 	double getZ() const {return z;};
 
-	/** Vérifie si ce vecteur et le vecteur <code>v</code> sont éqaux, i.e. qu'ils ont les mêmes composantes. */
+	/** Vérifie si ce vecteur et le vecteur <code>v</code> sont égaux, i.e. qu'ils ont les mêmes composantes. */
 	bool operator== (const Vector3D& v) const {return x == v.x && y == v.y && z == v.z;};
 
 	/** Vérifie si ce vecteur et le vecteur <code>v</code> sont différents, i.e. qu'ils ont des composantes différentes. */
@@ -111,13 +109,10 @@ public:
 	 * 	avec le produit vectoriel de deux vecteurs <code>v</code> et <code>w</code>). */
 	double tripleProduct(const Vector3D& v, const Vector3D& w) const { return dot(v.cross(w)); }
 
-	/** Rotation vectorielle. Retourne le produit de ce vecteur avec la matrice de rotation
-	 * (d'angle <code>theta</code>, de direction donnée par le vecteur <code>d</code>).
-	 * Source : http://upload.wikimedia.org/math/5/1/f/51f1345467a490f41539fdedf9c4b8da.png */
-	Vector3D rotate(const Vector3D& d,const double& theta) const {
-		return Vector3D(((~d).x*(~d).x+(1-(~d).x*(~d).x)*cos(theta))*x+((~d).x*(~d).y*(1-cos(theta))-(~d).z*sin(theta))*y+((~d).x*(~d).z*(1-sin(theta))+(~d).y*sin(theta))*z,
-						((~d).x*(~d).y*(1-cos(theta))+(~d).z*sin(theta))*x+((~d).y*(~d).y+(1-(~d).y*(~d).y)*cos(theta))*y+((~d).y*(~d).z*(1-sin(theta))-(~d).x*sin(theta))*z,
-						((~d).x*(~d).z*(1-sin(theta))-(~d).y*sin(theta))*x+((~d).y*(~d).z*(1-sin(theta))+(~d).x*sin(theta))*y+((~d).z*(~d).z+(1-(~d).z*(~d).z)*cos(theta))*z);
+	/** Rotation vectorielle. Retourne le vecteur courant, évalué dans la formule en <code>a</code>,
+	 * le vecteur de l'axe, et en <code>t</code>, l'angle de rotation. */
+	Vector3D rotate(const Vector3D& a,const double& t) const {
+		return ((cos(t)*this)+((1-cos(t))*((this->dot((~a)))*this))+(sin(t)*((~a).cross(this))));
 	}
 
 	/** Vecteur nul. (0,0,0) */

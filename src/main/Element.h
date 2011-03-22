@@ -34,12 +34,20 @@ protected:
 	/** Pointeur sur l'élément suivant. */
 	Element *next;
 
+	/** Intensité (constante) du champ.
+	 * TODO à améliorer */
+	double fieldIntensity;
+
+	/** Direction du champ magnétique, invariant dans l'espace. */
+	Vector3D fieldDirection;
+
 public:
 	Element();
 	virtual ~Element();
 
 	virtual bool isOutside(const Particle& p) const = 0;
 
+	/* TODO Et si la valeur de retour était un pointeur? */
 	virtual bool isPast(const Particle& p) const = 0;
 
 	Vector3D getEntryPosition() const {return entryPosition;}

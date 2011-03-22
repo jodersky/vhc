@@ -134,6 +134,17 @@ Nous n'avons pas rajouté un constructeur de copie.
 Question P3.2
 \end_layout
 
+\begin_layout Standard
+Lorsque l'on décide d'implémenter le constructeur par défaut (qui crée un
+ vecteur nul) et le constructeur par coordonnés cartésiennes dans une seule
+ et même méthode, il se peut que lorsque l'on crée une nouvelle instance
+ de Vector3D sans l'initialiser (en laissant donc le soin au constructeur
+ par défaut de le faire), on se retrouve avec un vecteur nul à un endroit
+ où il vaudrait mieux ne pas en avoir.
+ Par conséquent, en séparant ces deux méthodes, le programmeur est amené
+ à penser dès l'instanciation à quelle fin il crée son objet.
+\end_layout
+
 \begin_layout Section*
 Question P3.3
 \end_layout
@@ -214,7 +225,7 @@ color{red}{Réponse incohérente! La question conçernant l'énergie me perturbe
 \end_layout
 
 \begin_layout Standard
-Les membres d'une particule representant le facteur gamma
+Les membres d'une particule représentant le facteur gamma
 \begin_inset Formula $\gamma$
 \end_inset
 
@@ -228,7 +239,7 @@ Les membres d'une particule representant le facteur gamma
 \end_layout
 
 \begin_layout Standard
-L'avantage d'un attribut est que son accès est trés rapide et ne prend (presque)
+L'avantage d'un attribut est que son accès est très rapide et ne prend (presque)
  pas de temps de calcul.
  Par contre, si la valeur d'un attribut est relié logiquement à la valeur
  d'un autre attribut et que ce dernier est modifié, il faudra manuellement
@@ -251,7 +262,7 @@ si il est défini comme variable, il faudrait le mettre à jour à chaque fois
 \end_layout
 
 \begin_layout Standard
-Contrairement à un attribut, une méthode est évaluée à chaque fois que l'on
+Contrairement à un attribut, une méthode est évaluée à chaque fois qu'on
  l'appelle.
  Ceci a l'avantage que si le résultat d'une méthode dépend d'une variable,
  la variable pourra être modifiée sans considération de la méthode.
@@ -271,7 +282,7 @@ Dans le cas de notre projet, nous avons décidés d'implémenter l'énergie
 
 \begin_layout Enumerate
 Au cours de la simulation, la vitesse sera changée très fréquemment, beaucoup
- plus que les appelles à gamma.
+ plus que les appels à gamma.
  Une implémentation de gamma sous forme de méthode améliore donc la performance.
 \end_layout
 
@@ -303,6 +314,195 @@ Aux énergies atteintes dans un accélérateur, les particules sont tellement
 .
  On pourrait alors penser à définir la vitesse comme méthode mais d'après
  l'argument 1, ce serait complètement absurde au niveau de la performance.
+\end_layout
+
+\begin_layout Section*
+Question P6.1
+\end_layout
+
+\begin_layout Standard
+Pour représenter et oraniser les éléments, nous avons choisi dans ce projet
+ de coder les éléments (magnétiques et électriques, droits et courbes) sous
+ formes de classes.
+ Concrètement, la classe 
+\family typewriter
+\size small
+Element
+\family default
+\size default
+ est la classe grand-mère, les quatre classes filles sont les classes
+\family typewriter
+\size small
+ Droit 
+\family default
+\size default
+et 
+\family typewriter
+\size small
+Courbe
+\family default
+\size default
+, 
+\family typewriter
+\size small
+Magnétique
+\family default
+\size default
+ et 
+\family typewriter
+\size small
+Electrique
+\family default
+\size default
+.
+ La classe 
+\family typewriter
+\size small
+Magnétique
+\family default
+\size default
+ hérite à la fois de 
+\family typewriter
+\size small
+Droit
+\family default
+\size default
+ et de 
+\family typewriter
+\size small
+Courbe
+\family default
+\size default
+, tandis que 
+\family typewriter
+\size small
+Electrique
+\family default
+\size default
+ n'hérite 
+\begin_inset Quotes eld
+\end_inset
+
+que
+\begin_inset Quotes erd
+\end_inset
+
+ de 
+\family typewriter
+\size small
+Droit
+\family default
+\size default
+.
+\end_layout
+
+\begin_layout Section*
+Question P6.2
+\end_layout
+
+\begin_layout Standard
+Les champs magnétiques et électriques sont représentés à l'aide :
+\end_layout
+
+\begin_layout Standard
+- d'un 
+\family typewriter
+\size small
+Vector3D
+\family default
+\size default
+ indiquant la direction du champ, pour l'instant ne dépendant pas de la
+ position de la particule dans l'
+\family typewriter
+\size small
+Element
+\family default
+\size default
+,
+\end_layout
+
+\begin_layout Standard
+- d'un 
+\family typewriter
+\size small
+double
+\family default
+\size default
+ indiquant la valeur constante de l'intensité de chaque champ.
+\end_layout
+
+\begin_layout Standard
+En effet, en physique on représente les lignes de champ par des lignes parrallèl
+es, continues, et nous disons que le champ a une certaine intensité, qui
+ reste la même tout le long des lignes.
+ Or en informatique, cela ne nous intéresse pas de représenter ces lignes.
+ Puisque les seules interactions de ces champs avec les particules invoquent
+ des vecteurs représentant l'intensité et la direction du champ à l'endroit
+ où se trouve la particule par rapport à l'
+\family typewriter
+\size small
+Element
+\family default
+\size default
+, on n'a besoin que d'un 
+\family typewriter
+\size small
+Vector3D
+\family default
+\size default
+, et d'un 
+\family typewriter
+\size small
+double
+\family default
+\size default
+ fournissant son intensité.
+ Nous avons cependant choisi d'opérer un distinction entre norme et direction,
+ en vue d'une éventuelle amélioration du code, où nous n'aurions besoin
+ de l'intensité qu'une seule fois pour toutes, et nous aurions le loisir
+ de modifier la direction comme bon nous semble.
+\end_layout
+
+\begin_layout Section*
+Question P6.3
+\end_layout
+
+\begin_layout Standard
+Dans la classe 
+\family typewriter
+\size small
+Courbe
+\family default
+\size default
+, nous avons implémenté le centre de courbure sous forme d'un 
+\family typewriter
+\size small
+Vector3D
+\family default
+\size default
+, puisque tous les points sont naturellement représentés par des vecteurs
+ dans 
+\begin_inset Formula $\mathbb{R^{3}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section*
+Question P6.4
+\end_layout
+
+\begin_layout Standard
+Afin qu'une particule soit dans un et un seul à la fois, nous avons décidé
+ de rajouter un pointeur à chaque particule, qui soit responsable de lui
+ indiquer dans quel 
+\family typewriter
+\size small
+Element
+\family default
+\size default
+ elle doit être.
+ Cela pour garantir un effet de traçababilité.
 \end_layout
 
 \end_body
