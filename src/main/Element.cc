@@ -9,13 +9,10 @@
 
 namespace vhc {
 
-//Element::Element() {
+//Element::Element(const Vector3D& entryPosition) {
 	// TODO Auto-generated constructor stub
 
 //}
 
-//Element::~Element() {
-	// TODO Auto-generated destructor stub
-//}
 
 }

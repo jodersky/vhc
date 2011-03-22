@@ -29,26 +29,34 @@ protected:
 	Vector3D exitPosition;
 
 	/** Rayon de la chambre à vide. */
-	double radius;
+	double sectionRadius;
 
 	/** Pointeur sur l'élément suivant. */
 	Element *next;
 
-	/** Intensité (constante) du champ.
-	 * TODO à améliorer */
-	double fieldIntensity;
+	/* Intensité (constante) du champ.
+		 * TODO à améliorer
+		double fieldIntensity;
+		Vector3D magneticField
 
-	/** Direction du champ magnétique, invariant dans l'espace. */
-	Vector3D fieldDirection;
+		/** Direction du champ magnétique, invariant dans l'espace.
+		Vector3D fieldDirection;
+	 */
 
 public:
-	Element();
-	virtual ~Element();
+	Element(const Vector3D& entry, const Vector3D& exit, double sectionRadius, Element* next = NULL):
+		entryPosition(entry),
+		exitPosition(exit),
+		sectionRadius(sectionRadius),
+		next(next)
+	{};
 
 	virtual bool isOutside(const Particle& p) const = 0;
 
 	/* TODO Et si la valeur de retour était un pointeur? */
 	virtual bool isPast(const Particle& p) const = 0;
+
+	Vector3D getDiagonal() const {return exitPosition - entryPosition;}
 
 	Vector3D getEntryPosition() const {return entryPosition;}
 	void setEntryPosition(const Vector3D& newPos) {entryPosition = newPos;}
@@ -56,8 +64,8 @@ public:
 	Vector3D getExitPosition() const {return exitPosition;}
 	void setExitPosition(const Vector3D& newPos) {exitPosition = newPos;}
 
-	double getRadius() const {return radius;}
-	void setRadius(double r) {radius = r;}
+	double getSectionRadius() const {return sectionRadius;}
+	void setSectionRadius(double r) {sectionRadius = r;}
 
 	Element* getNext() const {return next;}
 
