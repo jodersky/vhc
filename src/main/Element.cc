@@ -9,13 +9,13 @@
 
 namespace vhc {
 
-Element::Element(): entryPosition(0,0,0), exitPosition(0,0,0), radius(0), next(0) {
+//Element::Element() {
 	// TODO Auto-generated constructor stub
 
-}
+//}
 
-Element::~Element() {
+//Element::~Element() {
 	// TODO Auto-generated destructor stub
-}
+//}
 
 }

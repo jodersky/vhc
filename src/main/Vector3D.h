@@ -89,14 +89,14 @@ public:
 
 	/** Vecteur unitaire de ce vecteur. */
 	Vector3D operator~() const {
-		if (getNorm() != 0.0) return (*this) / getNorm();
+		if (norm() != 0.0) return (*this) / norm();
 		else throw std::domain_error("Zero vector does not have a unit vector.");
 	};
 	/** Retourne le vecteur unitaire */
-	Vector3D getUnit() const {return ~(*this);}
+	Vector3D unit() const {return ~(*this);}
 
 	/** Retourne la norme du vecteur. */
-	double getNorm() const {return sqrt(dot(*this));};
+	double norm() const {return sqrt(dot(*this));};
 
 	/** Retourne une représentation en chaîne de caractères de ce vecteur. */
 	std::string toString() const {
@@ -111,8 +111,13 @@ public:
 
 	/** Rotation vectorielle. Retourne le vecteur courant, évalué dans la formule en <code>a</code>,
 	 * le vecteur de l'axe, et en <code>t</code>, l'angle de rotation. */
-	Vector3D rotate(const Vector3D& a,const double& t) const {
-		return ((cos(t)*this)+((1-cos(t))*((this->dot((~a)))*this))+(sin(t)*((~a).cross(this))));
+	Vector3D rotate(const Vector3D& axis,const double& t) const {
+		const Vector3D& x = *this;
+		const Vector3D& a = ~axis;
+
+		//cos(t) x + ( 1-cos(t) ) (x*a) a + sin(t) a ^ x
+
+		return x * cos(t) + a * x.dot(a) * (1-cos(t)) +  a.cross(x) * sin(t);
 	}
 
 	/** Vecteur nul. (0,0,0) */

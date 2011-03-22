@@ -57,7 +57,7 @@ public:
 		mass(mass),
 		charge(charge) {
 
-		velocity = constants::c * sqrt(1 - (mass * mass) / (energy * energy));
+		velocity = constants::c * sqrt(1 - (mass * mass) / (energy * energy)) * direction;
 	};
 
 
