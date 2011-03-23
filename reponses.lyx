@@ -512,24 +512,104 @@ Question P6.3
 \end_layout
 
 \begin_layout Standard
-Dans la classe 
+Nous représentons le centre de courbure 
 \family typewriter
 \size small
-Courbe
+centerOfCurvature
 \family default
 \size default
-, nous avons implémenté le centre de courbure sous forme d'un 
+ à l'aide d'un 
 \family typewriter
 \size small
 Vector3D
 \family default
 \size default
-, puisque tous les points sont naturellement représentés par des vecteurs
+ que l'on instancie indirectement en fournissant la courbure 
+\family typewriter
+\size small
+k
+\family default
+\size default
+ à une fonction statique, qui nous renvoie 
+\series bold
+la
+\series default
+ position du centre de courbure (cf.
+ constructeur de 
+\family typewriter
+\size small
+curved
+\family default
+\size default
  dans 
-\begin_inset Formula $\mathbb{R}^{3}$
+\family typewriter
+\size small
+Curved.cc
+\family default
+\size default
+).
+\end_layout
+
+\begin_layout Standard
+En effet, le centre de courbure d'une courbe est défini d'une manière unique
+ si nous avons :
+\end_layout
+
+\begin_layout Standard
+- une position d'entrée 
+\family typewriter
+\size small
+entry
+\family default
+\size default
+;
+\end_layout
+
+\begin_layout Standard
+- une position de sortie 
+\family typewriter
+\size small
+exit
+\family default
+\size default
+;
+\end_layout
+
+\begin_layout Standard
+- une courbure
+\family typewriter
+\size small
+ k
+\family default
+\size default
+ (donc un rayon de courbure 
+\family typewriter
+\size small
+curvatureRadius
+\family default
+\size default
+ ) avec son signe !;
+\end_layout
+
+\begin_layout Standard
+- une convention à l'aide de laquelle nous savons, en fonction du signe
+ du rayon, de quel côté de l'Element la courbe se courbe.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Les éléments courbes auront de plus une courbure k, constante (l’inverse
+ du rayon de courbure), dont le signe indique le sens de courbure par rapport
+ à l’orientation donnée par l’opposé de l’axe vertical (noté -
+\begin_inset Formula $\overrightarrow{\textrm{e}{}^{3}}$
 \end_inset
 
-.
+) .
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
@@ -537,16 +617,47 @@ Question P6.4
 \end_layout
 
 \begin_layout Standard
-Afin qu'une particule soit dans un et un seul à la fois, nous avons décidé
- de rajouter un pointeur à chaque particule, qui soit responsable de lui
- indiquer dans quel 
+Afin qu'une particule soit dans un et un seul 
 \family typewriter
 \size small
 Element
 \family default
 \size default
- elle doit être.
- Cela pour garantir un effet de traçababilité.
+ à la fois, nous avons décidé de rajouter un attribut privé (un pointeur)
+ à chaque particule, qui soit responsable de lui indiquer dans quel 
+\family typewriter
+\size small
+Element
+\family default
+\size default
+ elle se trouve.
+ Elle ne peut se retrouver dans deux 
+\family typewriter
+\size small
+Element
+\family default
+\size default
+s.
+ C'est un moyen simple de coller une étiquette 'Où je suis ?' sur une particule,
+ et on pourra facilement vérifier qu'à chaque évolution du système, notre
+ particule ne soit que dans un et un seul 
+\family typewriter
+\size small
+Element
+\family default
+\size default
+ à la fois.
+ Cela modifie la classe 
+\family typewriter
+\size small
+Particule
+\family default
+\size default
+.
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \end_body
