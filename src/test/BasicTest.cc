@@ -14,7 +14,8 @@ using namespace vhc;
 
 int main() {
 
-	Straight(Vector3D(0,0,0), Vector3D(1,2,0), 0.2);
+	//Straight(Vector3D(0,0,0), Vector3D(1,2,0), 0.2);
+
 	Curved(Vector3D(0,0,0), Vector3D(1,2,0), 2, 0.2);
 
 	return 0;

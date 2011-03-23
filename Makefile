@@ -59,7 +59,7 @@ $(BINDIR):
 	@mkdir -p $@
 
 clean:
-	@rm -rf $(BINDIR)
+	rm -rf $(BINDIR)
 
 # Lance les tests
 test: test-build

@@ -14,7 +14,7 @@
 
 namespace vhc {
 
-//TODO everything
+
 class Straight: public Element {
 
 public:
@@ -25,13 +25,13 @@ public:
 
 	//TODO ! why can't you access protected variables, i.e. entryPosition won't work?!
 	virtual bool isOutside(const Particle& particle) const {
-		Vector3D a(particle.getPosition() - getEntryPosition());
-		const Vector3D b = (particle.getPosition() - getEntryPosition());
+		Vector3D a(particle.getPosition() - entryPosition);
+		const Vector3D b = (particle.getPosition() - entryPosition);
 		return (a.cross(b)).norm() / getDiagonal().norm() > sectionRadius;
 	};
 
 	virtual bool isPast(const Particle& particle) const {
-		const Vector3D v(particle.getPosition() - getEntryPosition());
+		const Vector3D v(particle.getPosition() - entryPosition);
 		return getDiagonal().dot(v) > getDiagonal().dot(getDiagonal());
 	}
 
