@@ -92,7 +92,7 @@ public:
 	double getGamma() const {return energy / (mass * constants::c2);}
 
 	/** Retourne une représentation en chaîne de cette particule. */
-	std::string toString() const {
+	virtual std::string toString() const {
 		std::stringstream s;
 		s << "Particle:"	<< "\n";
 		s << "\tPosition: "	<< position	<< "\n";

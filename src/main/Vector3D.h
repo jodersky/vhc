@@ -96,10 +96,13 @@ public:
 	Vector3D unit() const {return ~(*this);}
 
 	/** Retourne la norme du vecteur. */
-	double norm() const {return sqrt(dot(*this));};
+	double norm() const {return sqrt(dot(*this));}
+
+	/** Retourne la norme du vecteur au carre. */
+	double normSquare() const {return dot(*this);}
 
 	/** Retourne une représentation en chaîne de caractères de ce vecteur. */
-	std::string toString() const {
+	virtual std::string toString() const {
 		std::stringstream s;
 		s << "Vector3D(" << x << ", " << y << ", " << z << ")";
 		return s.str();
