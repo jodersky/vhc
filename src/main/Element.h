@@ -17,6 +17,7 @@ namespace vhc {
 class Element {
 
 private:
+
 	/** Empêche la copie d'éléments et facilite ainsi la gestion de pointeurs.
 	 *  Pourquoi aurait-on besoin de copier un élément? */
 	Element(const Element& e);
@@ -85,7 +86,7 @@ public:
 
 	/** Assigne un pointeur sur l'element suivant. */
 	//TODO use pointer?
-	void setNext(Element& n) {next = &n;}
+	void setNext(Element* n) {next = n;}
 
 };
 

@@ -336,13 +336,13 @@ Element
 s 
 \family typewriter
 \size small
-[Magnetic (Straight
+[Magnetic (StraightElement
 \family default
 \size default
  et 
 \family typewriter
 \size small
-Curved)
+CurvedElement)
 \family default
 \size default
  et 
@@ -361,13 +361,13 @@ Element
  est la classe grand-mère, les trois classes filles sont les classes
 \family typewriter
 \size small
- Straight
+ StraightElement
 \family default
 \size default
 , 
 \family typewriter
 \size small
-Curved
+CurvedElement
 \family default
 \size default
  et 
@@ -380,13 +380,13 @@ Magnetic
  Les trois classes petites-filles sont 
 \family typewriter
 \size small
-MagneticStraight
+MagneticStraightElement
 \family default
 \size default
 , 
 \family typewriter
 \size small
-MagneticCurved
+MagneticCurvedElement
 \family default
 \size default
  et 
@@ -398,7 +398,7 @@ Electric
 , où 
 \family typewriter
 \size small
-MagneticStraight
+MagneticStraightElement
 \family default
 \size default
  hérite à la fois de 
@@ -410,13 +410,13 @@ Magnetic
  et de 
 \family typewriter
 \size small
-Straight
+StraightElement
 \family default
 \size default
 , et où 
 \family typewriter
 \size small
-MagneticCurved
+MagneticCurvedElement
 \family default
 \size default
  hérite de 
@@ -428,7 +428,7 @@ Magnetic
  et de 
 \family typewriter
 \size small
-Curved
+CurvedElement
 \family default
 \size default
 .
@@ -441,7 +441,7 @@ Electric
  n'hérite 'que' de 
 \family typewriter
 \size small
-Straight
+StraightElement
 \family default
 \size default
 .
@@ -544,7 +544,7 @@ curved
  dans 
 \family typewriter
 \size small
-Curved.cc
+CurvedElement.cc
 \family default
 \size default
 ).

@@ -1,12 +1,12 @@
 /*
- * Straight.h
+ * StraightElement.h
  *
  *  Created on: Mar 22, 2011
  *      Author: jakob
  */
 
-#ifndef STRAIGHT_H_
-#define STRAIGHT_H_
+#ifndef STRAIGHTELEMENT_H_
+#define STRAIGHTELEMENT_H_
 
 #include "Vector3D.h"
 #include "Element.h"
@@ -15,11 +15,11 @@
 namespace vhc {
 
 
-class Straight: public Element {
+class StraightElement: public Element {
 
 public:
 
-	Straight(const Vector3D& entry, const Vector3D& exit, double sectionRadius, Element* next = NULL):
+	StraightElement(const Vector3D& entry, const Vector3D& exit, double sectionRadius, Element* next = NULL):
 		Element(entry, exit, sectionRadius, next)
 	{};
 
@@ -39,4 +39,4 @@ public:
 
 }
 
-#endif /* STRAIGHT_H_ */
+#endif /* STRAIGHTELEMENT_H_ */

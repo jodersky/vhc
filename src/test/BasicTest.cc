@@ -6,17 +6,17 @@
  */
 
 #include "Element.h"
-#include "Curved.h"
-#include "Straight.h"
+#include "CurvedElement.h"
+#include "StraightElement.h"
 #include "Vector3D.h"
 
 using namespace vhc;
 
 int main() {
 
-	//Straight(Vector3D(0,0,0), Vector3D(1,2,0), 0.2);
+	//StraightElement(Vector3D(0,0,0), Vector3D(1,2,0), 0.2);
 
-	Curved(Vector3D(0,0,0), Vector3D(1,2,0), 2, 0.2);
+	CurvedElement(Vector3D(0,0,0), Vector3D(1,2,0), 2, 0.2);
 
 	return 0;
 }

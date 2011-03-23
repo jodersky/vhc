@@ -1,12 +1,12 @@
 /*
- * Curved.h
+ * CurvedElement.h
  *
  *  Created on: Mar 22, 2011
  *      Author: jakob
  */
 
-#ifndef CURVED_H_
-#define CURVED_H_
+#ifndef CURVEDELEMENT_H_
+#define CURVEDELEMENT_H_
 
 #include <math.h>
 //#include <cmath.h>
@@ -17,7 +17,7 @@
 namespace vhc {
 
 //TODO implement abstract methods of Element
-class Curved: public Element {
+class CurvedElement: public Element {
 
 protected:
 
@@ -26,7 +26,7 @@ protected:
 
 public:
 
-	Curved(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double curvature, Element* next = NULL);
+	CurvedElement(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double curvature, Element* next = NULL);
 
 	virtual bool isOutside(const Particle& particle) const {
 		Vector3D x(particle.getPosition() - entryPosition);
@@ -42,4 +42,4 @@ public:
 
 }
 
-#endif /* CURVED_H_ */
+#endif /* CURVEDELEMENT_H_ */
