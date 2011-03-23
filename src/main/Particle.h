@@ -17,7 +17,8 @@
 namespace vhc {
 
 /** Classe représentant une particule.
- * TODO poser question sur l'energie, gamma, qdm*/
+ * TODO poser question sur l'energie, gamma, qdm
+ * TODO rajouter un pointeur sur l'element dans lequel la particule se trouve*/
 class Particle: public Printable {
 
 private:
