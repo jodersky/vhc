@@ -9,14 +9,12 @@
 #define CURVEDELEMENT_H_
 
 #include <math.h>
-//#include <cmath.h>
 #include "Element.h"
 #include "Particle.h"
 #include "Vector3D.h"
 
 namespace vhc {
 
-//TODO implement abstract methods of Element
 class CurvedElement: public Element {
 
 protected:
@@ -27,6 +25,8 @@ protected:
 public:
 
 	CurvedElement(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double curvature, Element* next = NULL);
+
+	virtual CurvedElement* copy() const {return new CurvedElement(*this);}
 
 	virtual bool isOutside(const Particle& particle) const {
 		Vector3D x(particle.getPosition() - entryPosition);

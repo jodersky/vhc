@@ -23,7 +23,8 @@ public:
 		Element(entry, exit, sectionRadius, next)
 	{};
 
-	//TODO ! why can't you access protected variables, i.e. entryPosition won't work?!
+	virtual StraightElement* copy() const {return new StraightElement(*this);}
+
 	virtual bool isOutside(const Particle& particle) const {
 		Vector3D a(particle.getPosition() - entryPosition);
 		const Vector3D b = (particle.getPosition() - entryPosition);

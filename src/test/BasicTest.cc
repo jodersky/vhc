@@ -16,7 +16,7 @@ int main() {
 
 	//StraightElement(Vector3D(0,0,0), Vector3D(1,2,0), 0.2);
 
-	CurvedElement(Vector3D(0,0,0), Vector3D(1,2,0), 2, 0.2);
+	//CurvedElement(Vector3D(0,0,0), Vector3D(1,2,0), 2, 0.2);
 
 	return 0;
 }

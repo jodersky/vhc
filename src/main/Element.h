@@ -18,9 +18,9 @@ class Element {
 
 private:
 
-	/** Empêche la copie d'éléments et facilite ainsi la gestion de pointeurs.
-	 *  Pourquoi aurait-on besoin de copier un élément? */
-	Element(const Element& e);
+	/** Empêche la copie d'éléments par le constructeur de copie.
+	 *  Si on veut explicitement copier un element utiliser <code>copy()</code>.*/
+	//Element(const Element& e);
 
 protected:
 
@@ -53,6 +53,10 @@ public:
 		exitPosition(exit),
 		sectionRadius(sectionRadius),
 		next(next) {};
+
+	/** Copie l'element sur le heap et renvoye un pointeur sur la copie.
+	 *  ATTENTION: La delocation de memoire est sous la responsabilite de l'appelant. */
+	virtual Element* copy() const = 0;
 
 	virtual bool isOutside(const Particle& particle) const = 0;
 
