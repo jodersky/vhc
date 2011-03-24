@@ -656,6 +656,23 @@ Particule
 .
 \end_layout
 
+\begin_layout Section*
+Question P8.1
+\end_layout
+
+\begin_layout Standard
+La méthode `heurte_bord' (`isOutside' dans notre cas), est une methode virtuelle
+ pure.
+\end_layout
+
+\begin_layout Section*
+Question P8.2
+\end_layout
+
+\begin_layout Standard
+Cela implique que la classe `Element' est abstraite.
+\end_layout
+
 \begin_layout Standard
 
 \end_layout
