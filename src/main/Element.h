@@ -8,13 +8,16 @@
 #ifndef ELEMENT_H_
 #define ELEMENT_H_
 
+#include <string>
+#include <sstream>
 #include "Vector3D.h"
 #include "Particle.h"
+#include "Printable.h"
 
 namespace vhc {
 
 /** Classe abstraite representant un element d'un accelerateur. */
-class Element {
+class Element: public Printable {
 
 private:
 
@@ -38,7 +41,7 @@ protected:
 	Element *next;
 
 	/* Intensité (constante) du champ.
-		 * TODO à améliorer
+		 *  à améliorer
 		double fieldIntensity;
 		Vector3D magneticField
 
@@ -48,6 +51,11 @@ protected:
 
 public:
 
+	/** Constructeur d'elements.
+	 *  @param entry position de la face d'entree
+	 *  @param exit position de face de sortie
+	 *  @param sectionRadius rayon de section de la chambre a vide
+	 *  @param next pointeur sur l'element suivant */
 	Element(const Vector3D& entry, const Vector3D& exit, double sectionRadius, Element* next = NULL):
 		entryPosition(entry),
 		exitPosition(exit),
@@ -58,8 +66,10 @@ public:
 	 *  ATTENTION: La delocation de memoire est sous la responsabilite de l'appelant. */
 	virtual Element* copy() const = 0;
 
+	/** Determine si la particule donnee a heurte le bord de cet element. */
 	virtual bool isOutside(const Particle& particle) const = 0;
 
+	/** Determine si la particule donnee a passe cet element. */
 	/* TODO Et si la valeur de retour était un pointeur? */
 	virtual bool isPast(const Particle& particle) const = 0;
 
@@ -71,13 +81,13 @@ public:
 	Vector3D getEntryPosition() const {return entryPosition;}
 
 	/** Assigne la position d'entree. */
-	void setEntryPosition(const Vector3D& newPos) {entryPosition = newPos;}
+	//void setEntryPosition(const Vector3D& newPos) {entryPosition = newPos;}
 
 	/** Retourne la position de sortie. */
 	Vector3D getExitPosition() const {return exitPosition;}
 
 	/** Assigne la position de sortie. */
-	void setExitPosition(const Vector3D& newPos) {exitPosition = newPos;}
+	//void setExitPosition(const Vector3D& newPos) {exitPosition = newPos;}
 
 	/** Retourne le rayon de la section de cet element. */
 	double getSectionRadius() const {return sectionRadius;}
@@ -89,8 +99,20 @@ public:
 	Element* getNext() const {return next;}
 
 	/** Assigne un pointeur sur l'element suivant. */
-	//TODO use pointer?
 	void setNext(Element* n) {next = n;}
+
+	bool isConnected() const {return next != NULL;}
+
+	virtual std::string getType() const {return "Element";}
+	virtual std::string toString() const {
+		std::stringstream s;
+		s << getType() << ":\n";
+		s << "\tentry: " << getEntryPosition()	<<	"\n";
+		s << "\texit: " << getExitPosition()	<<	"\n";
+		s << "\tsection radius: " << getSectionRadius()	<<	"\n";
+		s << "\tconnected: " << (isConnected() ? "true" : "false");
+		return s.str();
+	}
 
 };
 

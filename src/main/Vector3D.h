@@ -103,7 +103,7 @@ public:
 	/** Retourne une représentation en chaîne de caractères de ce vecteur. */
 	virtual std::string toString() const {
 		std::stringstream s;
-		s << "Vector3D(" << x << ", " << y << ", " << z << ")";
+		s << "(" << x << ", " << y << ", " << z << ")";
 		return s.str();
 	};
 

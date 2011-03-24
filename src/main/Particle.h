@@ -95,11 +95,11 @@ public:
 	virtual std::string toString() const {
 		std::stringstream s;
 		s << "Particle:"	<< "\n";
-		s << "\tPosition: "	<< position	<< "\n";
-		s << "\tVelocity: "	<< velocity	<< "\n";
-		s << "\tMass: "		<< mass		<< "\n";
-		s << "\tCharge: "	<< charge	<< "\n";
-		s << "\tForce: "	<< force	<< "\n";
+		s << "\tposition: "	<< position	<< "\n";
+		s << "\tvelocity: "	<< velocity	<< "\n";
+		s << "\tmass:     "	<< mass		<< "\n";
+		s << "\tcharge:   "	<< charge	<< "\n";
+		s << "\tforce:    "	<< force	<< "\n";
 		return s.str();
 	}
 

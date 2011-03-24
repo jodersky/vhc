@@ -36,6 +36,13 @@ public:
 		return getDiagonal().dot(v) > getDiagonal().dot(getDiagonal());
 	}
 
+	virtual std::string getType() const {return "Straight Element";}
+	virtual std::string toString() const {
+		std::stringstream s;
+		s << Element::toString();
+		return s.str();
+	}
+
 };
 
 }
