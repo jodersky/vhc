@@ -8,10 +8,9 @@
 #ifndef VECTOR3D_H_
 #define VECTOR3D_H_
 
-#include <iostream>
 #include <sstream>
 #include <math.h>
-#include <stdexcept>
+#include "exceptions.h"
 #include "Printable.h"
 
 namespace vhc {
@@ -90,7 +89,7 @@ public:
 	/** Vecteur unitaire de ce vecteur. */
 	Vector3D operator~() const {
 		if (norm() != 0.0) return (*this) / norm();
-		else throw std::domain_error("Zero vector does not have a unit vector.");
+		else throw UnsupportedOperationException("Zero vector does not have a unit vector.");
 	};
 	/** Retourne le vecteur unitaire */
 	Vector3D unit() const {return ~(*this);}

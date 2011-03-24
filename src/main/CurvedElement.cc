@@ -7,6 +7,7 @@
 
 #include <assert.h>
 #include <math.h>
+#include "exceptions.h"
 #include "CurvedElement.h"
 
 namespace vhc {
@@ -23,7 +24,7 @@ CurvedElement::CurvedElement(const Vector3D& entry, const Vector3D& exit, double
 
 		//pas possible que le rayon de courbure soit plus petit la moitie
 		//de la distance entre les points d'entree et de sortie
-		assert(1.0 / k >= (exit - entry).norm() / 2);
+		if (1.0 / k < (exit - entry).norm() / 2) throw IllegalArgumentException("Invalid curvature radius.");
 
 		Vector3D midpoint = (getEntryPosition() + getExitPosition())/ 2;
 		curvatureCenter = midpoint + sqrt(1.0 - (k * k) / 4 * getDiagonal().normSquare()) * (getDiagonal().unit().cross(Vector3D::k));

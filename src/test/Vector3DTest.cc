@@ -9,6 +9,7 @@
 #include <assert.h>
 #include <iomanip>
 #include <limits>
+#include "exceptions.h"
 #include "Vector3D.h"
 
 using namespace std;
@@ -34,7 +35,7 @@ int main() {
 	bool caught = false;
 	try {
 		~Vector3D::Null;
-	} catch (domain_error& ex) {
+	} catch (UnsupportedOperationException& ex) {
 		caught = true;
 	};
 	assert(caught == true);
