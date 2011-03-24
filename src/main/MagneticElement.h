@@ -19,7 +19,9 @@ public:
 
 	virtual ~MagneticElement();
 
-	virtual Vector3D magneticField(const Vector3D& position) = 0;
+	virtual Vector3D magneticField(const Vector3D& position) const = 0;
+
+	virtual std::string getType() const {return "Magnetic Element";}
 };
 
 }

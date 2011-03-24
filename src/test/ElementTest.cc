@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <assert.h>
 #include "Element.h"
 #include "CurvedElement.h"
 #include "StraightElement.h"
@@ -26,11 +27,13 @@ int main() {
 	delete c; c = NULL;
 
 	//test d'initialisation illegale
+	bool caught = false;
 	try {
-	CurvedElement(Vector3D(0,0,0), Vector3D(1,0,0), 0.2, 1.0 / 0.4);
+		CurvedElement(Vector3D(0,0,0), Vector3D(1,0,0), 0.2, 1.0 / 0.4);
 	} catch (Exception& e) {
-		cerr << e.toString() << endl;
+		caught = true;
 	};
+	assert(caught);
 
 
 	return 0;

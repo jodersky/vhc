@@ -70,7 +70,6 @@ public:
 	virtual bool isOutside(const Particle& particle) const = 0;
 
 	/** Determine si la particule donnee a passe cet element. */
-	/* TODO Et si la valeur de retour était un pointeur? */
 	virtual bool isPast(const Particle& particle) const = 0;
 
 	/** Retourne la diagonale, c'est-a-dire le vecteur de la position d'entree
