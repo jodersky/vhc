@@ -17,11 +17,9 @@ class ElectricElement: public Element {
 
 public:
 
-	ElectricElement();
-
 	virtual ~ElectricElement();
 
-	Vector3D electricField(const Vector3D& position) const = 0;
+	virtual Vector3D electricField(const Vector3D& position) const = 0;
 
 	virtual std::string getType() const {return "Electric Element";}
 

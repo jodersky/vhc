@@ -9,13 +9,6 @@
 
 namespace vhc {
 
-ElectricElement::ElectricElement() {
-	// TODO Auto-generated constructor stub
 
-}
-
-ElectricElement::~ElectricElement() {
-	// TODO Auto-generated destructor stub
-}
 
 }
