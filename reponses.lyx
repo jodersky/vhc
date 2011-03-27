@@ -657,16 +657,86 @@ Particule
 \end_layout
 
 \begin_layout Section*
+Question P7.1
+\end_layout
+
+\begin_layout Section*
+Question P7.2
+\end_layout
+
+\begin_layout Section*
+Question P8.1
+\end_layout
+
+\begin_layout Section*
 Question P8.1
 \end_layout
 
 \begin_layout Standard
-La méthode `heurte_bord' (`isOutside' dans notre cas), est une methode virtuelle
- pure.
+En termes de POO, cela signifie que la méthode 
+\family typewriter
+\size small
+isOutside
+\family default
+\size default
+ est virtuelle (même virtuelle pure à l'intérieur de la classe 
+\family typewriter
+\size small
+Element
+\family default
+\size default
+).
 \end_layout
 
 \begin_layout Section*
 Question P8.2
+\end_layout
+
+\begin_layout Standard
+Cela implique donc que la classe 
+\family typewriter
+\size small
+Element
+\family default
+\size default
+ est 
+\shape italic
+abstraite
+\shape default
+.
+\end_layout
+
+\begin_layout Section*
+Question P8.3
+\end_layout
+
+\begin_layout Standard
+La méthode 
+\family typewriter
+\size small
+Printable
+\family default
+\size default
+ est elle aussi 
+\shape italic
+abstraite
+\shape default
+, on y a implément une méthode générique 
+\family typewriter
+\size small
+toString
+\family default
+\size default
+.
+ Cette méthode est 
+\shape italic
+virtuelle pure
+\shape default
+.
+\end_layout
+
+\begin_layout Section*
+Question P9.1
 \end_layout
 
 \begin_layout Standard

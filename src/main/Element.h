@@ -16,7 +16,8 @@
 
 namespace vhc {
 
-/** Classe abstraite representant un element d'un accelerateur. */
+// TODO destructeur virtuel!!!
+/** Classe abstraite représentant un élément d'un accelerateur. */
 class Element: public Printable {
 
 private:
@@ -67,6 +68,7 @@ public:
 	virtual Element* copy() const = 0;
 
 	/** Determine si la particule donnee a heurte le bord de cet element. */
+
 	virtual bool isOutside(const Particle& particle) const = 0;
 
 	/** Determine si la particule donnee a passe cet element. */
@@ -97,8 +99,11 @@ public:
 	/** Retourne un pointeur l'element suivant. NULL s'il n'existe pas. */
 	Element* getNext() const {return next;}
 
-	/** Assigne un pointeur sur l'element suivant. */
+	/** Assigne un pointeur sur l'élément suivant. */
 	void setNext(Element* n) {next = n;}
+
+	/** Retourne une représentation en chaîne de caractères de cet élément. */
+	virtual std::string toString() const = 0;
 
 	bool isConnected() const {return next != NULL;}
 
