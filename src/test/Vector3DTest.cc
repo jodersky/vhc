@@ -34,7 +34,7 @@ int main() {
 
 	bool caught = false;
 	try {
-		~Vector3D::Null;
+		Vector3D n = ~Vector3D::Null;
 	} catch (UnsupportedOperationException& ex) {
 		caught = true;
 	};

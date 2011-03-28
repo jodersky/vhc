@@ -15,12 +15,10 @@
 
 namespace vhc {
 
-
 /** Represente un element courbe. En plus de posseder les proprietes generales d'un element,
  *  un element courbe a de plus une courbure et un centre de courbure.
  *  ==> TODO ajouter explication de la courbure
  *  Le centre de courbure est calcule avec la courbure et les positions des faces d'entree et de sortie d'un element. */
-
 class CurvedElement: public Element {
 
 protected:
@@ -33,8 +31,6 @@ protected:
 
 public:
 
-
-	/** Constructeur d'un élément courbe. */
 	/** Constructeur d'elements courbes.
 	 *  @param entry position de la face d'entree
 	 *  @param exit position de face de sortie
@@ -43,22 +39,19 @@ public:
 	 *  @param next pointeur sur l'element suivant */
 	CurvedElement(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double curvature, Element* next = NULL);
 
-	/** Retourne un booléen indiquant la présence à l'intérieur de l'élément de la particule. */
-	virtual CurvedElement* copy() const {return new CurvedElement(*this);}
+
+	virtual ~CurvedElement() {};
+	//virtual CurvedElement* copy() const {return new CurvedElement(*this);}
 
 	virtual bool isOutside(const Particle& particle) const {
 		Vector3D x(particle.getPosition() - entryPosition);
 		return (x - Vector3D(x.getX(), x.getY(), 0).unit() / fabs(curvature)).norm() > sectionRadius;
 	}
 
-	/** Retourne un booléen indiquant le passage au prochain élément de la particule. */
 	virtual bool isPast(const Particle& particle) const {
 		Vector3D out = (entryPosition - curvatureCenter).cross(exitPosition - curvatureCenter).cross(entryPosition - curvatureCenter);
 		return (particle.getPosition() - exitPosition).dot(out) > 0;
 	}
-
-	/** Retourne une chaîne de caractères de cet élément courbe. */
-	virtual std::string toString () const;
 
 	double getCurvature() const {return curvature;}
 

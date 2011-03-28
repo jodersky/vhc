@@ -9,7 +9,7 @@
 
 
 # Choix du compilateur
-CXX = g++
+export CXX = g++
 
 # Repertoire de base
 export BASEDIR = $(abspath .)
@@ -23,11 +23,14 @@ export BINDIR = $(BASEDIR)/bin
 # Partie commentée : choisissez les options que vous voulez avoir
 #                    en décommentant la/les lignes correspondantes
 #
+# CXXFLAGS += -Wall
 # CXXFLAGS += -ansi -pedantic -Wall   # pour les purs et durs
 # CXXFLAGS += -g                      # pour debugger
 # CXXFLAGS += -pg                     # pour profiler
 # LDFLAGS  += -pg                     # pour profiler
 # CXXFLAGS += -O2                     # pour optimiser la vitesse
+
+export CXXFLAGS
 
 .PHONY: all checkdirs build test-build doc test clean
 

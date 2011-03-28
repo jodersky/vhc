@@ -16,8 +16,7 @@
 
 namespace vhc {
 
-// TODO destructeur virtuel!!!
-/** Classe abstraite représentant un élément d'un accelerateur. */
+/** Classe abstraite representant un element d'un accelerateur. */
 class Element: public Printable {
 
 private:
@@ -46,7 +45,7 @@ protected:
 		double fieldIntensity;
 		Vector3D magneticField
 
-		/** Direction du champ magnétique, invariant dans l'espace.
+		* Direction du champ magnétique, invariant dans l'espace.
 		Vector3D fieldDirection;
 	 */
 
@@ -63,16 +62,27 @@ public:
 		sectionRadius(sectionRadius),
 		next(next) {};
 
+	virtual ~Element() {};
+
 	/** Copie l'element sur le heap et renvoye un pointeur sur la copie.
 	 *  ATTENTION: La delocation de memoire est sous la responsabilite de l'appelant. */
-	virtual Element* copy() const = 0;
+	//virtual Element* copy() const = 0;
 
 	/** Determine si la particule donnee a heurte le bord de cet element. */
-
 	virtual bool isOutside(const Particle& particle) const = 0;
 
 	/** Determine si la particule donnee a passe cet element. */
 	virtual bool isPast(const Particle& particle) const = 0;
+
+	/** Retourne le champ magnetique, a l'interieur de cet element a la position donnee. */
+	virtual Vector3D magneticFieldAt(const Vector3D& position) const {
+		return Vector3D::Null;
+	}
+
+	/** Retourne le champ electrique, a l'interieur de cet element a la position donnee. */
+	virtual Vector3D electricFieldAt(const Vector3D& position) const {
+		return Vector3D::Null;
+	}
 
 	/** Retourne la diagonale, c'est-a-dire le vecteur de la position d'entree
 	 *  a la position de sortie. */
@@ -99,15 +109,17 @@ public:
 	/** Retourne un pointeur l'element suivant. NULL s'il n'existe pas. */
 	Element* getNext() const {return next;}
 
-	/** Assigne un pointeur sur l'élément suivant. */
+	/** Assigne un pointeur sur l'element suivant. */
 	void setNext(Element* n) {next = n;}
 
-	/** Retourne une représentation en chaîne de caractères de cet élément. */
-	virtual std::string toString() const = 0;
-
+	/** Retourne vrai si cet element est connecte a un element suivant, faux sinon. */
 	bool isConnected() const {return next != NULL;}
 
+	/** Retourne une representation en chaine du type de cet element, i.e. du nom de la classe.
+	 *  Cette methode est utilisee principalement pour changer le comportement de <code>toString()</code>
+	 *  dans des implementations concretes. */
 	virtual std::string getType() const {return "Element";}
+
 	virtual std::string toString() const {
 		std::stringstream s;
 		s << getType() << ":\n";
