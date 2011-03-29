@@ -10,6 +10,7 @@
 
 #include <vector>
 #include "Element.h"
+#include "Vector3D.h"
 
 namespace vhc {
 
@@ -18,6 +19,8 @@ namespace vhc {
  *  ne peuvent pas etres reassignes, ajoutes ou supprimes depuis l'exterieur.
  *  Le but de cette contrainte est de faciliter la gestion de pointeurs, necessaires au polymorphisme. */
 class CompositeElement: public Element {
+
+protected:
 
 	/** Elements composants de cet element compose. */
 	std::vector < Element* > elements;
@@ -49,6 +52,23 @@ public:
 		if (elements[elements.size() - 1]->isPast(particle)) return true;
 		else return false;
 	}
+
+	virtual Vector3D magneticFieldAt(const Vector3D& position) const {
+		Vector3D b = Vector3D::Null;
+		for (int i(0); i < elements.size(); i++) {
+			b = b + elements[i]->magneticFieldAt(position);
+		}
+		return b;
+	}
+
+	virtual Vector3D electricFieldAt(const Vector3D& position) const {
+		Vector3D e = Vector3D::Null;
+		for (int i(0); i < elements.size(); i++) {
+			e = e + elements[i]->electricFieldAt(position);
+		}
+		return e;
+	}
+
 };
 
 }

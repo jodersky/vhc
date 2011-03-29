@@ -32,9 +32,7 @@ export BINDIR = $(BASEDIR)/bin
 
 export CXXFLAGS
 
-.PHONY: all checkdirs build test-build doc test clean
-
-all: checkdirs build test-build doc test
+all: checkdirs build test-build gui-build doc test
 
 # Compile les fichiers source principales
 build: checkdirs
@@ -48,24 +46,33 @@ test-build: build
 	make all -C $(SRCDIR)/test
 	@echo "Done building test sources."
 
+gui-build: build
+	@echo "Building GUI..."
+	cd $(SRCDIR)/gui; qmake; make all
+	@echo "Done building GUI."
+
 # Genere la documentation
 doc:
 	@echo "Building doc..."
 	doxygen Doxyfile
 	@echo "Done building doc."
 
+
 # Verifie l'existance du repertoire de sortie
 checkdirs: $(BINDIR)
 
-# Cree le repertoire de sortie
-$(BINDIR):
-	@mkdir -p $@
-
-clean:
-	rm -rf $(BINDIR)
 
 # Lance les tests
 test: test-build
 	./testr.sh $(BINDIR)/test
 
-	
+
+clean:
+	rm -rf $(BINDIR)
+
+# Cree le repertoire de sortie
+$(BINDIR):
+	@mkdir -p $@
+
+
+.PHONY: all checkdirs build test-build gui-build doc test clean
