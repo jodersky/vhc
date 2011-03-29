@@ -10,7 +10,7 @@
 
 #include <sstream>
 #include <math.h>
-#include "exceptions.h"
+#include "exception.h"
 #include "Printable.h"
 
 namespace vhc {
@@ -113,7 +113,7 @@ public:
 
 	/** Rotation vectorielle. Retourne le vecteur courant, évalué dans la formule en <code>a</code>,
 	 * le vecteur de l'axe, et en <code>t</code>, l'angle de rotation. */
-	Vector3D rotate(const Vector3D& axis,const double& t) const {
+	Vector3D rotate(const Vector3D& axis, double t) const {
 		const Vector3D& x = *this;
 		const Vector3D& a = ~axis;
 

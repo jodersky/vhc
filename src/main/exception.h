@@ -1,12 +1,12 @@
 /*
- * exceptions.h
+ * exception.h
  *
  *  Created on: Mar 24, 2011
  *      Author: jakob
  */
 
-#ifndef EXCEPTIONS_H_
-#define EXCEPTIONS_H_
+#ifndef EXCEPTION_H_
+#define EXCEPTION_H_
 
 #include <sstream>
 #include <string>
@@ -74,4 +74,4 @@ public:
 
 }
 
-#endif /* EXCEPTIONS_H_ */
+#endif /* EXCEPTION_H_ */

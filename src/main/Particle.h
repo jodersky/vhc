@@ -38,7 +38,7 @@ private:
 	/** Charge de cette particule. */
 	double charge;
 
-	double energy;
+	double gamma;
 
 public:
 
@@ -51,15 +51,14 @@ public:
 			charge(charge)
 	{};
 
-	Particle(const Vector3D& position0, double energy, const Vector3D& direction, double mass, double charge):
+	Particle(const Vector3D& position, double mass, double charge, double energy, const Vector3D& direction):
 		position(position),
-		velocity(0, 0, 0),
+		velocity(constants::c * sqrt(1 - (mass * mass) / (energy * energy)) * direction),
 		force(0, 0, 0),
 		mass(mass),
-		charge(charge) {
-
-		velocity = constants::c * sqrt(1 - (mass * mass) / (energy * energy)) * direction;
-	};
+		charge(charge),
+		gamma(energy/(mass*constants::c2))
+	{};
 
 
 	/** Retourne la position de cette particule. */
@@ -77,6 +76,13 @@ public:
 	/** Applique une force sur cette particule. */
 	void applyForce(const Vector3D& f) {force = force + f;}
 
+	void applyMagneticForce(const Vector3D& b, double dt) {
+		if (b != Vector3D::Null) {
+			Vector3D f = charge * velocity.cross(b);
+			force = force + f.rotate(velocity.cross(f), (dt * f.norm()) / (2 * gamma * mass * velocity.norm()));
+		}
+	}
+
 	/** Retourne la masse de cette particule. */
 	double getMass() const {return mass;}
 
@@ -86,10 +92,12 @@ public:
 	/** Retourne la vitesse de cette particule. */
 	Vector3D getVelocity() const {return velocity;}
 
-	//GeV
-	double getEnergy() const {return energy;}
+	void setVelocity(const Vector3D& v) {velocity = v;}
 
-	double getGamma() const {return energy / (mass * constants::c2);}
+	//GeV
+	double getEnergy() const {return gamma * mass * constants::c2;}
+
+	double getGamma() const {return gamma;}
 
 	/** Retourne une représentation en chaîne de cette particule. */
 	virtual std::string toString() const {
@@ -99,7 +107,7 @@ public:
 		s << "\tvelocity: "	<< velocity	<< "\n";
 		s << "\tmass:     "	<< mass		<< "\n";
 		s << "\tcharge:   "	<< charge	<< "\n";
-		s << "\tforce:    "	<< force	<< "\n";
+		s << "\tforce:    "	<< force;
 		return s.str();
 	}
 

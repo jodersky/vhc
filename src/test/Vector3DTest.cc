@@ -9,7 +9,7 @@
 #include <assert.h>
 #include <iomanip>
 #include <limits>
-#include "exceptions.h"
+#include "exception.h"
 #include "Vector3D.h"
 
 using namespace std;

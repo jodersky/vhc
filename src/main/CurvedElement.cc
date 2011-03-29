@@ -7,7 +7,7 @@
 
 #include <assert.h>
 #include <math.h>
-#include "exceptions.h"
+#include "exception.h"
 #include "CurvedElement.h"
 
 using namespace std;
