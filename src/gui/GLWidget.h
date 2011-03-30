@@ -13,8 +13,12 @@ public:
 	QSize minimumSizeHint () const;
 	QSize sizeHint () const;
 
+	double eyeX;
+	double eyeY;
+	double eyeZ;
+
 protected:
-	
+
 	void initializeGL ();
 	void paintGL ();
 	void resizeGL (int width, int height);

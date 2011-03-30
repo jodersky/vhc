@@ -65,6 +65,9 @@ checkdirs: $(BINDIR)
 # Lance les tests
 test: test-build
 	./testr.sh $(BINDIR)/test
+	
+gui: gui-build
+	$(BINDIR)/gui/gui
 
 
 clean:

@@ -1,9 +1,56 @@
 #include <QtOpenGL>
+#include <math.h>
 #include "GLWidget.h"
+
+void torus(int numc, int numt) {
+   int i, j, k;
+   double s, t, x, y, z, twopi;
+
+   twopi = 2 * M_PI;
+   for (i = 0; i < numc; i++) {
+      glBegin(GL_QUAD_STRIP);
+      for (j = 0; j <= numt; j++) {
+         for (k = 1; k >= 0; k--) {
+            s = (i + k) % numc + 0.5;
+            t = j % numt;
+
+            x = (1+.1*cos(s*twopi/numc))*cos(t*twopi/numt);
+            y = (1+.1*cos(s*twopi/numc))*sin(t*twopi/numt);
+            z = .1 * sin(s * twopi / numc);
+            glColor3d(0, s/numc, t/numc);
+            glVertex3f(x, y, z);
+         }
+      }
+      glEnd();
+   }
+}
+
+void axes() {
+	glBegin(GL_LINES);
+	glColor3d(1, 0, 0);
+	glVertex3d(0, 0, 0); // origin of the line
+	glVertex3d(100, 0, 0); // ending point of the line
+	glEnd();
+	glBegin(GL_LINES);
+	glColor3d(0, 1, 0);
+	glVertex3d(0, 0, 0); // origin of the line
+	glVertex3d(0, 100, 0); // ending point of the line
+	glEnd();
+	glBegin(GL_LINES);
+	glColor3d(0, 0, 1);
+	glVertex3d(0, 0, 0); // origin of the line
+	glVertex3d(0, 0, 100); // ending point of the line
+	glEnd();
+
+}
+
 
 GLWidget::GLWidget (QWidget* parent)
 	: QGLWidget (parent)
 {
+	eyeX = 0;
+	eyeY = 0;
+	eyeZ = 10;
 	resize (sizeHint ());
 }
 
@@ -18,7 +65,7 @@ QSize GLWidget::sizeHint () const {
 }
 
 void GLWidget::initializeGL () {
-	glClearColor (255, 255, 255, 1.0);
+	glClearColor (0, 0, 0, 1.0);
 	glEnable (GL_DEPTH_TEST);
 	gluPerspective(65.0, 4.0/3, 1.0, 1000.0);
 }
@@ -26,9 +73,9 @@ void GLWidget::initializeGL () {
 void GLWidget::paintGL () {
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity ();
-	//gluLookAt(0,0,0,
-	//	0,0,0,
-	//	0,0,1);
+	gluLookAt(eyeX,eyeY,eyeZ,
+		0,0,0,
+		0,1000,0);
 	//glTranslated (0.0, 0.0, -10.0);
 	//glColor3d (0.0, 0.0, 1.0);
 	//glScaled (300.0, 300.0, 300.0);
@@ -45,13 +92,20 @@ void GLWidget::paintGL () {
 	glColor3d(0,1,0);
 	glVertex3d (300 + 10, -300, 0.0);
 	glEnd ();
+
+
+	axes();
+
+	glColor3d(0,0,1);
+	glScaled(300,300,300);
+	torus(80, 250);
 }
 
 void GLWidget::resizeGL (int width, int height) {
 	glViewport (0, 0, width, height);
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
-	glOrtho (-width, width, -height, height, -100.0, 100.0);
+	glOrtho (-width, width, -height, height, -1000.0, 1000.0);
 	glMatrixMode (GL_MODELVIEW);
 }
 
@@ -67,11 +121,26 @@ void GLWidget::keyPressEvent (QKeyEvent* event) {
 			qApp->quit();
 			break;
 		case Qt::Key_Up:
-			qApp->quit();
+			eyeZ += 10;
+			break;
+		case Qt::Key_Down:
+			eyeZ -= 10;
+			break;
+		case Qt::Key_Right:
+			eyeX += 10;
+			break;
+		case Qt::Key_Left:
+			eyeX -= 10;
+			break;
+		case Qt::Key_R:
+			eyeX = 0;
+			eyeY = 0;
+			eyeZ = 10;
 			break;
 		default:
 			break;
 	}
+	repaint();
 }
 
 void GLWidget::keyReleaseEvent (QKeyEvent* event) {
