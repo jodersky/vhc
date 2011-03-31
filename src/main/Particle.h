@@ -53,11 +53,11 @@ public:
 
 	Particle(const Vector3D& position, double mass, double charge, double energy, const Vector3D& direction):
 		position(position),
-		velocity(constants::c * sqrt(1 - (mass * mass) / (energy * energy)) * direction),
+		velocity(constants::c * sqrt(1 - (mass * mass) / (energy * energy)) * direction.unit()),
+		gamma(energy / (mass * constants::c2)),
 		force(0, 0, 0),
 		mass(mass),
-		charge(charge),
-		gamma(energy/(mass*constants::c2))
+		charge(charge)
 	{};
 
 
@@ -92,7 +92,10 @@ public:
 	/** Retourne la vitesse de cette particule. */
 	Vector3D getVelocity() const {return velocity;}
 
-	void setVelocity(const Vector3D& v) {velocity = v;}
+	void setVelocity(const Vector3D& v) {
+		velocity = v;
+		gamma = 1.0 / sqrt(1.0 - v.normSquare() / constants::c2);
+	}
 
 	//GeV
 	double getEnergy() const {return gamma * mass * constants::c2;}
@@ -105,6 +108,8 @@ public:
 		s << "Particle:"	<< "\n";
 		s << "\tposition: "	<< position	<< "\n";
 		s << "\tvelocity: "	<< velocity	<< "\n";
+		s << "\t|v|: "		<< velocity.norm() << "\n";
+		s << "\tgamma: "	<< gamma << "\n";
 		s << "\tmass:     "	<< mass		<< "\n";
 		s << "\tcharge:   "	<< charge	<< "\n";
 		s << "\tforce:    "	<< force;

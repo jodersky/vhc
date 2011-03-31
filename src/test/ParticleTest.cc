@@ -17,7 +17,7 @@
 using namespace vhc;
 using namespace std;
 
-Particle particle(Vector3D(0,0,0), 0.2, constants::e, 450, Vector3D::i);
+Particle particle(Vector3D(0,0,0), 5.1, constants::e, 150, Vector3D::i);
 Element* element;
 
 
@@ -39,7 +39,7 @@ int main() {
 		step(h);
 		t += h;
 		cin.get(c);
-	} while (c != 'x' && !hit);
+	} while (c != 'c' && !hit);
 
 	if (hit) {
 		cout << "Particle hit the wall!!!" << endl;
@@ -57,5 +57,6 @@ void step(double h) {
 	particle.setVelocity(particle.getVelocity() + a * h);
 	particle.setPosition(particle.getPosition() + particle.getVelocity() * h);
 
+	particle.setForce(Vector3D::Null);
 }
 

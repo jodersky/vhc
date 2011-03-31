@@ -2,21 +2,21 @@
 #include <math.h>
 #include "GLWidget.h"
 
-void torus(int numc, int numt) {
+void torus(int numc, int numt, double R = 1, double r = 0.1) {
    int i, j, k;
    double s, t, x, y, z, twopi;
 
    twopi = 2 * M_PI;
    for (i = 0; i < numc; i++) {
       glBegin(GL_QUAD_STRIP);
-      for (j = 0; j <= numt; j++) {
+      for (j = 0; j <= numt ; j++) {
          for (k = 1; k >= 0; k--) {
             s = (i + k) % numc + 0.5;
             t = j % numt;
 
-            x = (1+.1*cos(s*twopi/numc))*cos(t*twopi/numt);
-            y = (1+.1*cos(s*twopi/numc))*sin(t*twopi/numt);
-            z = .1 * sin(s * twopi / numc);
+            x = (R+r*cos(s*twopi/numc))*cos(t*twopi/numt);
+            y = (R+r*cos(s*twopi/numc))*sin(t*twopi/numt);
+            z = r * sin(s * twopi / numc);
             glColor3d(0, s/numc, t/numc);
             glVertex3f(x, y, z);
          }
@@ -98,7 +98,10 @@ void GLWidget::paintGL () {
 
 	glColor3d(0,0,1);
 	glScaled(300,300,300);
-	torus(80, 250);
+	glPolygonMode(GL_FRONT, GL_LINE);
+	glPolygonMode(GL_BACK, GL_LINE);
+
+	torus(12, 20, 1, 0.2);
 }
 
 void GLWidget::resizeGL (int width, int height) {
