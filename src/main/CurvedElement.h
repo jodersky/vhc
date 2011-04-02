@@ -13,6 +13,7 @@
 #include "Particle.h"
 #include "Vector3D.h"
 
+
 namespace vhc {
 
 /** Represente un element courbe. En plus de posseder les proprietes generales d'un element,
@@ -67,7 +68,6 @@ public:
 		s << "\tcurvature center: "	<< getCurvatureCenter();
 		return s.str();
 	}
-
 
 
 };

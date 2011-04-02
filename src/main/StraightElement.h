@@ -11,6 +11,7 @@
 #include "Vector3D.h"
 #include "Element.h"
 #include "Particle.h"
+#include "ElementVisitor.h"
 
 namespace vhc {
 
@@ -44,6 +45,8 @@ public:
 		s << Element::toString();
 		return s.str();
 	}
+
+	virtual void accept(ElementVisitor& v) {v.visit(this);}
 
 };
 

@@ -11,6 +11,8 @@
 #include <vector>
 #include "Element.h"
 #include "Vector3D.h"
+#include "ElementVisitor.h"
+
 
 namespace vhc {
 
@@ -66,7 +68,13 @@ public:
 		for (int i(0); i < elements.size(); i++) {
 			e = e + elements[i]->electricFieldAt(position);
 		}
-		return e;
+		return	 e;
+	}
+
+	virtual void accept(ElementVisitor& v) {
+		for (int i(0); i < elements.size(); ++i) {
+			elements[i]->accept(v);
+		}
 	}
 
 };

@@ -13,6 +13,8 @@
 #include "Vector3D.h"
 #include "Particle.h"
 #include "Printable.h"
+#include "ElementVisitor.h"
+
 
 namespace vhc {
 
@@ -130,6 +132,7 @@ public:
 		return s.str();
 	}
 
+	virtual void accept(ElementVisitor& v) = 0;
 };
 
 }

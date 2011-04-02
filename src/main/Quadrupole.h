@@ -11,6 +11,7 @@
 #include <string>
 #include "StraightElement.h"
 #include "Vector3D.h"
+#include "ElementVisitor.h"
 
 namespace vhc {
 
@@ -44,6 +45,8 @@ public:
 	}
 
 	virtual std::string getType() const {return "Quadrupole";}
+
+	virtual void accept(ElementVisitor& v) {v.visit(this);}
 };
 
 }

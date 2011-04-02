@@ -98,10 +98,12 @@ void GLWidget::paintGL () {
 
 	glColor3d(0,0,1);
 	glScaled(300,300,300);
+
 	glPolygonMode(GL_FRONT, GL_LINE);
 	glPolygonMode(GL_BACK, GL_LINE);
-
 	torus(12, 20, 1, 0.2);
+	glPolygonMode(GL_FRONT, GL_FILL);
+	glPolygonMode(GL_BACK, GL_FILL);
 }
 
 void GLWidget::resizeGL (int width, int height) {

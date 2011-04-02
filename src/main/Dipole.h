@@ -12,6 +12,8 @@
 #include <sstream>
 #include "CurvedElement.h"
 #include "Vector3D.h"
+#include "ElementVisitor.h"
+
 
 namespace vhc {
 
@@ -62,6 +64,8 @@ public:
 		s << "\t|B|: " << getMagneticField().norm();
 		return s.str();
 	}
+
+	virtual void accept(ElementVisitor& v) {v.visit(this);}
 
 
 };
