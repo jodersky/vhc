@@ -55,9 +55,14 @@ public:
 		return (particle.getPosition() - exitPosition).dot(out) > 0;
 	}
 
+	/** Retourne la courbure. */
 	double getCurvature() const {return curvature;}
 
+	/** Retourne le centre de courbure. */
 	Vector3D getCurvatureCenter() const {return curvatureCenter;}
+
+	/** Retourne l'angle entre la position d'entree, le centre de courbure et la position de sortie. */
+	double getAngle() const {return acos((entryPosition - curvatureCenter).unit().dot((exitPosition - curvatureCenter).unit()));}
 
 	virtual std::string getType() const {return "Curved Element";}
 	virtual std::string toString() const {

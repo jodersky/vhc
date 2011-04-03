@@ -10,5 +10,5 @@ LIBS += -L$(BINDIR)/main -lvhc
 QT += opengl
 
 # Input
-HEADERS += GLWidget.h Camera.h
-SOURCES += Main.cc GLWidget.cc Camera.cc
+HEADERS += GLWidget.h Camera.h ElementRenderer.h util.h
+SOURCES += Main.cc GLWidget.cc Camera.cc ElementRenderer.cc util.cc

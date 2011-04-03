@@ -1,15 +1,16 @@
 #include <QtOpenGL>
 #include <math.h>
 #include "GLWidget.h"
+#include "util.h"
 
-void torus(int numc, int numt, double R = 1, double r = 0.1) {
+void torus(int numc, int numt, double fraction = 1 , double R = 1, double r = 0.1) {
    int i, j, k;
    double s, t, x, y, z, twopi;
 
    twopi = 2 * M_PI;
    for (i = 0; i < numc; i++) {
       glBegin(GL_QUAD_STRIP);
-      for (j = 0; j <= numt ; j++) {
+      for (j = 0; j <= numt / fraction ; j++) {
          for (k = 1; k >= 0; k--) {
             s = (i + k) % numc + 0.5;
             t = j % numt;
@@ -24,6 +25,8 @@ void torus(int numc, int numt, double R = 1, double r = 0.1) {
       glEnd();
    }
 }
+
+
 
 void axes() {
 	glBegin(GL_LINES);
@@ -101,9 +104,13 @@ void GLWidget::paintGL () {
 
 	glPolygonMode(GL_FRONT, GL_LINE);
 	glPolygonMode(GL_BACK, GL_LINE);
-	torus(12, 20, 1, 0.2);
+	torus(12, 20, 4, 1, 0.1);
+
+	vhc::util::cylinder(0.1, 0, 2, 12, 20);
+
 	glPolygonMode(GL_FRONT, GL_FILL);
 	glPolygonMode(GL_BACK, GL_FILL);
+
 }
 
 void GLWidget::resizeGL (int width, int height) {
@@ -149,4 +156,5 @@ void GLWidget::keyPressEvent (QKeyEvent* event) {
 }
 
 void GLWidget::keyReleaseEvent (QKeyEvent* event) {
+
 }

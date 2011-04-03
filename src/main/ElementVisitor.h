@@ -37,8 +37,6 @@ public:
 	virtual void visit(CurvedElement* curved) = 0;
 
 	virtual void visit(Dipole* dipole) = 0;
-
-	virtual void visit(CompositeElement* composite) = 0;
 };
 
 }

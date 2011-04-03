@@ -8,6 +8,7 @@
 #include <iostream>
 #include <assert.h>
 #include "Dipole.h"
+#include "FODO.h"
 #include "Vector3D.h"
 
 using namespace std;
@@ -19,6 +20,11 @@ int main() {
 	Dipole* d = new Dipole(Vector3D(0,0,0), Vector3D(1,2,0), 0.2, 0.2, Vector3D::Null, NULL);
 	cout << *d << endl;
 	delete d; d = NULL;
+
+	FODO* fodo = new FODO(Vector3D(0,0,0), Vector3D(1, 0,0), 0.2, 0.2, 3);
+	cout << *fodo << endl;
+	delete fodo; fodo = NULL;
+
 /*
 	CurvedElement* c = new CurvedElement(Vector3D(0,1,0), Vector3D(1,0,0), 0.2, 1);
 	cout << *c << endl;

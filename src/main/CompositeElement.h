@@ -34,7 +34,7 @@ public:
 		elements(0) {};
 
 
-	virtual ~CompositeElement();
+	virtual ~CompositeElement() {};
 
 	/*for (int i(0); i < elements.size(); ++i) {
 				delete elements[i];
@@ -68,13 +68,21 @@ public:
 		for (int i(0); i < elements.size(); i++) {
 			e = e + elements[i]->electricFieldAt(position);
 		}
-		return	 e;
+		return e;
 	}
 
 	virtual void accept(ElementVisitor& v) {
 		for (int i(0); i < elements.size(); ++i) {
 			elements[i]->accept(v);
 		}
+	}
+
+	virtual std::string toString() {
+		std::stringstream s;
+		for (int i(0); i < elements.size(); ++i) {
+			s << elements[i]->toString() << "\n";
+		}
+		return s.str();
 	}
 
 };
