@@ -12,6 +12,7 @@
 #include "Element.h"
 #include "Particle.h"
 #include "Vector3D.h"
+#include "ElementVisitor.h"
 
 
 namespace vhc {
@@ -73,7 +74,6 @@ public:
 		s << "\tcurvature center: "	<< getCurvatureCenter();
 		return s.str();
 	}
-
 
 };
 

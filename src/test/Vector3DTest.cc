@@ -40,6 +40,12 @@ int main() {
 	};
 	assert(caught == true);
 
+	//vector product test
+	assert(Vector3D::i.cross(Vector3D::j)==Vector3D::k);
+	assert(Vector3D::j.cross(Vector3D::k)==Vector3D::i);
+	assert(Vector3D::k.cross(Vector3D::i)==Vector3D::j);
+	assert(Vector3D::j.cross(Vector3D::i)==-Vector3D::k);
+
 	cout << "Vector3D: tests completed successfully" << endl;
 
 	return 0;

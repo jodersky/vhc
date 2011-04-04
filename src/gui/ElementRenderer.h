@@ -8,12 +8,17 @@
 #ifndef ELEMENTRENDERER_H_
 #define ELEMENTRENDERER_H_
 
+#include <stdlib.h>
 #include "ElementVisitor.h"
 
 namespace vhc {
 
 
 class ElementRenderer: public ElementVisitor {
+
+private:
+	static const int SLICES = 12;
+	static const int STACKS_PER_LENGTH = 20;
 
 public:
 
@@ -24,8 +29,6 @@ public:
 	virtual void visit(StraightElement* straight);
 
 	virtual void visit(Quadrupole* quadrupole);
-
-	virtual void visit(CurvedElement* curved);
 
 	virtual void visit(Dipole* dipole);
 

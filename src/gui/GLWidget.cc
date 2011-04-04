@@ -1,7 +1,13 @@
 #include <QtOpenGL>
 #include <math.h>
+#include <iostream>
 #include "GLWidget.h"
+#include "StraightElement.h"
+#include "ElementRenderer.h"
+#include "CurvedElement.h"
+#include "Dipole.h"
 #include "util.h"
+#include "Vector3D.h"
 
 void torus(int numc, int numt, double fraction = 1 , double R = 1, double r = 0.1) {
    int i, j, k;
@@ -49,7 +55,7 @@ void axes() {
 
 
 GLWidget::GLWidget (QWidget* parent)
-	: QGLWidget (parent)
+	: QGLWidget (parent), camera(10,0,0), wireframe(false)
 {
 	eyeX = 0;
 	eyeY = 0;
@@ -71,18 +77,48 @@ void GLWidget::initializeGL () {
 	glClearColor (0, 0, 0, 1.0);
 	glEnable (GL_DEPTH_TEST);
 	gluPerspective(65.0, 4.0/3, 1.0, 1000.0);
+	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+	glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
 }
 
 void GLWidget::paintGL () {
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity ();
-	gluLookAt(eyeX,eyeY,eyeZ,
-		0,0,0,
-		0,1000,0);
+	//gluLookAt(eyeX,eyeY,eyeZ,
+		//0,0,0,
+		//0,1,0);
 	//glTranslated (0.0, 0.0, -10.0);
 	//glColor3d (0.0, 0.0, 1.0);
-	//glScaled (300.0, 300.0, 300.0);
+	camera.setView();
+	axes();
 
+	glScaled (300.0, 300.0, 300.0);
+
+	if (wireframe) {
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glPolygonMode(GL_BACK, GL_LINE);
+	} else {
+		glPolygonMode(GL_FRONT, GL_FILL);
+		glPolygonMode(GL_BACK, GL_FILL);
+	}
+
+	vhc::ElementRenderer* er = new vhc::ElementRenderer;
+
+	vhc::StraightElement* se = new vhc::StraightElement(vhc::Vector3D::j, vhc::Vector3D::j + vhc::Vector3D::i, 0.2);
+	vhc::StraightElement* se2 = new vhc::StraightElement(vhc::Vector3D(2,0,0), vhc::Vector3D(2,-1,0), 0.2);
+	se->accept(*er);
+	se2->accept(*er);
+	delete se; se = NULL;
+	delete se2; se2 = NULL;
+
+	vhc::CurvedElement* ce = new vhc::Dipole(vhc::Vector3D(1,1,0), vhc::Vector3D::i * 2, 0.2, 1, vhc::Vector3D::Null);
+	std::cout <<*ce << "\n";
+	ce->accept(*er);
+	delete er; er = NULL;
+
+	delete ce; ce = NULL;
+
+/*
 	glBegin (GL_POLYGON);
 	glColor3d(1,0,0);
 	glVertex3d (-300, -300, 0.0);
@@ -109,7 +145,7 @@ void GLWidget::paintGL () {
 	vhc::util::cylinder(0.1, 0, 2, 12, 20);
 
 	glPolygonMode(GL_FRONT, GL_FILL);
-	glPolygonMode(GL_BACK, GL_FILL);
+	glPolygonMode(GL_BACK, GL_FILL);*/
 
 }
 
@@ -133,21 +169,31 @@ void GLWidget::keyPressEvent (QKeyEvent* event) {
 			qApp->quit();
 			break;
 		case Qt::Key_Up:
-			eyeZ += 10;
+			//eyeZ += 10;
+			camera.theta += 2 *  M_PI / 100;
 			break;
 		case Qt::Key_Down:
-			eyeZ -= 10;
+			//eyeZ -= 10;
+			camera.theta -= 2 *  M_PI / 100;
 			break;
 		case Qt::Key_Right:
-			eyeX += 10;
+			//eyeX += 10;
+			camera.phi += 2 *  M_PI / 100;
 			break;
 		case Qt::Key_Left:
-			eyeX -= 10;
+			//eyeX -= 10;
+			camera.phi -= 2 *  M_PI / 100;
 			break;
 		case Qt::Key_R:
-			eyeX = 0;
-			eyeY = 0;
-			eyeZ = 10;
+			//eyeX = 0;
+			//eyeY = 0;
+			//eyeZ = 10;
+			camera.r = 10;
+			camera.phi = 0;
+			camera.theta = 0;
+			break;
+		case Qt::Key_Space:
+			wireframe = !wireframe;
 			break;
 		default:
 			break;

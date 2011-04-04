@@ -2,6 +2,8 @@
 #define GLWIDGET_H
 
 #include <QGLWidget>
+#include "Camera.h"
+
 class GLWidget : public QGLWidget
 {
 	Q_OBJECT
@@ -16,6 +18,10 @@ public:
 	double eyeX;
 	double eyeY;
 	double eyeZ;
+
+	Camera camera;
+	bool wireframe;
+
 
 protected:
 

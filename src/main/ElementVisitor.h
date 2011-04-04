@@ -34,8 +34,6 @@ public:
 
 	virtual void visit(Quadrupole* quadrupole) = 0;
 
-	virtual void visit(CurvedElement* curved) = 0;
-
 	virtual void visit(Dipole* dipole) = 0;
 };
 

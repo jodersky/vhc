@@ -107,6 +107,8 @@ public:
 		return s.str();
 	};
 
+	double angle(const Vector3D& v) const {return acos(dot(v) / norm() / v.norm());}
+
 	/** Produit mixte de 3 vecteurs. Retourne le produit scalaire de ce vecteur
 	 * 	avec le produit vectoriel de deux vecteurs <code>v</code> et <code>w</code>). */
 	double tripleProduct(const Vector3D& v, const Vector3D& w) const { return dot(v.cross(w)); }

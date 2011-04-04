@@ -11,7 +11,7 @@
 namespace vhc {
 namespace util {
 
-/** Dessine un tore autour de l'origine*
+/** Dessine un tore autour de l'origine
  *  @param R rayon du tore
  *  @param r rayon du "cylindre" du tore
  *  @param fraction fraction de tore a dessiner (1 = un tour)

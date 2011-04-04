@@ -8,20 +8,30 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 #include <math.h>
+#include <QtOpenGL>
 #include "exception.h"
 
 class Camera {
 
 private:
-	double _x;
-	double _y;
-	double _z;
-
 
 public:
-	Camera(double x, double y, double z): _x(x), _y(y), _z(z) {};
-	virtual ~Camera();
 
+	double r;
+	double theta;
+	double phi;
+
+	Camera(double r, double theta, double phi): r(r), theta(theta), phi(phi) {};
+	virtual ~Camera() {};
+
+
+	void setView() {
+		double eyeX, eyeY, eyeZ;
+		toCarthesian(r, theta, phi, eyeX, eyeY, eyeZ);
+		gluLookAt(eyeX,eyeY,eyeZ,
+				0,0,0,
+				0,1,0);
+	}
 
 
 	static double sign(double value) {return (value > 0) - (value < 0);}
