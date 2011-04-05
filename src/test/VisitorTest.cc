@@ -30,10 +30,6 @@ public:
 		cout << "A quadrupole." << endl;
 	}
 
-	virtual void visit(CurvedElement* curved) {
-		cout << "A curved element." << endl;
-	}
-
 	virtual void visit(Dipole* dipole) {
 		cout << "A dipole." << endl;
 	}

@@ -34,8 +34,7 @@ int main() {
 	char c('0');
 	bool hit = false;
 	do {
-		//if (element->isOutside(particle)) hit = true;
-		cout << particle << endl;
+		if (element->isOutside(particle)) hit = true;
 		step(h);
 		t += h;
 		cin.get(c);
@@ -56,7 +55,7 @@ void step(double h) {
 	Vector3D a = particle.getForce() / (particle.getGamma() * particle.getMass());
 	particle.setVelocity(particle.getVelocity() + a * h);
 	particle.setPosition(particle.getPosition() + particle.getVelocity() * h);
-
+	cout << particle << endl;
 	particle.setForce(Vector3D::Null);
 }
 

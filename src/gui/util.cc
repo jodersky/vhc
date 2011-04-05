@@ -18,13 +18,14 @@ void torus(double R, double r, double fraction, int slices, int stacks) {
       glBegin(GL_QUAD_STRIP);
       for (j = 0; j <= stacks * fraction ; j++) {
          for (k = 1; k >= 0; k--) {
-            s = (i + k) % slices + 0.5;
+            s = (i + k) % slices;// + 0.5;
             t = j % stacks;
 
             x = (R+r*cos(s*twopi/slices))*cos(t*twopi/stacks);
             y = (R+r*cos(s*twopi/slices))*sin(t*twopi/stacks);
             z = r * sin(s * twopi / slices);
-            glVertex3f(x, y, z);
+            glColor3d((rand() % 100) / 100.0, (rand() % 100) / 100.0, (rand() % 100) / 100.0);
+            glVertex3d(x, y, z);
          }
       }
       glEnd();

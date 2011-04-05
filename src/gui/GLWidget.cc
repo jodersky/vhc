@@ -90,9 +90,11 @@ void GLWidget::paintGL () {
 	//glTranslated (0.0, 0.0, -10.0);
 	//glColor3d (0.0, 0.0, 1.0);
 	camera.setView();
+
 	axes();
 
 	glScaled (300.0, 300.0, 300.0);
+
 
 	if (wireframe) {
 		glPolygonMode(GL_FRONT, GL_LINE);
@@ -107,6 +109,7 @@ void GLWidget::paintGL () {
 	vhc::StraightElement* se = new vhc::StraightElement(vhc::Vector3D::j, vhc::Vector3D::j + vhc::Vector3D::i, 0.2);
 	vhc::StraightElement* se2 = new vhc::StraightElement(vhc::Vector3D(2,0,0), vhc::Vector3D(2,-1,0), 0.2);
 	se->accept(*er);
+	//se.draw()
 	se2->accept(*er);
 	delete se; se = NULL;
 	delete se2; se2 = NULL;

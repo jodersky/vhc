@@ -58,6 +58,7 @@ public:
 		IllegalArgumentException(): Exception() {};
 		IllegalArgumentException(std::string message): Exception(message) {};
 
+
 		virtual std::string getExceptionType() const {return "IllegalArgumentException";}
 };
 

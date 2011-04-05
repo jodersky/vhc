@@ -56,9 +56,10 @@ void ElementRenderer::visit(Dipole* dipole) {
 	double angle = asin(axis.norm() / d.norm());
 	glRotated(angle * 180 / M_PI, axis.getX(), axis.getY(), axis.getZ());
 
+	//double fraction
 	util::torus(d.norm(),
 			dipole->getSectionRadius(),
-			dipole->getAngle() / (2 * M_PI),12, 200);
+			dipole->getAngle() / (2 * M_PI), SLICES, 200);// * dipole->getAngle() * d.norm());
 
 	glPopMatrix();
 }
