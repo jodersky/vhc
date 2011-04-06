@@ -660,12 +660,70 @@ Particule
 Question P7.1
 \end_layout
 
+\begin_layout Standard
+La classe
+\family typewriter
+\size small
+ Accelerator
+\family default
+\size default
+ est conçue de manière à ce que les détails d'implémentation soient inexistants,
+ tout est dans la partie publique, sauf les attributs dans l'espace 
+\shape italic
+protected
+\shape default
+, afin de pouvoir y avoir accès depuis l'interne.
+ Par ailleurs, en ce qui concerne les méthodes de deux ou trois lignes,
+ à savoir la plupart, sont déclarées 
+\shape italic
+inline
+\shape default
+.
+\end_layout
+
 \begin_layout Section*
 Question P7.2
 \end_layout
 
-\begin_layout Section*
-Question P8.1
+\begin_layout Standard
+Le constructeur de copie privé : il doit servir à empêcher tout appel au
+ constructeur de copie par défaut, puisqu'il ne fait rien, on ne pourra
+ simplement pas faire de copie d'
+\family typewriter
+\size small
+Accelerator
+\family default
+\size default
+, donc pas de passage par valeur.
+\end_layout
+
+\begin_layout Standard
+L'opérateur '=' : de même que pour le constructeur de copie, sa déclaration
+ en privé empêche la comparaison entre 
+\family typewriter
+\size small
+Accelerator
+\family default
+\size default
+s, puisque cet opérateur a déjà été surchargé pour les 
+\family typewriter
+\size small
+Element
+\family default
+\size default
+s, nous ne voudrions pas de confusion avec la classe 
+\family typewriter
+\size small
+Accelerator
+\family default
+\size default
+, elle-même composée de divers 
+\family typewriter
+\size small
+Element
+\family default
+\size default
+s.
 \end_layout
 
 \begin_layout Section*
@@ -740,11 +798,61 @@ Question P9.1
 \end_layout
 
 \begin_layout Standard
-Cela implique que la classe `Element' est abstraite.
+FODO
+\end_layout
+
+\begin_layout Section*
+Question P10.1
 \end_layout
 
 \begin_layout Standard
+Concernant les classes contenant des pointeurs, il s'agit de fixer une manière
+ de gérer les pointeurs, les montrer ou non.
+ Si on choisi de les montrer, alors il faut gérer les 
+\family typewriter
+\size small
+delete
+\family default
+\size default
+ en externe, et cela induit un plus grand risque d'erreurs, plus que si
+ on choisi la deuxième option.
+ Dans ce cas, on peut envisager d'écrire les 
+\family typewriter
+\size small
+new
+\family default
+\size default
+ et les 
+\family typewriter
+\size small
+delete
+\family default
+\size default
+ en interne, ce qui implique qu'on est tout seul à manipuler des pointeurs,
+ ce qui est plus élégant.
+\end_layout
 
+\begin_layout Section*
+Question P10.2
+\end_layout
+
+\begin_layout Standard
+Dans le cadre de la programmation oritentée-objets, il s'agit, pour ne faire
+ qu'une seule fois appel à la méthode
+\family typewriter
+\size small
+ Printable
+\family default
+\size default
+, de la redéfinir.
+\end_layout
+
+\begin_layout Section*
+Question P10.3
+\end_layout
+
+\begin_layout Section*
+Question P10.4
 \end_layout
 
 \end_body
