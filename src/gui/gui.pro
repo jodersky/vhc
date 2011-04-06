@@ -11,4 +11,4 @@ QT += opengl
 
 # Input
 HEADERS += GLWidget.h Camera.h ElementRenderer.h util.h
-SOURCES += Main.cc GLWidget.cc Camera.cc ElementRenderer.cc util.cc
+SOURCES += Main.cc GLWidget.cc Camera.h ElementRenderer.cc util.cc

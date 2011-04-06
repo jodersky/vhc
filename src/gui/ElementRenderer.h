@@ -17,7 +17,7 @@ namespace vhc {
 class ElementRenderer: public ElementVisitor {
 
 private:
-	static const int SLICES = 12;
+	static const int SLICES = 100;
 	static const int STACKS_PER_LENGTH = 20;
 
 public:

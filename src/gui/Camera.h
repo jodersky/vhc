@@ -7,58 +7,53 @@
 
 #ifndef CAMERA_H_
 #define CAMERA_H_
-#include <math.h>
+#include <cmath>
 #include <QtOpenGL>
 #include "exception.h"
+#include "Vector3D.h"
+
+namespace vhc {
 
 class Camera {
 
 private:
+	Vector3D position; //from position
+	Vector3D direction; //to position + direction
+	Vector3D up;
+
+	double heading; //left/right
+	double pitch; //up/down
+
 
 public:
 
-	double r;
-	double theta;
-	double phi;
-
-	Camera(double r, double theta, double phi): r(r), theta(theta), phi(phi) {};
+	Camera(): position(1, 1, 1), direction(1, 0, 0), up(0,0,1), heading(M_PI_4), pitch(-M_PI_4) {};
 	virtual ~Camera() {};
 
-
 	void setView() {
-		double eyeX, eyeY, eyeZ;
-		toCarthesian(r, theta, phi, eyeX, eyeY, eyeZ);
-		gluLookAt(eyeX,eyeY,eyeZ,
-				0,0,0,
-				0,1,0);
+		Vector3D td = direction.rotate(Vector3D::j, pitch).rotate(Vector3D::k, heading);; //tranformed direction
+		Vector3D at = position + td;
+
+		gluLookAt(position.getX(), position.getY(), position.getZ(),
+				  at.getX(), at.getY(), at.getZ(),
+				  up.getX(), up.getY(), up.getZ());
+	}
+
+	void addHeading(double h) {
+		heading += h;
+	}
+
+	void addPitch(double h) {
+		pitch += h;
 	}
 
 
-	static double sign(double value) {return (value > 0) - (value < 0);}
-
-	static void toSpherical(double x, double y, double z, double& r, double&theta, double& phi) {
-		r = sqrt(x * x + y * y + z * z);
-		if (r == 0) {
-			theta = 0;
-			phi = 0;
-			return;
-		}
-
-		theta = acos(z / r);
-
-		if (x > 0) phi = atan(y / x);
-		else if (x == 0) phi = sign(y) * M_PI / 2;
-		else if (x < 0 && y >= 0) phi = atan(y / x) + M_PI;
-		else if (x < 0 && y < 0) phi = atan(y / x) - M_PI;
-		else throw vhc::Exception("This should not happen!");
-
+	void move(const Vector3D& moveVector) {
+		Vector3D mv = moveVector.rotate(Vector3D::j, pitch).rotate(Vector3D::k, heading);
+		position = position + mv;
 	}
 
-	static void toCarthesian(double r, double theta, double phi, double& x, double& y, double& z) {
-		x = r * sin(theta) * cos(phi);
-		y = r * sin(theta) * sin(phi);
-		z = r * cos(theta);
-	}
 };
 
+}
 #endif /* CAMERA_H_ */

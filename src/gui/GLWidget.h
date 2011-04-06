@@ -15,12 +15,9 @@ public:
 	QSize minimumSizeHint () const;
 	QSize sizeHint () const;
 
-	double eyeX;
-	double eyeY;
-	double eyeZ;
-
-	Camera camera;
 	bool wireframe;
+	vhc::Camera camera;
+	QPoint center;
 
 
 protected:
@@ -32,6 +29,7 @@ protected:
 	void mouseReleaseEvent (QMouseEvent* event);
 	void keyPressEvent (QKeyEvent* event);
 	void keyReleaseEvent (QKeyEvent* event);
+	void mouseMoveEvent(QMouseEvent* event);
 };
 
 #endif

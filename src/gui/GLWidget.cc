@@ -9,57 +9,49 @@
 #include "util.h"
 #include "Vector3D.h"
 
-void torus(int numc, int numt, double fraction = 1 , double R = 1, double r = 0.1) {
-   int i, j, k;
-   double s, t, x, y, z, twopi;
-
-   twopi = 2 * M_PI;
-   for (i = 0; i < numc; i++) {
-      glBegin(GL_QUAD_STRIP);
-      for (j = 0; j <= numt / fraction ; j++) {
-         for (k = 1; k >= 0; k--) {
-            s = (i + k) % numc + 0.5;
-            t = j % numt;
-
-            x = (R+r*cos(s*twopi/numc))*cos(t*twopi/numt);
-            y = (R+r*cos(s*twopi/numc))*sin(t*twopi/numt);
-            z = r * sin(s * twopi / numc);
-            glColor3d(0, s/numc, t/numc);
-            glVertex3f(x, y, z);
-         }
-      }
-      glEnd();
-   }
-}
-
-
+using namespace vhc;
 
 void axes() {
 	glBegin(GL_LINES);
 	glColor3d(1, 0, 0);
 	glVertex3d(0, 0, 0); // origin of the line
-	glVertex3d(100, 0, 0); // ending point of the line
+	glVertex3d(1, 0, 0); // ending point of the line
 	glEnd();
 	glBegin(GL_LINES);
 	glColor3d(0, 1, 0);
 	glVertex3d(0, 0, 0); // origin of the line
-	glVertex3d(0, 100, 0); // ending point of the line
+	glVertex3d(0, 1, 0); // ending point of the line
 	glEnd();
 	glBegin(GL_LINES);
 	glColor3d(0, 0, 1);
 	glVertex3d(0, 0, 0); // origin of the line
-	glVertex3d(0, 0, 100); // ending point of the line
+	glVertex3d(0, 0, 1); // ending point of the line
+	glEnd();
+}
+
+void grid() {
+	int size = 10;
+	glColor3d(0.5, 0.5, 0.5);
+	glBegin(GL_LINES);
+	for (int i = 0; i <= 2 * size; ++i) {
+		glVertex3d(1.0 * (i - size) / size, -1, 0);
+		glVertex3d(1.0 * (i - size) / size, 1, 0);
+	};
+	glEnd();
+	glBegin(GL_LINES);
+	for (int i = 0; i <= 2 * size; ++i) {
+		glVertex3d(-1, 1.0 * (i - size) / size, 0);
+		glVertex3d(1, 1.0 * (i - size) / size, 0);
+	};
 	glEnd();
 
 }
 
 
 GLWidget::GLWidget (QWidget* parent)
-	: QGLWidget (parent), camera(10,0,0), wireframe(false)
+	: QGLWidget (parent), wireframe(false), camera(), center()
 {
-	eyeX = 0;
-	eyeY = 0;
-	eyeZ = 10;
+	setMouseTracking(true);
 	resize (sizeHint ());
 }
 
@@ -70,30 +62,40 @@ QSize GLWidget::minimumSizeHint () const {
 }
 
 QSize GLWidget::sizeHint () const {
-	return QSize (800, 600);
+	return QSize (1000, 800);
 }
 
 void GLWidget::initializeGL () {
 	glClearColor (0, 0, 0, 1.0);
 	glEnable (GL_DEPTH_TEST);
-	gluPerspective(65.0, 4.0/3, 1.0, 1000.0);
+	gluPerspective(65.0, 4.0/3.0, 1.0, 10000.0);
 	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 	glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+}
+
+void GLWidget::resizeGL (int width, int height) {
+	center = QPoint(width / 2, height / 2);
+	glViewport (0, 0, width, height);
+	glMatrixMode (GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(65.0, 1, 1.0, 10000.0);
+	glMatrixMode (GL_MODELVIEW);
 }
 
 void GLWidget::paintGL () {
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity ();
-	//gluLookAt(eyeX,eyeY,eyeZ,
-		//0,0,0,
-		//0,1,0);
-	//glTranslated (0.0, 0.0, -10.0);
-	//glColor3d (0.0, 0.0, 1.0);
 	camera.setView();
-
+	glPushMatrix();
+	glScaled(100, 100, 100);
+	grid();
 	axes();
+	glPopMatrix();
 
-	glScaled (300.0, 300.0, 300.0);
+
+	QCursor::setPos(center);
+
+	glScaled (100.0, 100.0, 100.0);
 
 
 	if (wireframe) {
@@ -121,44 +123,9 @@ void GLWidget::paintGL () {
 
 	delete ce; ce = NULL;
 
-/*
-	glBegin (GL_POLYGON);
-	glColor3d(1,0,0);
-	glVertex3d (-300, -300, 0.0);
-	glColor3d(0,1,0);
-	glVertex3d (300 + 10, -300, 0.0);
-	glColor3d(0,0,1);
-	glVertex3d (0, 300, 0.0);
-	glColor3d(1,1,1);
-	glVertex3d (0, 0, 100);
-	glColor3d(0,1,0);
-	glVertex3d (300 + 10, -300, 0.0);
-	glEnd ();
-
-
-	axes();
-
-	glColor3d(0,0,1);
-	glScaled(300,300,300);
-
-	glPolygonMode(GL_FRONT, GL_LINE);
-	glPolygonMode(GL_BACK, GL_LINE);
-	torus(12, 20, 4, 1, 0.1);
-
-	vhc::util::cylinder(0.1, 0, 2, 12, 20);
-
-	glPolygonMode(GL_FRONT, GL_FILL);
-	glPolygonMode(GL_BACK, GL_FILL);*/
-
 }
 
-void GLWidget::resizeGL (int width, int height) {
-	glViewport (0, 0, width, height);
-	glMatrixMode (GL_PROJECTION);
-	glLoadIdentity ();
-	glOrtho (-width, width, -height, height, -1000.0, 1000.0);
-	glMatrixMode (GL_MODELVIEW);
-}
+
 
 void GLWidget::mousePressEvent (QMouseEvent* event) {
 }
@@ -167,33 +134,36 @@ void GLWidget::mouseReleaseEvent (QMouseEvent* event) {
 }
 
 void GLWidget::keyPressEvent (QKeyEvent* event) {
+	Vector3D mv = Vector3D::Null;
 	switch (event->key()) {
 		case Qt::Key_Escape:
 			qApp->quit();
 			break;
+		case Qt::Key_A:
+			mv = mv - Vector3D::j;
+			break;
+		case Qt::Key_W:
+			mv = mv + Vector3D::i;
+			break;
+		case Qt::Key_D:
+			mv = mv + Vector3D::j;
+			break;
+		case Qt::Key_S:
+			mv = mv - Vector3D::i;
+			break;
 		case Qt::Key_Up:
-			//eyeZ += 10;
-			camera.theta += 2 *  M_PI / 100;
+			camera.addPitch(2 *  M_PI / 100);
 			break;
 		case Qt::Key_Down:
-			//eyeZ -= 10;
-			camera.theta -= 2 *  M_PI / 100;
+			camera.addPitch(-2 *  M_PI / 100);
 			break;
 		case Qt::Key_Right:
-			//eyeX += 10;
-			camera.phi += 2 *  M_PI / 100;
+			camera.addHeading(-2 *  M_PI / 100);
 			break;
 		case Qt::Key_Left:
-			//eyeX -= 10;
-			camera.phi -= 2 *  M_PI / 100;
+			camera.addHeading(2 *  M_PI / 100);
 			break;
 		case Qt::Key_R:
-			//eyeX = 0;
-			//eyeY = 0;
-			//eyeZ = 10;
-			camera.r = 10;
-			camera.phi = 0;
-			camera.theta = 0;
 			break;
 		case Qt::Key_Space:
 			wireframe = !wireframe;
@@ -201,9 +171,20 @@ void GLWidget::keyPressEvent (QKeyEvent* event) {
 		default:
 			break;
 	}
-	repaint();
+	camera.move(mv);
+	updateGL();
+	//repaint();
 }
 
 void GLWidget::keyReleaseEvent (QKeyEvent* event) {
+
+}
+
+void GLWidget::mouseMoveEvent(QMouseEvent* event) {
+	int dheading = -QCursor::pos().x() + center.x();
+	int dpitch = QCursor::pos().y() - center.y();
+	camera.addHeading(1.0 * dheading / 20);
+	camera.addPitch(1.0 * dpitch / 20);
+	updateGL();
 
 }
