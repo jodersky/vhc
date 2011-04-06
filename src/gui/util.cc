@@ -38,5 +38,42 @@ void cylinder(double base, double top, double height, int slices, int stacks) {
 	gluDeleteQuadric(q);
 }
 
+void axes() {
+	glBegin(GL_LINES);
+	glColor3d(1, 0, 0);
+	glVertex3d(0, 0, 0);
+	glVertex3d(1, 0, 0);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glColor3d(0, 1, 0);
+	glVertex3d(0, 0, 0);
+	glVertex3d(0, 1, 0);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glColor3d(0, 0, 1);
+	glVertex3d(0, 0, 0);
+	glVertex3d(0, 0, 1);
+	glEnd();
+}
+
+void grid(int divisions) {
+	int size = divisions / 2;
+	glBegin(GL_LINES);
+	for (int i = 0; i <= 2 * size; ++i) {
+		glVertex3d(1.0 * (i - size) / size, -1, 0);
+		glVertex3d(1.0 * (i - size) / size, 1, 0);
+	};
+	glEnd();
+	glBegin(GL_LINES);
+	for (int i = 0; i <= 2 * size; ++i) {
+		glVertex3d(-1, 1.0 * (i - size) / size, 0);
+		glVertex3d(1, 1.0 * (i - size) / size, 0);
+	};
+	glEnd();
+}
+
+
 }
 }

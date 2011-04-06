@@ -22,6 +22,14 @@ void torus(double R, double r, double fraction, int slices = 12, int stacks = 20
 
 void cylinder(double base, double top, double height, int slices = 12, int stacks = 20);
 
+/** Dessine les axes unitaires d'un repere cartesien.
+ * 	Les axes ont les couleurs suivantes: x -> rouge, y -> vert, z -> bleu */
+void axes();
+
+/** Dessine une grille sur le plan XY entre les coordonnees -1 et 1 des deux axes.
+ *  Cette grille comporte <code>divisions</code> divisions.*/
+void grid(int divisions);
+
 }
 }
 

@@ -68,13 +68,12 @@ QSize GLWidget::sizeHint () const {
 void GLWidget::initializeGL () {
 	glClearColor (0, 0, 0, 1.0);
 	glEnable (GL_DEPTH_TEST);
-	gluPerspective(65.0, 4.0/3.0, 1.0, 10000.0);
+	//gluPerspective(65.0, 4.0/3.0, 1.0, 10000.0);
 	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 	glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
 }
 
 void GLWidget::resizeGL (int width, int height) {
-	center = QPoint(width / 2, height / 2);
 	glViewport (0, 0, width, height);
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity();
@@ -93,6 +92,7 @@ void GLWidget::paintGL () {
 	glPopMatrix();
 
 
+	center = QWidget::mapToGlobal(QPoint(this->size().width() / 2, this->size().height() / 2));
 	QCursor::setPos(center);
 
 	glScaled (100.0, 100.0, 100.0);
@@ -143,13 +143,13 @@ void GLWidget::keyPressEvent (QKeyEvent* event) {
 			mv = mv - Vector3D::j;
 			break;
 		case Qt::Key_W:
-			mv = mv + Vector3D::i;
+			mv = mv - Vector3D::i;
 			break;
 		case Qt::Key_D:
 			mv = mv + Vector3D::j;
 			break;
 		case Qt::Key_S:
-			mv = mv - Vector3D::i;
+			mv = mv + Vector3D::i;
 			break;
 		case Qt::Key_Up:
 			camera.addPitch(2 *  M_PI / 100);
@@ -182,7 +182,7 @@ void GLWidget::keyReleaseEvent (QKeyEvent* event) {
 
 void GLWidget::mouseMoveEvent(QMouseEvent* event) {
 	int dheading = -QCursor::pos().x() + center.x();
-	int dpitch = QCursor::pos().y() - center.y();
+	int dpitch = -QCursor::pos().y() + center.y();
 	camera.addHeading(1.0 * dheading / 20);
 	camera.addPitch(1.0 * dpitch / 20);
 	updateGL();

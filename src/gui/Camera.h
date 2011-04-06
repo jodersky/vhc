@@ -27,7 +27,7 @@ private:
 
 public:
 
-	Camera(): position(1, 1, 1), direction(1, 0, 0), up(0,0,1), heading(M_PI_4), pitch(-M_PI_4) {};
+	Camera(): position(1, 1, 1), direction(-1, 0, 0), up(0,0,1), heading(M_PI_4), pitch(-M_PI_4) {};
 	virtual ~Camera() {};
 
 	void setView() {
