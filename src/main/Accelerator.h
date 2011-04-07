@@ -52,21 +52,38 @@ public:
 	/** Retourne une représentation en chaîne de caractères de cet accélérateur. */
 	virtual std::string toString() const;
 
-	// TODO méthodes demandées dans la consigne
-	/** Ajoute un élément à l'accélérateur. */
-	void addElement();
+	// TODO ou va le delete ?
+	/** Ajoute un élément (non spécifié) à l'accélérateur. */
+	void addElement() {
+		ptr = new Element;
+		elementCollec.push_back(ptr);
+	}
 
-	/** Ajoute une particule à l'accélérateur. */
-	void addParticle();
+	// TODO où va le delete?
+	// TODO instanciation légale?
+	/** Instancie une particule et l'ajoute à l'accélérateur. */
+	void addParticle(){
+		ptr = new Particle(newPart);
+		particleCollec.push_back(ptr);
+	}
 
-	/** Efface tous les éléments. */
-	void killAllElements();
+	/** Efface tous les éléments (et les particules, logique). */
+	void killAllElements(){
+		for (vector<Element*>::iterator i(elementCollec.begin()); i != elementCollec.end(); ++i)
+			elementCollec.erase(i);
+		killAllParticles();
+	}
 
 	/** Efface toutes les particules. */
-	void KillAllParticles();
+	void killAllParticles(){
+		for (vector<Particle*>::iterator i(particleCollec.begin()); i != particleCollec.end(); ++i)
+			particleCollec.erase(i);
+	}
 
-	/** Fait évoluer l'accélérateur. */
-	void play();
+	/** Fait évoluer l'accélérateur (pas de temps fixe). */
+	void step(){
+		accelerator.bouge();
+	}
 
 
 };
