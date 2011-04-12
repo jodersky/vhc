@@ -22,7 +22,7 @@ private :
 	Accelerator (Accelerator const& autre) {}
 
 	/** Opérateur '=' ne faisant rien. */
-	bool operator= (Accelerator const& autre) const {}
+	void operator= (Accelerator const& autre) const {}
 
 protected:
 
@@ -42,12 +42,12 @@ public:
 	/* Retourne un pointeur sur un élément de l'accélérateur,
 	 * il n'y a pas besoin d'avoir l'élément lui-même.
 	 * Question : où mettre le 'delete' ? */
-	Element* getElement (int rank) const { return elementCollec[rank-1]; }
+	Element* getElement(int rank) const { return elementCollec[rank]; }
 
 	/* Retourne un pointeur sur une particule de l'accélérateur,
 	 * il n'y a pas besoin d'avoir la particule elle-même.
 	 * Question : où mettre le 'delete' ? */
-	Particle* getParticle(int rank) const { return particleCollec[rank-1]; rank}
+	Particle* getParticle(int rank) const { return particleCollec[rank];}
 
 	/** Retourne une représentation en chaîne de caractères de cet accélérateur. */
 	virtual std::string toString() const;

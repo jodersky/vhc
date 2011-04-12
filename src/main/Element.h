@@ -67,6 +67,7 @@ public:
 	virtual ~Element() {};
 
 	/** Copie l'element sur le heap et renvoye un pointeur sur la copie.
+	 *  En copiant un element, le pointeur sur l'element suivant est remis a zero.
 	 *  ATTENTION: La delocation de memoire est sous la responsabilite de l'appelant. */
 	//virtual Element* copy() const = 0;
 

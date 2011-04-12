@@ -29,31 +29,14 @@ protected:
 
 public:
 
-	CompositeElement(const Vector3D& entry, const Vector3D& exit, double sectionRadius, Element* next = NULL):
-		Element(entry, exit, sectionRadius, next),
-		elements(0) {};
-
-
-	virtual ~CompositeElement() {};
-
-	/*for (int i(0); i < elements.size(); ++i) {
-				delete elements[i];
-				elements[i] = NULL;
-			};*/
+	CompositeElement(const Vector3D& entry, const Vector3D& exit, double sectionRadius, Element* next = NULL);
+	virtual ~CompositeElement();
 
 	/** Determine si une particule a heurte le bord de cet element, donc d'un des elements composants. */
-	virtual bool isOutside(const Particle& particle) const {
-		for (int i(0); i < elements.size(); ++i) {
-			if (elements[i]->isOutside(particle)) return true;
-		}
-		return false;
-	}
+	virtual bool isOutside(const Particle& particle) const;
 
 	/** Determine si une particule a passe cet element, donc passe le dernier element composant. */
-	virtual bool isPast(const Particle& particle) const {
-		if (elements[elements.size() - 1]->isPast(particle)) return true;
-		else return false;
-	}
+	virtual bool isPast(const Particle& particle) const;
 
 	virtual Vector3D magneticFieldAt(const Vector3D& position) const {
 		Vector3D b = Vector3D::Null;
