@@ -73,7 +73,7 @@ public:
 	virtual Element* clone() const = 0;
 
 	/** Determine si la particule donnee a heurte le bord de cet element. */
-	virtual bool isOutside(const Particle& particle) const = 0;
+	virtual bool hasHit(const Particle& particle) const = 0;
 
 	/** Determine si la particule donnee a passe cet element. */
 	virtual bool isPast(const Particle& particle) const = 0;

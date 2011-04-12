@@ -35,13 +35,13 @@ int main() {
 	double curvature = 0.1;
 	Vector3D direction = entry.cross(Vector3D::k);
 
-	double mass = 5.1E-4; //GeV
-	double charge = constants::e; //C
-	double energy = 1; //GeV
+	double mass = 9.11E-31;
+	double charge = constants::e;
+	double energy = 1 * 1E9 * constants::e;
 
 
 	particle = new Particle(entry, mass, charge, energy, direction);
-	double Bz = particle->getGamma() * particle->getMassKg() * curvature * particle->getVelocity().norm() / particle->getCharge();
+	double Bz = particle->getGamma() * particle->getMass() * curvature * particle->getVelocity().norm() / particle->getCharge();
 	cout << Bz << endl;
 	element = new Dipole(entry, exit, sectionRadius, curvature, Vector3D::k * Bz);
 
@@ -51,7 +51,7 @@ int main() {
 	char c('0');
 	bool hit = false;
 	do {
-		if (element->isOutside(*particle)) hit = true;
+		if (element->hasHit(*particle)) hit = true;
 		cout << "t = " << t << endl;
 		step(h);
 		t += h;
@@ -70,12 +70,12 @@ int main() {
 }
 
 void step(double h) {
+	cout << *particle << endl;
 	particle->applyMagneticForce(element->magneticFieldAt(particle->getPosition()), h);
 
-	Vector3D a = particle->getForce() / (particle->getGamma() * particle->getMassKg());
+	Vector3D a = particle->getForce() / (particle->getGamma() * particle->getMass());
 	particle->setVelocity(particle->getVelocity() + a * h);
 	particle->setPosition(particle->getPosition() + particle->getVelocity() * h);
-	cout << *particle << endl;
 	particle->setForce(Vector3D::Null);
 }
 

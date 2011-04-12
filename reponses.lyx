@@ -734,7 +734,7 @@ Question P8.1
 En termes de POO, cela signifie que la méthode 
 \family typewriter
 \size small
-isOutside
+hasHit
 \family default
 \size default
  est virtuelle (même virtuelle pure à l'intérieur de la classe 

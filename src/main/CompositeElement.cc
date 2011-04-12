@@ -15,9 +15,9 @@ CompositeElement::CompositeElement(const Vector3D& entry, const Vector3D& exit, 
 
 CompositeElement::~CompositeElement() {};
 
-bool CompositeElement::isOutside(const Particle& particle) const {
+bool CompositeElement::hasHit(const Particle& particle) const {
 	for (int i(0); i < elements.size(); ++i) {
-		if (elements[i]->isOutside(particle)) return true;
+		if (elements[i]->hasHit(particle)) return true;
 	}
 	return false;
 }

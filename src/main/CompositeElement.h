@@ -33,7 +33,7 @@ public:
 	virtual ~CompositeElement();
 
 	/** Determine si une particule a heurte le bord de cet element, donc d'un des elements composants. */
-	virtual bool isOutside(const Particle& particle) const;
+	virtual bool hasHit(const Particle& particle) const;
 
 	/** Determine si une particule a passe cet element, donc passe le dernier element composant. */
 	virtual bool isPast(const Particle& particle) const;

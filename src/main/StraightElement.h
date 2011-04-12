@@ -28,7 +28,7 @@ public:
 
 	//virtual StraightElement* clone() const {return new StraightElement(*this);}
 
-	virtual bool isOutside(const Particle& particle) const {
+	virtual bool hasHit(const Particle& particle) const {
 		Vector3D a(particle.getPosition() - entryPosition);
 		const Vector3D b = (particle.getPosition() - entryPosition);
 		return (a.cross(b)).norm() / getDiagonal().norm() > sectionRadius;

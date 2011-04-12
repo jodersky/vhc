@@ -45,7 +45,7 @@ public:
 	virtual ~CurvedElement() {};
 	//virtual CurvedElement* clone() const {return new CurvedElement(*this);}
 
-	virtual bool isOutside(const Particle& particle) const {
+	virtual bool hasHit(const Particle& particle) const {
 		Vector3D x(particle.getPosition() - entryPosition);
 		if (x == Vector3D::Null) return false;
 		else return (x - Vector3D(x.getX(), x.getY(), 0).unit() / fabs(curvature)).norm() > sectionRadius;

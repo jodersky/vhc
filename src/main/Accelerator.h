@@ -80,8 +80,8 @@ public:
 	}
 
 
-	/** Fait évoluer l'accélérateur (pas de temps fixe). */
-	void step(){
+	/** Fait évoluer l'accélérateur d'un lapse de temps dt . */
+	void step(double dt) {
 
 	}
 
