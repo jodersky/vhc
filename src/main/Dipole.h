@@ -67,6 +67,10 @@ public:
 
 	virtual void accept(ElementVisitor& v) {v.visit(this);}
 
+	virtual Dipole* copy() const {
+		return new Dipole(getEntryPosition(), getExitPosition(), getSectionRadius(), getCurvature(), _magneticField);
+	}
+
 
 };
 

@@ -48,6 +48,8 @@ public:
 
 	virtual void accept(ElementVisitor& v) {v.visit(this);}
 
+	virtual StraightElement* copy() const {return new StraightElement(getEntryPosition(), getExitPosition(), getSectionRadius());}
+
 };
 
 }

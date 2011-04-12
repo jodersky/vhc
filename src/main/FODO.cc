@@ -16,6 +16,8 @@ namespace vhc {
 
 FODO::FODO(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double straightLength, double focalisingCoefficient, Element* next):
 	CompositeElement(entry, exit, sectionRadius, next),
+	straightLength(straightLength),
+	focalisingCoefficient(focalisingCoefficient),
 	focalisingQuadrupole(NULL),
 	defocalisingQuadrupole(NULL),
 	straightElement1(NULL),
@@ -47,6 +49,10 @@ FODO::~FODO() {
 		delete elements[i];
 		elements[i] = NULL;
 	}
+}
+
+FODO* FODO::copy() const {
+	return new FODO(getEntryPosition(), getExitPosition(), getSectionRadius(), straightLength, focalisingCoefficient);
 }
 
 }

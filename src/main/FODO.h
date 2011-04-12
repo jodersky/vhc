@@ -15,6 +15,10 @@
 namespace vhc {
 
 class FODO: public CompositeElement {
+
+private:
+	double straightLength;
+	double focalisingCoefficient;
 	Quadrupole* focalisingQuadrupole;
 	Quadrupole* defocalisingQuadrupole;
 	StraightElement* straightElement1;
@@ -24,6 +28,8 @@ public:
 	FODO(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double straightLength, double focalisingCoefficient,  Element* next = NULL);
 
 	virtual ~FODO();
+
+	virtual FODO* copy() const;
 };
 
 }
