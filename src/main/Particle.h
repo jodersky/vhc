@@ -79,12 +79,15 @@ public:
 	void applyMagneticForce(const Vector3D& b, double dt) {
 		if (b != Vector3D::Null) {
 			Vector3D f = charge * velocity.cross(b);
-			force = force + f.rotate(velocity.cross(f), (dt * f.norm()) / (2 * gamma * mass * velocity.norm()));
+			force = force + f.rotate(velocity.cross(f), (dt * f.norm()) / (2 * gamma * getMassKg() * velocity.norm()));
 		}
 	}
 
-	/** Retourne la masse de cette particule. */
+	/** Retourne la masse de cette particule en GeV. */
 	double getMass() const {return mass;}
+
+	/** Retourne la masse de cette particule en Kg. */
+	double getMassKg() const {return mass * 1E-9 * constants::e / constants::c2;}
 
 	/** Retourne la charge de cette particule. */
 	double getCharge() const {return charge;}

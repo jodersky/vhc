@@ -47,7 +47,7 @@ public:
 	/* Retourne un pointeur sur une particule de l'accélérateur,
 	 * il n'y a pas besoin d'avoir la particule elle-même.
 	 * Question : où mettre le 'delete' ? */
-	Particle* getParticle(int rank) const { return particleCollec[rank-1]; }
+	Particle* getParticle(int rank) const { return particleCollec[rank-1]; rank}
 
 	/** Retourne une représentation en chaîne de caractères de cet accélérateur. */
 	virtual std::string toString() const;

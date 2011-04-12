@@ -6,17 +6,16 @@
  */
 
 
-#include "Accelerator.h"
+//#include "Accelerator.h"
 #include <iostream>
 #include <string>
 #include <vector>
 
-using namespace vhc;
 using namespace std;
 /** lance le test*/
 //TODO test avec un accélérateur initialisé
 int main() {
-	Accelerator a();
-	cout << a << endl;
+	//Accelerator a();
+	//cout << a << endl;
 	return 0;
 }

@@ -16,9 +16,9 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     GLWidget window;
-    vhc::Vector3D s = vhc::Vector3D::i;
+    window.showFullScreen();
 
-    window.resize(QApplication::desktop()->size());
+//   window.resize(QSize(500, 500));
     window.setWindowTitle("Virtual Hadron Collider");
     window.show();
 

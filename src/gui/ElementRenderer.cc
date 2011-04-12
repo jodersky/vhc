@@ -19,12 +19,11 @@
 namespace vhc {
 
 ElementRenderer::ElementRenderer() {
-	// TODO Auto-generated constructor stub
 
 }
 
 ElementRenderer::~ElementRenderer() {
-	// TODO Auto-generated destructor stub
+
 }
 
 

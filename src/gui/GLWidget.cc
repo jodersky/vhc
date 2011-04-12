@@ -11,6 +11,9 @@
 
 using namespace vhc;
 
+
+int keys;
+
 void axes() {
 	glBegin(GL_LINES);
 	glColor3d(1, 0, 0);
@@ -51,6 +54,7 @@ void grid() {
 GLWidget::GLWidget (QWidget* parent)
 	: QGLWidget (parent), wireframe(false), camera(), center()
 {
+	keys = 0;
 	setMouseTracking(true);
 	resize (sizeHint ());
 }
@@ -77,8 +81,9 @@ void GLWidget::resizeGL (int width, int height) {
 	glViewport (0, 0, width, height);
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(65.0, 1, 1.0, 10000.0);
+	gluPerspective(65.0, 4.0/3.0, 1.0, 10000.0);
 	glMatrixMode (GL_MODELVIEW);
+	setCursor(QCursor(Qt::CrossCursor));
 }
 
 void GLWidget::paintGL () {
@@ -95,6 +100,7 @@ void GLWidget::paintGL () {
 	center = QWidget::mapToGlobal(QPoint(this->size().width() / 2, this->size().height() / 2));
 	QCursor::setPos(center);
 
+
 	glScaled (100.0, 100.0, 100.0);
 
 
@@ -106,6 +112,8 @@ void GLWidget::paintGL () {
 		glPolygonMode(GL_BACK, GL_FILL);
 	}
 
+	//glEnable (GL_BLEND); glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glColor4d(0,0,0.5, 0.2);
 	vhc::ElementRenderer* er = new vhc::ElementRenderer;
 
 	vhc::StraightElement* se = new vhc::StraightElement(vhc::Vector3D::j, vhc::Vector3D::j + vhc::Vector3D::i, 0.2);
@@ -117,7 +125,7 @@ void GLWidget::paintGL () {
 	delete se2; se2 = NULL;
 
 	vhc::CurvedElement* ce = new vhc::Dipole(vhc::Vector3D(1,1,0), vhc::Vector3D::i * 2, 0.2, 1, vhc::Vector3D::Null);
-	std::cout <<*ce << "\n";
+	//std::cout <<*ce << "\n";
 	ce->accept(*er);
 	delete er; er = NULL;
 
@@ -133,6 +141,7 @@ void GLWidget::mousePressEvent (QMouseEvent* event) {
 void GLWidget::mouseReleaseEvent (QMouseEvent* event) {
 }
 
+
 void GLWidget::keyPressEvent (QKeyEvent* event) {
 	Vector3D mv = Vector3D::Null;
 	switch (event->key()) {
@@ -140,16 +149,20 @@ void GLWidget::keyPressEvent (QKeyEvent* event) {
 			qApp->quit();
 			break;
 		case Qt::Key_A:
-			mv = mv - Vector3D::j;
+			//mv = mv - Vector3D::j;
+			keys |= 1;
 			break;
 		case Qt::Key_W:
-			mv = mv - Vector3D::i;
+			//mv = mv - Vector3D::i;
+			keys |= 2;
 			break;
 		case Qt::Key_D:
-			mv = mv + Vector3D::j;
+			//mv = mv + Vector3D::j;
+			keys |= 4;
 			break;
 		case Qt::Key_S:
-			mv = mv + Vector3D::i;
+			//mv = mv + Vector3D::i;
+			keys |= 8;
 			break;
 		case Qt::Key_Up:
 			camera.addPitch(2 *  M_PI / 100);
@@ -171,20 +184,49 @@ void GLWidget::keyPressEvent (QKeyEvent* event) {
 		default:
 			break;
 	}
+	std::cout << event->text().toStdString() << std::endl;
+	std::cout << std::flush;
+
+	if (keys & 1) mv = mv - Vector3D::j;
+	if (keys & 2) mv = mv - Vector3D::i;
+	if (keys & 4) mv = mv + Vector3D::j;
+	if (keys & 8) mv = mv + Vector3D::i;
+
 	camera.move(mv);
 	updateGL();
 	//repaint();
+
+
 }
 
 void GLWidget::keyReleaseEvent (QKeyEvent* event) {
-
+	switch (event->key()) {
+			case Qt::Key_A:
+				//mv = mv - Vector3D::j;
+				keys &= ~1;
+				break;
+			case Qt::Key_W:
+				//mv = mv - Vector3D::i;
+				keys &= ~2;
+				break;
+			case Qt::Key_D:
+				//mv = mv + Vector3D::j;
+				keys &= ~4;
+				break;
+			case Qt::Key_S:
+				//mv = mv + Vector3D::i;
+				keys &= ~8;
+				break;
+			default:
+				break;
+	}
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent* event) {
 	int dheading = -QCursor::pos().x() + center.x();
 	int dpitch = -QCursor::pos().y() + center.y();
-	camera.addHeading(1.0 * dheading / 20);
-	camera.addPitch(1.0 * dpitch / 20);
+	camera.addHeading(1.0 * dheading / 200);
+	camera.addPitch(1.0 * dpitch / 200);
 	updateGL();
 
 }

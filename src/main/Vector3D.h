@@ -38,6 +38,9 @@ private:
 	/** Composante z. */
 	double z;
 
+	/** Cache de norme. (-1 si pas encore calcule) */
+	mutable double normCache;
+
 public:
 
 	/** Crée une nouvelle instance de <code>Vector3D</code>.
@@ -45,7 +48,7 @@ public:
 	 *  @param _y 2e composante
 	 *  @param _z 3e composante
 	 */
-	Vector3D(double _x, double _y, double _z) : x(_x), y(_y), z(_z) {};
+	Vector3D(double _x, double _y, double _z) : x(_x), y(_y), z(_z), normCache(-1) {};
 
 	/** Retourne la composante x de ce vecteur. */
 	double getX() const {return x;};
@@ -95,7 +98,10 @@ public:
 	Vector3D unit() const {return ~(*this);}
 
 	/** Retourne la norme du vecteur. */
-	double norm() const {return sqrt(dot(*this));}
+	double norm() const {
+		if (normCache == -1) normCache = sqrt(dot(*this));
+		return normCache;
+	}
 
 	/** Retourne la norme du vecteur au carre. */
 	double normSquare() const {return dot(*this);}
