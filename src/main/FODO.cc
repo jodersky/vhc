@@ -51,7 +51,7 @@ FODO::~FODO() {
 	}
 }
 
-FODO* FODO::copy() const {
+FODO* FODO::clone() const {
 	return new FODO(getEntryPosition(), getExitPosition(), getSectionRadius(), straightLength, focalisingCoefficient);
 }
 

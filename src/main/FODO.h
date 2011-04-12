@@ -29,7 +29,7 @@ public:
 
 	virtual ~FODO();
 
-	virtual FODO* copy() const;
+	virtual FODO* clone() const;
 };
 
 }

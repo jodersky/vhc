@@ -48,7 +48,7 @@ public:
 
 	virtual void accept(ElementVisitor& v) {v.visit(this);}
 
-	virtual Quadrupole* copy() const {return new Quadrupole(getEntryPosition(), getExitPosition(), getSectionRadius(), focusingCoefficient);}
+	virtual Quadrupole* clone() const {return new Quadrupole(getEntryPosition(), getExitPosition(), getSectionRadius(), focusingCoefficient);}
 };
 
 }

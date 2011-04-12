@@ -26,7 +26,7 @@ public:
 
 	virtual ~StraightElement() {};
 
-	//virtual StraightElement* copy() const {return new StraightElement(*this);}
+	//virtual StraightElement* clone() const {return new StraightElement(*this);}
 
 	virtual bool isOutside(const Particle& particle) const {
 		Vector3D a(particle.getPosition() - entryPosition);
@@ -48,7 +48,7 @@ public:
 
 	virtual void accept(ElementVisitor& v) {v.visit(this);}
 
-	virtual StraightElement* copy() const {return new StraightElement(getEntryPosition(), getExitPosition(), getSectionRadius());}
+	virtual StraightElement* clone() const {return new StraightElement(getEntryPosition(), getExitPosition(), getSectionRadius());}
 
 };
 

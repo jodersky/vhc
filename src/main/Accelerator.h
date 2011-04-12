@@ -26,7 +26,7 @@ private :
 
 protected:
 
-	/** Attributs d'un accélérateur : une collection d'éléments, et une de particules. */
+	/* Attributs d'un accélérateur : une collection d'éléments, et une de particules. */
 	std::vector< Element* > elementCollec;
 	std::vector< Particle* > particleCollec;
 
@@ -52,11 +52,9 @@ public:
 	/** Retourne une représentation en chaîne de caractères de cet accélérateur. */
 	virtual std::string toString() const;
 
-	// TODO ou va le delete ?
 	/** Ajoute un élément (non spécifié) à l'accélérateur. */
-	void addElement() {
-		ptr = new Element;
-		elementCollec.push_back(ptr);
+	void add(const Element& element) {
+		elementCollec.push_back(element.clone());
 	}
 
 	// TODO où va le delete?

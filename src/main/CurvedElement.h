@@ -43,7 +43,7 @@ public:
 
 
 	virtual ~CurvedElement() {};
-	//virtual CurvedElement* copy() const {return new CurvedElement(*this);}
+	//virtual CurvedElement* clone() const {return new CurvedElement(*this);}
 
 	virtual bool isOutside(const Particle& particle) const {
 		Vector3D x(particle.getPosition() - entryPosition);

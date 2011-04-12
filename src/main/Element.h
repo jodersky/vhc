@@ -14,17 +14,18 @@
 #include "Particle.h"
 #include "Printable.h"
 #include "ElementVisitor.h"
+#include "Cloneable.h"
 
 
 namespace vhc {
 
 /** Classe abstraite representant un element d'un accelerateur. */
-class Element: public Printable {
+class Element: public Printable, public Cloneable {
 
 private:
 
 	/** Empêche la copie d'éléments par le constructeur de copie.
-	 *  Si on veut explicitement copier un element utiliser <code>copy()</code>.*/
+	 *  Si on veut explicitement copier un element utiliser <code>clone()</code>.*/
 	//Element(const Element& e);
 
 protected:
@@ -69,7 +70,7 @@ public:
 	/** Copie l'element sur le heap et renvoye un pointeur sur la copie.
 	 *  En copiant un element, le pointeur sur l'element suivant est remis a zero.
 	 *  ATTENTION: La delocation de memoire est sous la responsabilite de l'appelant. */
-	virtual Element* copy() const = 0;
+	virtual Element* clone() const = 0;
 
 	/** Determine si la particule donnee a heurte le bord de cet element. */
 	virtual bool isOutside(const Particle& particle) const = 0;
