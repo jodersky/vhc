@@ -12,14 +12,16 @@
 #include <math.h>
 #include "Vector3D.h"
 #include "Printable.h"
+#include "Cloneable.h"
 #include "constants.h"
 
 namespace vhc {
 
-/** Classe représentant une particule.
+/** Classe représentant une particule
+ * TODO !!! changer le unites en SI pour la representation interne.
  * TODO poser question sur l'energie, gamma, qdm
  * TODO rajouter un pointeur sur l'element dans lequel la particule se trouve*/
-class Particle: public Printable {
+class Particle: public Printable, public Cloneable {
 
 private:
 
@@ -76,6 +78,8 @@ public:
 	/** Applique une force sur cette particule. */
 	void applyForce(const Vector3D& f) {force = force + f;}
 
+	/** Applique un champ magnetique sur cette particule durant un lapse de temps dt.
+	 *  Cette application change la force resultante de la particule. */
 	void applyMagneticForce(const Vector3D& b, double dt) {
 		if (b != Vector3D::Null) {
 			Vector3D f = charge * velocity.cross(b);
@@ -118,6 +122,8 @@ public:
 		s << "\tforce:    "	<< force;
 		return s.str();
 	}
+
+	virtual Particle* clone() const {return new Particle(*this);}
 
 
 

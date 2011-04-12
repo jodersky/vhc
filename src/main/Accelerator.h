@@ -39,6 +39,8 @@ public:
 		particleCollec(0)
 	{};
 
+	virtual ~Accelerator() {clear();}
+
 	/* Retourne un pointeur sur un élément de l'accélérateur,
 	 * il n'y a pas besoin d'avoir l'élément lui-même.
 	 * Question : où mettre le 'delete' ? */
@@ -52,35 +54,35 @@ public:
 	/** Retourne une représentation en chaîne de caractères de cet accélérateur. */
 	virtual std::string toString() const;
 
-	/** Ajoute un élément (non spécifié) à l'accélérateur. */
+	/** Copie un élément dans l'accélérateur. */
 	void add(const Element& element) {
 		elementCollec.push_back(element.clone());
 	}
 
-	// TODO où va le delete?
-	// TODO instanciation légale?
-	/** Instancie une particule et l'ajoute à l'accélérateur. */
-	void addParticle(){
-		ptr = new Particle(newPart);
-		particleCollec.push_back(ptr);
+	/** Copie une particule dans l'accélérateur. */
+	void add(const Particle& particle){
+		particleCollec.push_back(particle.clone());
 	}
 
-	/** Efface tous les éléments (et les particules, logique). */
-	void killAllElements(){
-		for (vector<Element*>::iterator i(elementCollec.begin()); i != elementCollec.end(); ++i)
-			elementCollec.erase(i);
-		killAllParticles();
+	/** Efface tous les éléments et les particules. */
+	void clear() {
+		for (int i = 0; i < particleCollec.size(); ++i) {
+			delete particleCollec[i];
+			particleCollec[i] = NULL;
+		}
+		particleCollec.clear();
+
+		for (int i = 0; i < elementCollec.size(); ++i) {
+			delete elementCollec[i];
+			elementCollec[i] = NULL;
+		}
+		elementCollec.clear();
 	}
 
-	/** Efface toutes les particules. */
-	void killAllParticles(){
-		for (vector<Particle*>::iterator i(particleCollec.begin()); i != particleCollec.end(); ++i)
-			particleCollec.erase(i);
-	}
 
 	/** Fait évoluer l'accélérateur (pas de temps fixe). */
 	void step(){
-		accelerator.bouge();
+
 	}
 
 

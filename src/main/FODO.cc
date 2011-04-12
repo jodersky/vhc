@@ -49,6 +49,7 @@ FODO::~FODO() {
 		delete elements[i];
 		elements[i] = NULL;
 	}
+	elements.clear();
 }
 
 FODO* FODO::clone() const {

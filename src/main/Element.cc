@@ -11,7 +11,7 @@
 namespace vhc {
 
 //Element::Element(const Vector3D& entryPosition) {
-	// TODO Auto-generated constructor stub
+	//  Auto-generated constructor stub
 
 //}
 
