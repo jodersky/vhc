@@ -22,6 +22,8 @@ void torus(double R, double r, double fraction, int slices = 12, int stacks = 20
 
 void cylinder(double base, double top, double height, int slices = 12, int stacks = 20);
 
+void sphere(double radius, int slices = 12, int stacks = 20);
+
 /** Dessine les axes unitaires d'un repere cartesien.
  * 	Les axes ont les couleurs suivantes: x -> rouge, y -> vert, z -> bleu */
 void axes();

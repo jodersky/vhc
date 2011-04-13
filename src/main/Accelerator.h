@@ -66,17 +66,25 @@ public:
 
 	/** Efface tous les éléments et les particules. */
 	void clear() {
-		for (int i = 0; i < particleCollec.size(); ++i) {
+		for (unsigned int i = 0; i < particleCollec.size(); ++i) {
 			delete particleCollec[i];
 			particleCollec[i] = NULL;
 		}
 		particleCollec.clear();
 
-		for (int i = 0; i < elementCollec.size(); ++i) {
+		for (unsigned int i = 0; i < elementCollec.size(); ++i) {
 			delete elementCollec[i];
 			elementCollec[i] = NULL;
 		}
 		elementCollec.clear();
+	}
+
+	const std::vector< Element* >& getElements() const {
+		return elementCollec;
+	}
+
+	const std::vector< Particle* >& getParticles() const {
+		return particleCollec;
 	}
 
 

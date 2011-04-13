@@ -24,10 +24,6 @@ void torus(double R, double r, double fraction, int slices, int stacks) {
             x = (R+r*cos(s*twopi/slices))*cos(t*twopi/stacks);
             y = (R+r*cos(s*twopi/slices))*sin(t*twopi/stacks);
             z = r * sin(s * twopi / slices);
-            double b = (rand() % 100) / 100.0;
-            bool white = (rand() % 3) == 0;
-            if (white) glColor3d(1, 1, 1);
-            else glColor3d(b, (rand() % 100) / 100.0, 1);
             glVertex3d(x, y, z);
          }
       }
@@ -38,6 +34,12 @@ void torus(double R, double r, double fraction, int slices, int stacks) {
 void cylinder(double base, double top, double height, int slices, int stacks) {
 	GLUquadric* q = gluNewQuadric();
 	gluCylinder(q, base, top, height, slices, stacks);
+	gluDeleteQuadric(q);
+}
+
+void sphere(double radius, int slices, int stacks) {
+	GLUquadric* q = gluNewQuadric();
+	gluSphere(q, radius, slices, stacks);
 	gluDeleteQuadric(q);
 }
 

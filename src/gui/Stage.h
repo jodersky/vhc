@@ -15,6 +15,7 @@
 #include "ElementRenderer.h"
 #include "ParticleRenderer.h"
 #include "Element.h"
+#include "Accelerator.h"
 
 
 namespace vhc {
@@ -24,30 +25,34 @@ class Stage: public QGLWidget {
 	Q_OBJECT
 
 public:
-	Stage(QWidget* parent);
+	Stage(QWidget* parent = NULL);
 	virtual ~Stage();
+
+	//TODO !!! temporary
+	Accelerator* accelerator;
 
 protected:
 
 	void initializeGL();
 	void resizeGL (int width, int height);
-	//void paintGL();
+	void paintGL();
 
 	//void mousePressEvent (QMouseEvent* event);
 	//void mouseReleaseEvent (QMouseEvent* event);
-	//void keyPressEvent (QKeyEvent* event);
-	//void keyReleaseEvent (QKeyEvent* event);
-	//void mouseMoveEvent(QMouseEvent* event);
+	void keyPressEvent (QKeyEvent* event);
+	void keyReleaseEvent (QKeyEvent* event);
+	void mouseMoveEvent(QMouseEvent* event);
 
 private:
-
-	std::vector<Element*> elements;
 
 	Camera camera;
 	ElementRenderer* elementRenderer;
 	ParticleRenderer particleRenderer;
 
 	bool wireframe;
+
+	int keys;
+	QPoint center;
 
 
 };

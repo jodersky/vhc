@@ -24,7 +24,6 @@ private:
 	double heading; //left/right
 	double pitch; //up/down
 
-
 public:
 
 	Camera(): position(1, 1, 1), direction(-1, 0, 0), up(0,0,1), heading(M_PI_4), pitch(-M_PI_4) {};
@@ -45,6 +44,8 @@ public:
 
 	void addPitch(double h) {
 		pitch += h;
+		if (pitch <= -M_PI_2) pitch = -M_PI_2 + 0.001;
+		if (pitch >= M_PI_2) pitch = M_PI_2 - 0.001;
 	}
 
 
