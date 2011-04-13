@@ -20,6 +20,8 @@ private:
 	static const int SLICES = 100;
 	static const int STACKS_PER_LENGTH = 20;
 
+	void drawStraight(StraightElement* straight);
+
 public:
 
 	ElementRenderer();

@@ -20,6 +20,12 @@
 
 namespace vhc {
 
+enum DisplayMode {
+	FILL = 0,
+	WIREFRAME = 1,
+	POINTS = 2
+};
+
 class Stage: public QGLWidget {
 
 	Q_OBJECT
@@ -49,11 +55,10 @@ private:
 	ElementRenderer* elementRenderer;
 	ParticleRenderer particleRenderer;
 
-	bool wireframe;
+	DisplayMode displayMode;
 
 	int keys;
 	QPoint center;
-
 
 };
 

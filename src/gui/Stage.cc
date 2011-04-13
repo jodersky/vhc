@@ -12,8 +12,7 @@ using namespace vhc::util;
 
 namespace vhc {
 
-
-Stage::Stage(QWidget* parent): QGLWidget (parent), accelerator(NULL), camera(), elementRenderer(new ElementRenderer), particleRenderer(), wireframe(false), keys(0) {
+Stage::Stage(QWidget* parent): QGLWidget (parent), accelerator(NULL), camera(), elementRenderer(new ElementRenderer), particleRenderer(), displayMode(FILL), keys(0) {
 	setMouseTracking(true);
 }
 
@@ -29,6 +28,7 @@ void Stage::initializeGL () {
 }
 
 void Stage::resizeGL (int width, int height) {
+	setCursor(QCursor(Qt::CrossCursor));
 	glViewport (0, 0, width, height);
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity();
@@ -38,9 +38,11 @@ void Stage::resizeGL (int width, int height) {
 
 void Stage::paintGL() {
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity ();
+	glLoadIdentity();
 
 	camera.setView();
+
+
 
 	glPushMatrix();
 	glScaled(100, 100, 100);
@@ -55,20 +57,33 @@ void Stage::paintGL() {
 	glScaled (100.0, 100.0, 100.0);
 
 
-	if (wireframe) {
-		glPolygonMode(GL_FRONT, GL_LINE);
-		glPolygonMode(GL_BACK, GL_LINE);
-	} else {
+	switch (displayMode) {
+	case FILL:
 		glPolygonMode(GL_FRONT, GL_FILL);
 		glPolygonMode(GL_BACK, GL_FILL);
+		break;
+	case WIREFRAME:
+		glPolygonMode(GL_FRONT, GL_LINE);
+		glPolygonMode(GL_BACK, GL_LINE);
+		break;
+	case POINTS:
+		glPolygonMode(GL_FRONT, GL_POINT);
+		glPolygonMode(GL_BACK, GL_POINT);
+		break;
+	default:
+		break;
 	}
 
-
 	if (accelerator != NULL){
-		glColor3d(0.9, 0.4, 0);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+		glEnable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
 		for (unsigned int i = 0; i < accelerator->getElements().size(); ++i) {
 			accelerator->getElements()[i]->accept(*elementRenderer);
 		}
+		glEnable(GL_DEPTH_TEST);
+		glDisable(GL_BLEND);
+
 		glColor3d(0, 0, 1);
 		for (unsigned int i = 0; i < accelerator->getParticles().size(); ++i) {
 			particleRenderer.render(*(accelerator->getParticles()[i]));
@@ -123,17 +138,23 @@ void Stage::keyPressEvent (QKeyEvent* event) {
 			break;
 		case Qt::Key_R:
 			break;
-		case Qt::Key_Space:
-			wireframe = !wireframe;
+		case Qt::Key_1:
+			displayMode = FILL;
+			break;
+		case Qt::Key_2:
+			displayMode = WIREFRAME;
+			break;
+		case Qt::Key_3:
+			displayMode = POINTS;
 			break;
 		default:
 			break;
 	}
 
-	if (keys & 1) mv = mv - Vector3D::j;
-	if (keys & 2) mv = mv - Vector3D::i;
-	if (keys & 4) mv = mv + Vector3D::j;
-	if (keys & 8) mv = mv + Vector3D::i;
+	if (keys & 1) mv = mv - 3 * Vector3D::j;
+	if (keys & 2) mv = mv - 3 * Vector3D::i;
+	if (keys & 4) mv = mv + 3 * Vector3D::j;
+	if (keys & 8) mv = mv + 3 * Vector3D::i;
 
 	camera.move(mv);
 	updateGL();

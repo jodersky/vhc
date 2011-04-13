@@ -11,6 +11,7 @@
 #include "CurvedElement.h"
 #include "StraightElement.h"
 #include "Dipole.h"
+#include "Quadrupole.h"
 #include "util.h"
 #include "Vector3D.h"
 
@@ -26,8 +27,7 @@ ElementRenderer::~ElementRenderer() {
 
 }
 
-
-void ElementRenderer::visit(StraightElement* straight) {
+void ElementRenderer::drawStraight(StraightElement* straight) {
 	glPushMatrix();
 	glTranslated(straight->getEntryPosition().getX(), straight->getEntryPosition().getY(), straight->getEntryPosition().getZ());
 	Vector3D axis = Vector3D::k.cross(straight->getDiagonal());
@@ -42,12 +42,21 @@ void ElementRenderer::visit(StraightElement* straight) {
 	glPopMatrix();
 }
 
-void ElementRenderer::visit(Quadrupole* quadrupole) {
 
+void ElementRenderer::visit(StraightElement* straight) {
+	glColor4d(0.4, 0.4, 0.4, 0.9);
+	drawStraight(straight);
+}
+
+void ElementRenderer::visit(Quadrupole* quadrupole) {
+	if (quadrupole->getFocusingCoefficient() > 1) glColor4d(0.4, 0, 0, 0.9);
+	else glColor4d(0, 0, 0.4, 0.9);
+	drawStraight(quadrupole);
 }
 
 
 void ElementRenderer::visit(Dipole* dipole) {
+	glColor4d(0.4, 0, 0.6, 0.9);
 	glPushMatrix();
 	glTranslated(dipole->getCurvatureCenter().getX(), dipole->getCurvatureCenter().getY(), dipole->getCurvatureCenter().getZ());
 	Vector3D d = dipole->getExitPosition() - dipole->getCurvatureCenter();
