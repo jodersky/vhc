@@ -5,6 +5,7 @@
  *      Author: jakob
  */
 
+#include <iostream>
 #include <QtOpenGL>
 #include <math.h>
 #include "ElementRenderer.h"
@@ -49,25 +50,34 @@ void ElementRenderer::visit(StraightElement* straight) {
 }
 
 void ElementRenderer::visit(Quadrupole* quadrupole) {
-	if (quadrupole->getFocusingCoefficient() > 1) glColor4d(0.4, 0, 0, 0.9);
-	else glColor4d(0, 0, 0.4, 0.9);
+	if (quadrupole->getFocusingCoefficient() > 1)
+		glColor4d(0.4, 0, 0, 0.9);
+	else
+		glColor4d(0.4, 0.2, 0.2, 0.9);
 	drawStraight(quadrupole);
 }
 
 
 void ElementRenderer::visit(Dipole* dipole) {
-	glColor4d(0.4, 0, 0.6, 0.9);
+	glColor4d(0.2, 0, 0.4, 0.9);
 	glPushMatrix();
 	glTranslated(dipole->getCurvatureCenter().getX(), dipole->getCurvatureCenter().getY(), dipole->getCurvatureCenter().getZ());
 	Vector3D d = dipole->getExitPosition() - dipole->getCurvatureCenter();
 	Vector3D axis = Vector3D::i.cross(d);
 	double angle = asin(axis.norm() / d.norm());
-	glRotated(angle * 180 / M_PI, axis.getX(), axis.getY(), axis.getZ());
+
+	std::cout << "axis: " << axis << "\n";
+	std::cout << "angle: " << angle * 180 / M_PI << "\n";
+	std::cout << "for element " << *dipole << "\n";
+	if (d != -Vector3D::i)
+		glRotated(angle * 180 / M_PI, axis.getX(), axis.getY(), axis.getZ());
+	else
+		glRotated(180, 0, 0, 1); //handle degenerate case
 
 	//double fraction
 	util::torus(d.norm(),
 			dipole->getSectionRadius(),
-			dipole->getAngle() / (2 * M_PI), SLICES, 200);// * dipole->getAngle() * d.norm());
+			dipole->getAngle() / (2 * M_PI), SLICES, 200); // * dipole->getAngle() * d.norm());
 
 	glPopMatrix();
 }

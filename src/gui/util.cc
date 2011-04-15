@@ -24,6 +24,7 @@ void torus(double R, double r, double fraction, int slices, int stacks) {
             x = (R+r*cos(s*twopi/slices))*cos(t*twopi/stacks);
             y = (R+r*cos(s*twopi/slices))*sin(t*twopi/stacks);
             z = r * sin(s * twopi / slices);
+            glColor3d(0, 1 - 1.0 * j / (stacks * fraction), 1.0 * j / (stacks * fraction));
             glVertex3d(x, y, z);
          }
       }

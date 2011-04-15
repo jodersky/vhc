@@ -5,6 +5,7 @@
  *      Author: jakob
  */
 
+#include <iostream>
 #include <QApplication>
 #include <QWidget>
 #include "GLWidget.h"
@@ -37,15 +38,6 @@ std::vector< Particle > createParticles(const Vector3D& position, int n) {
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-
-    //GLWidget window;
-    vhc::Accelerator accelerator;
-    vhc::StraightElement se =  vhc::StraightElement(vhc::Vector3D::j, vhc::Vector3D::j + vhc::Vector3D::i, 0.2);
-    vhc::StraightElement se2 = vhc::StraightElement(vhc::Vector3D(2,0,0), vhc::Vector3D(2,-1,0), 0.2);
-    vhc::CurvedElement* ce = new vhc::Dipole(vhc::Vector3D(1,1,0), vhc::Vector3D::i * 2, 0.2, 1, vhc::Vector3D::Null);
-    accelerator.add(se);
-    accelerator.add(se2);
-    accelerator.add(*ce);
 
 	FODO e1 = FODO(Vector3D(3, 2, 0), Vector3D(3, -2, 0), 0.2, 1.0, 5.0);
 	Dipole e2 = Dipole(e1.getExitPosition(), Vector3D(2, -3, 0), 0.2, 1);

@@ -54,6 +54,10 @@ public:
 		position = position + mv;
 	}
 
+	Vector3D getPosition() {return position;}
+	double getHeading() {return heading;}
+	double getPitch() {return pitch;}
+
 };
 
 }

@@ -32,7 +32,7 @@ void Stage::resizeGL (int width, int height) {
 	glViewport (0, 0, width, height);
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(65.0, 1.0 * width / height, 1.0, 10000.0);
+	gluPerspective(65.0, 1.0 * width / height, 0.1, 100.0);
 	glMatrixMode (GL_MODELVIEW);
 }
 
@@ -41,20 +41,20 @@ void Stage::paintGL() {
 	glLoadIdentity();
 
 	camera.setView();
-
-
+	renderText(0,12,QString("camera coordinates:") + camera.getPosition().toString().c_str());
+	axes();
 
 	glPushMatrix();
-	glScaled(100, 100, 100);
+	glScaled(10, 10, 10);
 	glColor3d(0.5, 0.5, 0.5);
 	grid(20);
-	axes();
 	glPopMatrix();
+
 
 	center = QWidget::mapToGlobal(QPoint(this->size().width() / 2, this->size().height() / 2));
 	QCursor::setPos(center);
 
-	glScaled (100.0, 100.0, 100.0);
+//	glScaled (100.0, 100.0, 100.0);
 
 
 	switch (displayMode) {
@@ -151,10 +151,10 @@ void Stage::keyPressEvent (QKeyEvent* event) {
 			break;
 	}
 
-	if (keys & 1) mv = mv - 3 * Vector3D::j;
-	if (keys & 2) mv = mv - 3 * Vector3D::i;
-	if (keys & 4) mv = mv + 3 * Vector3D::j;
-	if (keys & 8) mv = mv + 3 * Vector3D::i;
+	if (keys & 1) mv = mv - 0.1 * Vector3D::j;
+	if (keys & 2) mv = mv - 0.1 * Vector3D::i;
+	if (keys & 4) mv = mv + 0.1 * Vector3D::j;
+	if (keys & 8) mv = mv + 0.1 * Vector3D::i;
 
 	camera.move(mv);
 	updateGL();
