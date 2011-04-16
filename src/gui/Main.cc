@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 
     vhc::Stage window;
     window.accelerator = &acc;
-   // window.showFullScreen();
+    window.showFullScreen();
 
     //window.resize(QSize(500, 500));
     window.setWindowTitle("Virtual Hadron Collider");

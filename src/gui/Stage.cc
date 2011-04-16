@@ -16,22 +16,22 @@ Stage::Stage(QWidget* parent):
 		QGLWidget (parent),
 		accelerator(NULL),
 		camera(),
-		elementRenderer(new ElementRenderer),
+		elementRenderer(),
 		particleRenderer(),
 		displayMode(FILL),
-		keys(0) {
+		keys(0),
+		frameTime(0) {
 
 	timer = new QTimer(this);
 
 
-	connect(timer, SIGNAL(timeout()), this, SLOT(foo()));
-	timer->start(1);
+	connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+	timer->start(1.0/60);
 
 	setMouseTracking(true);
 }
 
 Stage::~Stage() {
-	delete elementRenderer; elementRenderer = NULL;
 	delete timer; timer = NULL;
 };
 
@@ -43,31 +43,33 @@ void Stage::initializeGL () {
 }
 
 void Stage::resizeGL (int width, int height) {
-	setCursor(QCursor(Qt::CrossCursor));
+	setCursor(QCursor(Qt::BlankCursor));
+	center = QPoint(width / 2, height / 2);
 	glViewport (0, 0, width, height);
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(65.0, 1.0 * width / height, 0.1, 100.0);
+	gluPerspective(65.0, 1.0 * width / height, 0.01, 100.0);
 	glMatrixMode (GL_MODELVIEW);
 }
 
 void Stage::paintGL() {
+	//time.start();
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
 	camera.setView();
-	renderText(0,12,QString("camera coordinates:") + camera.getPosition().toString().c_str());
+	renderText(0,12,QString("fps: ") + QString::number(1E3 / frameTime));
+	renderText(0,24,QString("camera coordinates: ") + camera.getPosition().toString().c_str());
+	renderText(0,36,QString("heading: ") + QString::number(camera.getHeading()));
+	renderText(0,48,QString("pitch: ") + QString::number(camera.getPitch()));
 	axes();
+
 
 	glPushMatrix();
 	glScaled(10, 10, 10);
 	glColor3d(0.5, 0.5, 0.5);
 	grid(20);
 	glPopMatrix();
-
-
-	center = QWidget::mapToGlobal(QPoint(this->size().width() / 2, this->size().height() / 2));
-	QCursor::setPos(center);
 
 //	glScaled (100.0, 100.0, 100.0);
 
@@ -94,7 +96,7 @@ void Stage::paintGL() {
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 		for (unsigned int i = 0; i < accelerator->getElements().size(); ++i) {
-			accelerator->getElements()[i]->accept(*elementRenderer);
+			elementRenderer.render(*(accelerator->getElements()[i]));
 		}
 		glEnable(GL_DEPTH_TEST);
 		glDisable(GL_BLEND);
@@ -105,20 +107,59 @@ void Stage::paintGL() {
 		}
 	}
 
+	if (keys != 0) {
+		double dt = frameTime;
+		double s = 0.002;
+		Vector3D mv = Vector3D::Null;
+		if (keys & 1) mv = mv - Vector3D::j * dt * s;
+		if (keys & 2) mv = mv - Vector3D::i * dt * s;
+		if (keys & 4) mv = mv + Vector3D::j * dt * s;
+		if (keys & 8) mv = mv + Vector3D::i * dt * s;
+		if (keys & 16) mv = mv + Vector3D::k * dt * s;
+		if (keys & 32) mv = mv - Vector3D::k * dt * s;
+		camera.move(mv);
+	}
 
 
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	double vp[4];
+	glGetDoublev(GL_VIEWPORT, vp);
+	glOrtho(vp[0], vp[1], vp[2], vp[3],-1,1);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+	glColor3d(1,1,0);
+
+	glBegin(GL_LINES);
+	glVertex3d(-0.01, 0,0);
+	glVertex3d(0.01, 0, 0);
+	glVertex3d(0,-0.01,0);
+	glVertex3d(0, 0.01, 0);
+	glEnd();
+
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
+	frameTime = time.restart();
 }
 
+
 void Stage::mouseMoveEvent(QMouseEvent* event) {
-	int dheading = -QCursor::pos().x() + center.x();
-	int dpitch = -QCursor::pos().y() + center.y();
-	camera.addHeading(1.0 * dheading / 200);
-	camera.addPitch(1.0 * dpitch / 200);
+	int dheading = -event->x() + center.x();
+	int dpitch = -event->y() + center.y();
+	camera.addHeading(1.0 * dheading * frameTime / 4000);
+	camera.addPitch(1.0 * dpitch * frameTime / 4000);
+	QCursor::setPos(center);
 	update();
 }
 
 void Stage::keyPressEvent (QKeyEvent* event) {
-	Vector3D mv = Vector3D::Null;
 	switch (event->key()) {
 		case Qt::Key_Escape:
 			qApp->quit();
@@ -167,16 +208,6 @@ void Stage::keyPressEvent (QKeyEvent* event) {
 		default:
 			break;
 	}
-
-	if (keys & 1) mv = mv - 0.1 * Vector3D::j;
-	if (keys & 2) mv = mv - 0.1 * Vector3D::i;
-	if (keys & 4) mv = mv + 0.1 * Vector3D::j;
-	if (keys & 8) mv = mv + 0.1 * Vector3D::i;
-	if (keys & 16) mv = mv + 0.1 * Vector3D::k;
-	if (keys & 32) mv = mv - 0.1 * Vector3D::k;
-	camera.move(mv);
-
-
 	update();
 }
 

@@ -55,7 +55,10 @@ private:
 
 	Camera camera;
 	QTimer* timer;
-	ElementRenderer* elementRenderer;
+	QTime time;
+	int frameTime; //ms
+
+	ElementRenderer elementRenderer;
 	ParticleRenderer particleRenderer;
 
 	DisplayMode displayMode;
