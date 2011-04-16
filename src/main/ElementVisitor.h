@@ -30,11 +30,11 @@ public:
 	ElementVisitor();
 	virtual ~ElementVisitor();
 
-	virtual void visit(StraightElement* straight) = 0;
+	virtual void visit(const StraightElement* straight) const = 0;
 
-	virtual void visit(Quadrupole* quadrupole) = 0;
+	virtual void visit(const Quadrupole* quadrupole) const = 0;
 
-	virtual void visit(Dipole* dipole) = 0;
+	virtual void visit(const Dipole* dipole) const = 0;
 };
 
 }

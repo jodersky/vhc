@@ -12,12 +12,27 @@ using namespace vhc::util;
 
 namespace vhc {
 
-Stage::Stage(QWidget* parent): QGLWidget (parent), accelerator(NULL), camera(), elementRenderer(new ElementRenderer), particleRenderer(), displayMode(FILL), keys(0) {
+Stage::Stage(QWidget* parent):
+		QGLWidget (parent),
+		accelerator(NULL),
+		camera(),
+		elementRenderer(new ElementRenderer),
+		particleRenderer(),
+		displayMode(FILL),
+		keys(0) {
+
+	timer = new QTimer(this);
+
+
+	connect(timer, SIGNAL(timeout()), this, SLOT(foo()));
+	timer->start(1);
+
 	setMouseTracking(true);
 }
 
 Stage::~Stage() {
 	delete elementRenderer; elementRenderer = NULL;
+	delete timer; timer = NULL;
 };
 
 void Stage::initializeGL () {
@@ -99,7 +114,7 @@ void Stage::mouseMoveEvent(QMouseEvent* event) {
 	int dpitch = -QCursor::pos().y() + center.y();
 	camera.addHeading(1.0 * dheading / 200);
 	camera.addPitch(1.0 * dpitch / 200);
-	updateGL();
+	update();
 }
 
 void Stage::keyPressEvent (QKeyEvent* event) {
@@ -109,20 +124,22 @@ void Stage::keyPressEvent (QKeyEvent* event) {
 			qApp->quit();
 			break;
 		case Qt::Key_A:
-			//mv = mv - Vector3D::j;
 			keys |= 1;
 			break;
 		case Qt::Key_W:
-			//mv = mv - Vector3D::i;
 			keys |= 2;
 			break;
 		case Qt::Key_D:
-			//mv = mv + Vector3D::j;
 			keys |= 4;
 			break;
 		case Qt::Key_S:
-			//mv = mv + Vector3D::i;
 			keys |= 8;
+			break;
+		case Qt::Key_PageUp:
+			keys |= 16;
+			break;
+		case Qt::Key_PageDown:
+			keys |= 32;
 			break;
 		case Qt::Key_Up:
 			camera.addPitch(2 *  M_PI / 100);
@@ -155,28 +172,33 @@ void Stage::keyPressEvent (QKeyEvent* event) {
 	if (keys & 2) mv = mv - 0.1 * Vector3D::i;
 	if (keys & 4) mv = mv + 0.1 * Vector3D::j;
 	if (keys & 8) mv = mv + 0.1 * Vector3D::i;
-
+	if (keys & 16) mv = mv + 0.1 * Vector3D::k;
+	if (keys & 32) mv = mv - 0.1 * Vector3D::k;
 	camera.move(mv);
-	updateGL();
+
+
+	update();
 }
 
 void Stage::keyReleaseEvent (QKeyEvent* event) {
 	switch (event->key()) {
 			case Qt::Key_A:
-				//mv = mv - Vector3D::j;
 				keys &= ~1;
 				break;
 			case Qt::Key_W:
-				//mv = mv - Vector3D::i;
 				keys &= ~2;
 				break;
 			case Qt::Key_D:
-				//mv = mv + Vector3D::j;
 				keys &= ~4;
 				break;
 			case Qt::Key_S:
-				//mv = mv + Vector3D::i;
 				keys &= ~8;
+				break;
+			case Qt::Key_PageUp:
+				keys &= ~16;
+				break;
+			case Qt::Key_PageDown:
+				keys &= ~32;
 				break;
 			default:
 				break;

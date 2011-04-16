@@ -46,7 +46,7 @@ public:
 
 	virtual std::string getType() const {return "Quadrupole";}
 
-	virtual void accept(ElementVisitor& v) {v.visit(this);}
+	virtual void accept(const ElementVisitor& v) const {v.visit(this);}
 
 	virtual Quadrupole* clone() const {return new Quadrupole(getEntryPosition(), getExitPosition(), getSectionRadius(), focusingCoefficient);}
 };

@@ -54,7 +54,7 @@ public:
 		return e;
 	}
 
-	virtual void accept(ElementVisitor& v) {
+	virtual void accept(const ElementVisitor& v) const {
 		for (int i(0); i < elements.size(); ++i) {
 			elements[i]->accept(v);
 		}

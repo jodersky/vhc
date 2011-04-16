@@ -134,7 +134,7 @@ public:
 		return s.str();
 	}
 
-	virtual void accept(ElementVisitor& v) = 0;
+	virtual void accept(const ElementVisitor& v) const = 0;
 };
 
 }

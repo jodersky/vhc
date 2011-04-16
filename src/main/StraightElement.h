@@ -46,7 +46,7 @@ public:
 		return s.str();
 	}
 
-	virtual void accept(ElementVisitor& v) {v.visit(this);}
+	virtual void accept(const ElementVisitor& v) const {v.visit(this);}
 
 	virtual StraightElement* clone() const {return new StraightElement(getEntryPosition(), getExitPosition(), getSectionRadius());}
 

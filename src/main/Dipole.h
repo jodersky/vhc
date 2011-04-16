@@ -65,7 +65,7 @@ public:
 		return s.str();
 	}
 
-	virtual void accept(ElementVisitor& v) {v.visit(this);}
+	virtual void accept(const ElementVisitor& v) const {v.visit(this);}
 
 	virtual Dipole* clone() const {
 		return new Dipole(getEntryPosition(), getExitPosition(), getSectionRadius(), getCurvature(), _magneticField);

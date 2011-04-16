@@ -8,19 +8,20 @@
 #ifndef ELEMENTRENDERER_H_
 #define ELEMENTRENDERER_H_
 
-#include <stdlib.h>
+#include "Renderer.h"
 #include "ElementVisitor.h"
+#include "Element.h"
 
 namespace vhc {
 
 
-class ElementRenderer: public ElementVisitor {
+class ElementRenderer: public ElementVisitor, public Renderer<Element> {
 
 private:
 	static const int SLICES = 100;
 	static const int STACKS_PER_LENGTH = 20;
 
-	void drawStraight(StraightElement* straight);
+	void drawStraight(const StraightElement* straight) const;
 
 public:
 
@@ -28,11 +29,13 @@ public:
 
 	virtual ~ElementRenderer();
 
-	virtual void visit(StraightElement* straight);
+	virtual void render(const Element& element) const;
 
-	virtual void visit(Quadrupole* quadrupole);
+	virtual void visit(const StraightElement* straight) const ;
 
-	virtual void visit(Dipole* dipole);
+	virtual void visit(const Quadrupole* quadrupole) const;
+
+	virtual void visit(const Dipole* dipole) const;
 
 };
 

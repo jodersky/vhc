@@ -8,11 +8,12 @@
 #ifndef PARTICLERENDERER_H_
 #define PARTICLERENDERER_H_
 
+#include "Renderer.h"
 #include "Particle.h"
 
 namespace vhc {
 
-class ParticleRenderer {
+class ParticleRenderer: public Renderer<Particle> {
 public:
 	ParticleRenderer();
 	virtual ~ParticleRenderer();

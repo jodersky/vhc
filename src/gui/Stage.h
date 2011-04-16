@@ -31,6 +31,7 @@ class Stage: public QGLWidget {
 	Q_OBJECT
 
 public:
+
 	Stage(QWidget* parent = NULL);
 	virtual ~Stage();
 
@@ -51,7 +52,9 @@ protected:
 
 private:
 
+
 	Camera camera;
+	QTimer* timer;
 	ElementRenderer* elementRenderer;
 	ParticleRenderer particleRenderer;
 
