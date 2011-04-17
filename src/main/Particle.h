@@ -20,9 +20,7 @@ namespace vhc {
 class Element; //forward declaration
 
 /** Classe représentant une particule
- * TODO !!! changer le unites en SI pour la representation interne.
- * TODO poser question sur l'energie, gamma, qdm
- * TODO rajouter un pointeur sur l'element dans lequel la particule se trouve*/
+ * TODO poser question sur l'energie, gamma, qdm*/
 class Particle: public Printable, public Cloneable {
 
 private:

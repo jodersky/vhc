@@ -58,6 +58,9 @@ private:
 	QTime time;
 	int frameTime; //ms
 
+	double h;
+	bool paused;
+
 	ElementRenderer elementRenderer;
 	ParticleRenderer particleRenderer;
 

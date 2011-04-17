@@ -7,14 +7,16 @@
 
 #ifndef ACCELERATOR_H_
 #define ACCELERATOR_H_
+#include <iostream>
 #include <vector>
+#include "exceptions.h"
 #include "Vector3D.h"
 #include "Particle.h"
 #include "Element.h"
 
 namespace vhc {
 
-// TODO Do we need any destructor ?
+
 class Accelerator {
 private :
 
@@ -55,13 +57,17 @@ public:
 	virtual std::string toString() const;
 
 	/** Copie un élément dans l'accélérateur. */
-	void add(const Element& element) {
-		elementCollec.push_back(element.clone());
+	Element* add(const Element& element) {
+		Element* e = element.clone();
+		elementCollec.push_back(e);
+		return e;
 	}
 
 	/** Copie une particule dans l'accélérateur. */
-	void add(const Particle& particle){
-		particleCollec.push_back(particle.clone());
+	Particle* add(const Particle& particle){
+		Particle* p = particle.clone();
+		particleCollec.push_back(p);
+		return p;
 	}
 
 	/** Efface tous les éléments et les particules. */
@@ -92,17 +98,26 @@ public:
 	void step(double dt) {
 
 		for (int i = 0; i < particleCollec.size(); ++i) {
-			Particle& particle = *(particleCollec[i]);
-			particle.applyMagneticForce(particle.getElement()->magneticFieldAt(particle.getPosition()), dt);
+			Particle* particle = particleCollec[i];
 
-			Vector3D a = particle.getForce() / (particle.getGamma() * particle.getMass());
-			particle.setVelocity(particle.getVelocity() + a * dt);
+			particle->applyMagneticForce(particle->getElement()->magneticFieldAt(particle->getPosition()), dt);
+
+			Vector3D a = particle->getForce() / (particle->getGamma() * particle->getMass());
+			particle->setVelocity(particle->getVelocity() + a * dt);
 		}
+
+
 
 		for (int i = 0; i < particleCollec.size(); ++i) {
 			Particle& particle = *(particleCollec[i]);
 			particle.setPosition(particle.getPosition() + particle.getVelocity() * dt);
 			particle.setForce(Vector3D::Null);
+
+			if (particle.getElement()->hasHit(particle)) std::cout << "Particle hit wall!" << std::endl;
+			if (particle.getElement()->isPast(particle)) { // si la particule est passee, qui sait si elle est dans l'element suivant?
+				if (!particle.getElement()->isConnected()) throw Exception("Element in accelerator not connected.");
+				else particle.setElement(particle.getElement()->getNext());
+			}
 		}
 
 	}

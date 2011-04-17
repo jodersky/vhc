@@ -45,8 +45,10 @@ public:
 	virtual ~CurvedElement();
 	//virtual CurvedElement* clone() const {return new CurvedElement(*this);}
 
+	//TODO !!! erreurs dans l'algorithme
 	virtual bool hasHit(const Particle& particle) const;
 
+	//TODO !!! erreurs dans l'algorithme
 	virtual bool isPast(const Particle& particle) const;
 
 	/** Retourne la courbure. */

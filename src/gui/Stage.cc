@@ -5,6 +5,7 @@
  *      Author: jakob
  */
 
+#include <iostream>
 #include "util.h"
 #include "Stage.h"
 
@@ -20,7 +21,9 @@ Stage::Stage(QWidget* parent):
 		particleRenderer(),
 		displayMode(FILL),
 		keys(0),
-		frameTime(0) {
+		frameTime(0),
+		h(1E-11),
+		paused(true) {
 
 	timer = new QTimer(this);
 
@@ -120,7 +123,7 @@ void Stage::paintGL() {
 		camera.move(mv);
 	}
 
-
+	if (!paused) accelerator->step(h * frameTime / 1000 * 100);
 
 	glColor3d(1,1,0);
 	util::crosshair();
@@ -183,6 +186,12 @@ void Stage::keyPressEvent (QKeyEvent* event) {
 			break;
 		case Qt::Key_3:
 			displayMode = POINTS;
+			break;
+		case Qt::Key_Return:
+			accelerator->step(h);
+			break;
+		case Qt::Key_Space:
+			paused = !paused;
 			break;
 		default:
 			break;

@@ -14,8 +14,8 @@ Particle::Particle(const Vector3D& position, double mass, double charge):
 		velocity(0, 0, 0),
 		force(0, 0, 0),
 		mass(mass),
-		charge(charge)
-		//element(NULL)
+		charge(charge),
+		element(NULL)
 	{};
 
 
@@ -25,8 +25,8 @@ Particle::Particle(const Vector3D& position, double mass, double charge, double 
 		gamma(energy / (mass * constants::C2)),
 		force(0, 0, 0),
 		mass(mass),
-		charge(charge)
-//		element(NULL)
+		charge(charge),
+		element(NULL)
 	{};
 
 Vector3D Particle::getPosition() const {return position;}
@@ -79,7 +79,7 @@ Particle* Particle::clone() const {return new Particle(*this);}
 
 Element* Particle::getElement() const {return element;}
 
-void Particle::setElement(Element* element) {element = element;}
+void Particle::setElement(Element* element) {this->element = element;}
 
 
 } //vhc
