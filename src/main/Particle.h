@@ -17,6 +17,8 @@
 
 namespace vhc {
 
+class Element; //forward declaration
+
 /** Classe représentant une particule
  * TODO !!! changer le unites en SI pour la representation interne.
  * TODO poser question sur l'energie, gamma, qdm
@@ -43,7 +45,7 @@ private:
 	/** Facteur gamma de cette particule. [1] */
 	double gamma;
 
-	//Element* element;
+	Element* element;
 
 public:
 
@@ -105,8 +107,8 @@ public:
 
 	virtual Particle* clone() const;
 
-	//void setElement(Element* element) {element = element;}
-	//Element* getElement() const {return element;}
+	Element* getElement() const;
+	void setElement(Element* element);
 
 };
 

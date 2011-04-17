@@ -22,15 +22,15 @@ using namespace vhc;
 class PrintVisitor: public ElementVisitor {
 public:
 
-	virtual void visit(StraightElement* straight) {
+	virtual void visit(const StraightElement* straight) const {
 		cout << "A straight element." << endl;
 	}
 
-	virtual void visit(Quadrupole* quadrupole) {
+	virtual void visit(const Quadrupole* quadrupole) const {
 		cout << "A quadrupole." << endl;
 	}
 
-	virtual void visit(Dipole* dipole) {
+	virtual void visit(const Dipole* dipole) const {
 		cout << "A dipole." << endl;
 	}
 

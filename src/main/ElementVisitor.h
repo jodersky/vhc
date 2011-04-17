@@ -10,12 +10,9 @@
 
 namespace vhc {
 
-
 class StraightElement;
 class Quadrupole;
-class CurvedElement;
 class Dipole;
-class CompositeElement;
 
 
 class ElementVisitor {

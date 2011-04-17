@@ -8,7 +8,6 @@
 #ifndef VECTOR3D_H_
 #define VECTOR3D_H_
 
-#include <sstream>
 #include <math.h>
 #include "exceptions.h"
 #include "Printable.h"

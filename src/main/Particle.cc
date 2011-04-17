@@ -77,5 +77,9 @@ std::string Particle::toString() const {
 
 Particle* Particle::clone() const {return new Particle(*this);}
 
+Element* Particle::getElement() const {return element;}
+
+void Particle::setElement(Element* element) {element = element;}
+
 
 } //vhc
