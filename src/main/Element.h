@@ -9,7 +9,6 @@
 #define ELEMENT_H_
 
 #include <string>
-#include <sstream>
 #include "Vector3D.h"
 #include "Particle.h"
 #include "Printable.h"
@@ -43,15 +42,6 @@ protected:
 	 *  NULL si aucun element n'existe. */
 	Element *next;
 
-	/* Intensité (constante) du champ.
-		 *  à améliorer
-		double fieldIntensity;
-		Vector3D magneticField
-
-		* Direction du champ magnétique, invariant dans l'espace.
-		Vector3D fieldDirection;
-	 */
-
 public:
 
 	/** Constructeur d'elements.
@@ -59,13 +49,9 @@ public:
 	 *  @param exit position de face de sortie
 	 *  @param sectionRadius rayon de section de la chambre a vide
 	 *  @param next pointeur sur l'element suivant */
-	Element(const Vector3D& entry, const Vector3D& exit, double sectionRadius, Element* next = NULL):
-		entryPosition(entry),
-		exitPosition(exit),
-		sectionRadius(sectionRadius),
-		next(next) {};
+	Element(const Vector3D& entry, const Vector3D& exit, double sectionRadius, Element* next = NULL);
 
-	virtual ~Element() {};
+	virtual ~Element();
 
 	/** Copie l'element sur le heap et renvoye un pointeur sur la copie.
 	 *  En copiant un element, le pointeur sur l'element suivant est remis a zero.
@@ -79,60 +65,48 @@ public:
 	virtual bool isPast(const Particle& particle) const = 0;
 
 	/** Retourne le champ magnetique, a l'interieur de cet element a la position donnee. */
-	virtual Vector3D magneticFieldAt(const Vector3D& position) const {
-		return Vector3D::Null;
-	}
+	virtual Vector3D magneticFieldAt(const Vector3D& position) const;
 
 	/** Retourne le champ electrique, a l'interieur de cet element a la position donnee. */
-	virtual Vector3D electricFieldAt(const Vector3D& position) const {
-		return Vector3D::Null;
-	}
+	virtual Vector3D electricFieldAt(const Vector3D& position) const;
 
 	/** Retourne la diagonale, c'est-a-dire le vecteur de la position d'entree
 	 *  a la position de sortie. */
-	Vector3D getDiagonal() const {return exitPosition - entryPosition;}
+	Vector3D getDiagonal() const;
 
 	/** Retourne la position d'entree. */
-	Vector3D getEntryPosition() const {return entryPosition;}
+	Vector3D getEntryPosition() const;
 
 	/** Assigne la position d'entree. */
 	//void setEntryPosition(const Vector3D& newPos) {entryPosition = newPos;}
 
 	/** Retourne la position de sortie. */
-	Vector3D getExitPosition() const {return exitPosition;}
+	Vector3D getExitPosition() const;
 
 	/** Assigne la position de sortie. */
 	//void setExitPosition(const Vector3D& newPos) {exitPosition = newPos;}
 
 	/** Retourne le rayon de la section de cet element. */
-	double getSectionRadius() const {return sectionRadius;}
+	double getSectionRadius() const;
 
 	/** Assigne le rayon de la section de cet element. */
-	void setSectionRadius(double r) {sectionRadius = r;}
+	//void setSectionRadius(double r) {sectionRadius = r;}
 
 	/** Retourne un pointeur l'element suivant. NULL s'il n'existe pas. */
-	Element* getNext() const {return next;}
+	Element* getNext() const;
 
 	/** Assigne un pointeur sur l'element suivant. */
-	void setNext(Element* n) {next = n;}
+	void setNext(Element* n);
 
 	/** Retourne vrai si cet element est connecte a un element suivant, faux sinon. */
-	bool isConnected() const {return next != NULL;}
+	bool isConnected() const;
 
 	/** Retourne une representation en chaine du type de cet element, i.e. du nom de la classe.
 	 *  Cette methode est utilisee principalement pour changer le comportement de <code>toString()</code>
 	 *  dans des implementations concretes. */
-	virtual std::string getType() const {return "Element";}
+	virtual std::string getType() const;
 
-	virtual std::string toString() const {
-		std::stringstream s;
-		s << getType() << ":\n";
-		s << "\tentry: " << getEntryPosition()	<<	"\n";
-		s << "\texit: " << getExitPosition()	<<	"\n";
-		s << "\tsection radius: " << getSectionRadius()	<<	"\n";
-		s << "\tconnected: " << (isConnected() ? "true" : "false");
-		return s.str();
-	}
+	virtual std::string toString() const;
 
 	virtual void accept(const ElementVisitor& v) const = 0;
 };

@@ -51,7 +51,7 @@ void ElementRenderer::visit(const StraightElement* straight) const {
 }
 
 void ElementRenderer::visit(const Quadrupole* quadrupole) const {
-	if (quadrupole->getFocusingCoefficient() > 1)
+	if (quadrupole->getFocalizingCoefficient() > 1)
 		glColor4d(0.4, 0, 0, 0.9);
 	else
 		glColor4d(0.4, 0.2, 0.2, 0.9);

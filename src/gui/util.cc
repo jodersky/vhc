@@ -80,6 +80,41 @@ void grid(int divisions) {
 	glEnd();
 }
 
+void crosshair() {
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+
+	glLoadIdentity();
+	double vp[4];
+	glGetDoublev(GL_VIEWPORT, vp);
+	glOrtho(vp[0], vp[2], vp[1], vp[3],-1,1);
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+
+	glLoadIdentity();
+	glTranslated(vp[2] / 2, vp[3] / 2, 0);
+
+	glBegin(GL_LINES);
+	glVertex3d(-5, 0,0);
+	glVertex3d(-2, 0, 0);
+
+	glVertex3d(2, 0, 0);
+	glVertex3d(5, 0, 0);
+
+	glVertex3d(0,-5,0);
+	glVertex3d(0, -2, 0);
+
+	glVertex3d(0, 2,0);
+	glVertex3d(0, 5, 0);
+	glEnd();
+
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+}
 
 }
 }

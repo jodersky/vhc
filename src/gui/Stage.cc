@@ -26,7 +26,7 @@ Stage::Stage(QWidget* parent):
 
 
 	connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-	timer->start(1.0/60);
+	timer->start(1000.0/60);
 
 	setMouseTracking(true);
 }
@@ -122,29 +122,8 @@ void Stage::paintGL() {
 
 
 
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	double vp[4];
-	glGetDoublev(GL_VIEWPORT, vp);
-	glOrtho(vp[0], vp[1], vp[2], vp[3],-1,1);
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
 	glColor3d(1,1,0);
-
-	glBegin(GL_LINES);
-	glVertex3d(-0.01, 0,0);
-	glVertex3d(0.01, 0, 0);
-	glVertex3d(0,-0.01,0);
-	glVertex3d(0, 0.01, 0);
-	glEnd();
-
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
+	util::crosshair();
 
 	frameTime = time.restart();
 }

@@ -25,7 +25,7 @@ Particle* particle = NULL;
 void step(double h);
 
 double toKg(double mGeV) {
-	return constants::e / constants::c2 * 1E9 * mGeV;
+	return constants::E / constants::C2 * 1E9 * mGeV;
 }
 
 int main() {
@@ -36,8 +36,8 @@ int main() {
 	Vector3D direction = entry.cross(Vector3D::k);
 
 	double mass = 9.11E-31;
-	double charge = constants::e;
-	double energy = 1 * 1E9 * constants::e;
+	double charge = constants::E;
+	double energy = 1 * 1E9 * constants::E;
 
 
 	particle = new Particle(entry, mass, charge, energy, direction);

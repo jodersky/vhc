@@ -9,7 +9,7 @@
 #define CAMERA_H_
 #include <cmath>
 #include <QtOpenGL>
-#include "exception.h"
+#include "exceptions.h"
 #include "Vector3D.h"
 
 namespace vhc {

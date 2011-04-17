@@ -27,5 +27,35 @@ bool CompositeElement::isPast(const Particle& particle) const {
 	else return false;
 }
 
-
+Vector3D CompositeElement::magneticFieldAt(const Vector3D& position) const {
+	Vector3D b = Vector3D::Null;
+	for (int i(0); i < elements.size(); i++) {
+		b = b + elements[i]->magneticFieldAt(position);
+	}
+	return b;
 }
+
+Vector3D CompositeElement::electricFieldAt(const Vector3D& position) const {
+	Vector3D e = Vector3D::Null;
+	for (int i(0); i < elements.size(); i++) {
+		e = e + elements[i]->electricFieldAt(position);
+	}
+	return e;
+}
+
+void CompositeElement::accept(const ElementVisitor& v) const {
+	for (int i(0); i < elements.size(); ++i) {
+		elements[i]->accept(v);
+	}
+}
+
+std::string CompositeElement::toString() const {
+	std::stringstream s;
+	for (int i(0); i < elements.size(); ++i) {
+		s << elements[i]->toString() << "\n";
+	}
+	return s.str();
+}
+
+
+} //vhc

@@ -10,16 +10,16 @@
 #include "StraightElement.h"
 #include "Quadrupole.h"
 #include "Vector3D.h"
-#include "exception.h"
+#include "exceptions.h"
 
 namespace vhc {
 
-FODO::FODO(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double straightLength, double focalisingCoefficient, Element* next):
+FODO::FODO(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double straightLength, double focalizingCoefficient, Element* next):
 	CompositeElement(entry, exit, sectionRadius, next),
 	straightLength(straightLength),
-	focalisingCoefficient(focalisingCoefficient),
-	focalisingQuadrupole(NULL),
-	defocalisingQuadrupole(NULL),
+	focalizingCoefficient(focalizingCoefficient),
+	focalizingQuadrupole(NULL),
+	defocalizingQuadrupole(NULL),
 	straightElement1(NULL),
 	straightElement2(NULL) {
 
@@ -28,13 +28,13 @@ FODO::FODO(const Vector3D& entry, const Vector3D& exit, double sectionRadius, do
 	if (l < 0) throw IllegalArgumentException("Length of straight elements must be less than half of FODO length.");
 
 	Vector3D d = getDiagonal().unit();
-	focalisingQuadrupole = new Quadrupole(entry, entry + d * l, sectionRadius, focalisingCoefficient);
-	elements.push_back(focalisingQuadrupole);
-	straightElement1 = new StraightElement(focalisingQuadrupole->getExitPosition(), focalisingQuadrupole->getExitPosition() + d * L, sectionRadius);
+	focalizingQuadrupole = new Quadrupole(entry, entry + d * l, sectionRadius, focalizingCoefficient);
+	elements.push_back(focalizingQuadrupole);
+	straightElement1 = new StraightElement(focalizingQuadrupole->getExitPosition(), focalizingQuadrupole->getExitPosition() + d * L, sectionRadius);
 	elements.push_back(straightElement1);
-	defocalisingQuadrupole = new Quadrupole(straightElement1->getExitPosition(), straightElement1->getExitPosition() + d * l, sectionRadius, -focalisingCoefficient);
-	elements.push_back(defocalisingQuadrupole);
-	straightElement2 = new StraightElement(defocalisingQuadrupole->getExitPosition(), defocalisingQuadrupole->getExitPosition() + d * L, sectionRadius);
+	defocalizingQuadrupole = new Quadrupole(straightElement1->getExitPosition(), straightElement1->getExitPosition() + d * l, sectionRadius, -focalizingCoefficient);
+	elements.push_back(defocalizingQuadrupole);
+	straightElement2 = new StraightElement(defocalizingQuadrupole->getExitPosition(), defocalizingQuadrupole->getExitPosition() + d * L, sectionRadius);
 	elements.push_back(straightElement2);
 
 	//connection des elements
@@ -53,7 +53,7 @@ FODO::~FODO() {
 }
 
 FODO* FODO::clone() const {
-	return new FODO(getEntryPosition(), getExitPosition(), getSectionRadius(), straightLength, focalisingCoefficient);
+	return new FODO(getEntryPosition(), getExitPosition(), getSectionRadius(), straightLength, focalizingCoefficient);
 }
 
 }

@@ -18,37 +18,24 @@ namespace vhc {
 class Quadrupole: public StraightElement {
 
 private:
-	double focusingCoefficient;
+	double focalizingCoefficient;
 
 public:
-	Quadrupole(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double focusingCoefficient, Element* next = NULL):
-		StraightElement(entry, exit, sectionRadius, next),
-		focusingCoefficient(focusingCoefficient)
-	{};
+	Quadrupole(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double focalizingCoefficient, Element* next = NULL);
 
-	virtual ~Quadrupole() {};
+	virtual ~Quadrupole();
 
-	virtual Vector3D magneticFieldAt(const Vector3D& position) {
-		Vector3D x = position - getEntryPosition();
-		Vector3D d = getDiagonal().unit();
-		Vector3D y = x - x.dot(d) * d;
-		Vector3D u = Vector3D::k.cross(d);
-		return focusingCoefficient * (y.dot(u) * Vector3D::k + position.getZ() * u);
-	}
+	virtual Vector3D magneticFieldAt(const Vector3D& position);
 
-	double getFocusingCoefficient() const {
-		return focusingCoefficient;
-	}
+	double getFocalizingCoefficient() const;
 
-	void setFocusingCoefficient(double value) {
-		focusingCoefficient = value;
-	}
+	void setFocalizingCoefficient(double value);
 
-	virtual std::string getType() const {return "Quadrupole";}
+	virtual std::string getType() const;
 
-	virtual void accept(const ElementVisitor& v) const {v.visit(this);}
+	virtual void accept(const ElementVisitor& v) const;
 
-	virtual Quadrupole* clone() const {return new Quadrupole(getEntryPosition(), getExitPosition(), getSectionRadius(), focusingCoefficient);}
+	virtual Quadrupole* clone() const;
 };
 
 }

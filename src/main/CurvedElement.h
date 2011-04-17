@@ -42,38 +42,24 @@ public:
 	CurvedElement(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double curvature, Element* next = NULL);
 
 
-	virtual ~CurvedElement() {};
+	virtual ~CurvedElement();
 	//virtual CurvedElement* clone() const {return new CurvedElement(*this);}
 
-	virtual bool hasHit(const Particle& particle) const {
-		Vector3D x(particle.getPosition() - entryPosition);
-		if (x == Vector3D::Null) return false;
-		else return (x - Vector3D(x.getX(), x.getY(), 0).unit() / fabs(curvature)).norm() > sectionRadius;
-	}
+	virtual bool hasHit(const Particle& particle) const;
 
-	virtual bool isPast(const Particle& particle) const {
-		Vector3D out = (entryPosition - curvatureCenter).cross(exitPosition - curvatureCenter).cross(entryPosition - curvatureCenter);
-		return (particle.getPosition() - exitPosition).dot(out) > 0;
-	}
+	virtual bool isPast(const Particle& particle) const;
 
 	/** Retourne la courbure. */
-	double getCurvature() const {return curvature;}
+	double getCurvature() const;
 
 	/** Retourne le centre de courbure. */
-	Vector3D getCurvatureCenter() const {return curvatureCenter;}
+	Vector3D getCurvatureCenter() const;
 
 	/** Retourne l'angle entre la position d'entree, le centre de courbure et la position de sortie. */
-	double getAngle() const {return acos((entryPosition - curvatureCenter).unit().dot((exitPosition - curvatureCenter).unit()));}
+	double getAngle() const;
 
-	virtual std::string getType() const {return "Curved Element";}
-	virtual std::string toString() const {
-		std::stringstream s;
-		s << Element::toString() << "\n";
-		s << "\tcurvature: "		<< getCurvature() 		<< "\n";
-		s << "\tcurvature radius: "	<< 1.0 / getCurvature() << "\n";
-		s << "\tcurvature center: "	<< getCurvatureCenter();
-		return s.str();
-	}
+	virtual std::string getType() const;
+	virtual std::string toString() const;
 
 };
 

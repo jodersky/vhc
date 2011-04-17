@@ -38,35 +38,13 @@ public:
 	/** Determine si une particule a passe cet element, donc passe le dernier element composant. */
 	virtual bool isPast(const Particle& particle) const;
 
-	virtual Vector3D magneticFieldAt(const Vector3D& position) const {
-		Vector3D b = Vector3D::Null;
-		for (int i(0); i < elements.size(); i++) {
-			b = b + elements[i]->magneticFieldAt(position);
-		}
-		return b;
-	}
+	virtual Vector3D magneticFieldAt(const Vector3D& position) const;
 
-	virtual Vector3D electricFieldAt(const Vector3D& position) const {
-		Vector3D e = Vector3D::Null;
-		for (int i(0); i < elements.size(); i++) {
-			e = e + elements[i]->electricFieldAt(position);
-		}
-		return e;
-	}
+	virtual Vector3D electricFieldAt(const Vector3D& position) const;
 
-	virtual void accept(const ElementVisitor& v) const {
-		for (int i(0); i < elements.size(); ++i) {
-			elements[i]->accept(v);
-		}
-	}
+	virtual void accept(const ElementVisitor& v) const;
 
-	virtual std::string toString() {
-		std::stringstream s;
-		for (int i(0); i < elements.size(); ++i) {
-			s << elements[i]->toString() << "\n";
-		}
-		return s.str();
-	}
+	virtual std::string toString() const;
 
 };
 

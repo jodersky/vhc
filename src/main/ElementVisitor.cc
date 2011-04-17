@@ -9,13 +9,8 @@
 
 namespace vhc {
 
-ElementVisitor::ElementVisitor() {
+ElementVisitor::ElementVisitor() {}
 
-
-}
-
-ElementVisitor::~ElementVisitor() {
-
-}
+ElementVisitor::~ElementVisitor() {}
 
 }

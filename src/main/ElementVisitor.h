@@ -8,14 +8,8 @@
 #ifndef ELEMENTVISITOR_H_
 #define ELEMENTVISITOR_H_
 
-//#include "StraightElement.h"
-//#include "Quadrupole.h"
-//#include "CurvedElement.h"
-//#include "Dipole.h"
-//#include "CompositeElement.h"
-//#include "Element.h"
-
 namespace vhc {
+
 
 class StraightElement;
 class Quadrupole;

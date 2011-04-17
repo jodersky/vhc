@@ -9,7 +9,6 @@
 #define DIPOLE_H_
 
 #include <string>
-#include <sstream>
 #include "CurvedElement.h"
 #include "Vector3D.h"
 #include "ElementVisitor.h"
@@ -35,41 +34,25 @@ public:
 	 *  @param magneticField champ magnetique du dipole
 	 *  @param next pointeur sur l'element prochain
 	 *  @see vhc::Element*/
-	Dipole(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double curvature, const Vector3D& magneticField = Vector3D::Null, Element* next = NULL):
-		CurvedElement(entry, exit, sectionRadius, curvature, next),
-		_magneticField(magneticField) {};
+	Dipole(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double curvature, const Vector3D& magneticField = Vector3D::Null, Element* next = NULL);
 
-	virtual ~Dipole() {};
+	virtual ~Dipole();
 
 	/** Retourne le champ magnetique a l'interieur de ce dipole. */
-	Vector3D getMagneticField() const {
-		return _magneticField;
-	}
+	Vector3D getMagneticField() const;
 
 	/** Modifie le champ magnetique de ce dipole.
 	 *  Ceci correspondrait en realite a une correction du champ a l'aide d'electroaimants. */
-	void setMagneticField(const Vector3D& field) {
-		_magneticField = field;
-	}
+	void setMagneticField(const Vector3D& field);
 
-	virtual Vector3D magneticFieldAt(const Vector3D& position) const {
-		return _magneticField;
-	}
+	virtual Vector3D magneticFieldAt(const Vector3D& position) const;
 
-	virtual std::string getType() const {return "Dipole";}
-	virtual std::string toString() const {
-		std::stringstream s;
-		s << CurvedElement::toString() << "\n";
-		s << "\tB: " << getMagneticField();
-		s << "\t|B|: " << getMagneticField().norm();
-		return s.str();
-	}
+	virtual std::string getType() const;
+	virtual std::string toString() const;
 
-	virtual void accept(const ElementVisitor& v) const {v.visit(this);}
+	virtual void accept(const ElementVisitor& v) const;
 
-	virtual Dipole* clone() const {
-		return new Dipole(getEntryPosition(), getExitPosition(), getSectionRadius(), getCurvature(), _magneticField);
-	}
+	virtual Dipole* clone() const;
 
 
 };

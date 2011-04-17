@@ -1,14 +1,13 @@
 /*
- * exception.h
+ * exceptions.h
  *
  *  Created on: Mar 24, 2011
  *      Author: jakob
  */
 
-#ifndef EXCEPTION_H_
-#define EXCEPTION_H_
+#ifndef EXCEPTIONS_H_
+#define EXCEPTIONS_H_
 
-#include <sstream>
 #include <string>
 #include "Printable.h"
 
@@ -26,28 +25,24 @@ private:
 public:
 
 	/** Constructeur par defaut. */
-	Exception(): message("") {};
+	Exception();
 
 	/** Instancie une nouvelle exception avec le message d'erreur donne.
 	 *  @param message message d'erreur*/
-	Exception(std::string message): message(message) {};
+	Exception(std::string message);
 
 	/** Destructeur virtuel. */
-	virtual ~Exception() {};
+	virtual ~Exception();
 
 	/** Retourne le type de cette exception, c'est-a-dire le nom de la classe. */
-	virtual std::string getExceptionType() const {return "Exception";}
+	virtual std::string getExceptionType() const;
 
 	/** Retourne le message d'erreur de cette exception. */
-	virtual std::string getMessage() const {return message;}
+	virtual std::string getMessage() const;
 
 	/** Retourne une representation en chaine de cette exception. Cette methode est a appeller pour
 	 *  si on veut connaitre les details de cette exception.*/
-	virtual std::string toString() const {
-		std::stringstream s;
-		s << getExceptionType() << ": " << getMessage();
-		return s.str();
-	}
+	virtual std::string toString() const;
 
 };
 
@@ -55,24 +50,24 @@ public:
  *  Exemple: si on voudrait instancier un polygone avec moins de 3 faces. */
 class IllegalArgumentException: public Exception {
 public:
-		IllegalArgumentException(): Exception() {};
-		IllegalArgumentException(std::string message): Exception(message) {};
+		IllegalArgumentException();
+		IllegalArgumentException(std::string message);
 
 
-		virtual std::string getExceptionType() const {return "IllegalArgumentException";}
+		virtual std::string getExceptionType() const;
 };
 
 /** Represente une exception due a l'appelle d'une operation non supportee par une instance de classe.
  *  Exemple: calculer le vecteur unitaire du vecteur nul. */
 class UnsupportedOperationException: public Exception {
 public:
-		UnsupportedOperationException(): Exception() {};
-		UnsupportedOperationException(std::string message): Exception(message) {};
+		UnsupportedOperationException();
+		UnsupportedOperationException(std::string message);
 
-		virtual std::string getExceptionType() const {return "UnsupportedOperationException";}
+		virtual std::string getExceptionType() const;
 };
 
 
 }
 
-#endif /* EXCEPTION_H_ */
+#endif /* EXCEPTIONS_H_ */

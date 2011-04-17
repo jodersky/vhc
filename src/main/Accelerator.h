@@ -19,10 +19,10 @@ class Accelerator {
 private :
 
 	/** Constructeur de copie ne faisant rien. */
-	Accelerator (Accelerator const& autre) {}
+	Accelerator (Accelerator const& other) {}
 
 	/** Opérateur '=' ne faisant rien. */
-	void operator= (Accelerator const& autre) const {}
+	void operator= (Accelerator const& other) const {}
 
 protected:
 
@@ -88,8 +88,9 @@ public:
 	}
 
 
-	/** Fait évoluer l'accélérateur d'un lapse de temps dt . */
+	/** Fait évoluer l'accélérateur d'un lapse de temps dt. */
 	void step(double dt) {
+
 
 	}
 

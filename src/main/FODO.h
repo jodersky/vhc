@@ -18,14 +18,14 @@ class FODO: public CompositeElement {
 
 private:
 	double straightLength;
-	double focalisingCoefficient;
-	Quadrupole* focalisingQuadrupole;
-	Quadrupole* defocalisingQuadrupole;
+	double focalizingCoefficient;
+	Quadrupole* focalizingQuadrupole;
+	Quadrupole* defocalizingQuadrupole;
 	StraightElement* straightElement1;
 	StraightElement* straightElement2;
 
 public:
-	FODO(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double straightLength, double focalisingCoefficient,  Element* next = NULL);
+	FODO(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double straightLength, double focalizingCoefficient,  Element* next = NULL);
 
 	virtual ~FODO();
 
