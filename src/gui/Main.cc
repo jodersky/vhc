@@ -8,7 +8,6 @@
 #include <iostream>
 #include <QApplication>
 #include <QWidget>
-#include "GLWidget.h"
 #include "Stage.h"
 #include "Accelerator.h"
 #include "StraightElement.h"

@@ -91,6 +91,19 @@ public:
 	/** Fait évoluer l'accélérateur d'un lapse de temps dt. */
 	void step(double dt) {
 
+		for (int i = 0; i < particleCollec.size(); ++i) {
+			Particle& particle = *(particleCollec[i]);
+			particle.applyMagneticForce(particle.getElement()->magneticFieldAt(particle.getPosition()), dt);
+
+			Vector3D a = particle.getForce() / (particle.getGamma() * particle.getMass());
+			particle.setVelocity(particle.getVelocity() + a * dt);
+		}
+
+		for (int i = 0; i < particleCollec.size(); ++i) {
+			Particle& particle = *(particleCollec[i]);
+			particle.setPosition(particle.getPosition() + particle.getVelocity() * dt);
+			particle.setForce(Vector3D::Null);
+		}
 
 	}
 

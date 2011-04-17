@@ -7,6 +7,7 @@
 
 #include <sstream>
 #include "Vector3D.h"
+#include "exceptions.h"
 
 using namespace std;
 

@@ -9,7 +9,6 @@
 #define VECTOR3D_H_
 
 #include <math.h>
-#include "exceptions.h"
 #include "Printable.h"
 
 namespace vhc {
