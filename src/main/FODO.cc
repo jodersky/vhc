@@ -52,6 +52,8 @@ FODO::~FODO() {
 	elements.clear();
 }
 
+std::string FODO::getType() const {return "FODO";}
+
 FODO* FODO::clone() const {
 	return new FODO(getEntryPosition(), getExitPosition(), getSectionRadius(), straightLength, focalizingCoefficient);
 }

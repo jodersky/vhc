@@ -98,7 +98,15 @@ public:
 		for (int i = 0; i < particleCollec.size(); ++i) {
 			Particle* particle = particleCollec[i];
 
+			std::cout << "element: " << (particle->getElement()->toString()) << "\n";
+
+			std::cout << "B field at particle position: " << (particle->getElement()->magneticFieldAt(particle->getPosition())) << "\n";
+			std::cout << "B field at entry position: " << (particle->getElement()->magneticFieldAt(particle->getElement()->getEntryPosition())) << "\n";
+
+			std::cout << "real stuff\n";
 			particle->applyMagneticForce(particle->getElement()->magneticFieldAt(particle->getPosition()), dt);
+
+			std::cout.flush();
 
 			Vector3D a = particle->getForce() / (particle->getGamma() * particle->getMass());
 			particle->setVelocity(particle->getVelocity() + a * dt);

@@ -49,6 +49,8 @@ void CompositeElement::accept(const ElementVisitor& v) const {
 	}
 }
 
+std::string CompositeElement::getType() const {return "CompositeElement";}
+
 std::string CompositeElement::toString() const {
 	std::stringstream s;
 	for (int i(0); i < elements.size(); ++i) {

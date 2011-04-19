@@ -25,13 +25,14 @@ public:
 
 	virtual ~Quadrupole();
 
-	virtual Vector3D magneticFieldAt(const Vector3D& position);
+	virtual Vector3D magneticFieldAt(const Vector3D& position) const;
 
 	double getFocalizingCoefficient() const;
 
 	void setFocalizingCoefficient(double value);
 
 	virtual std::string getType() const;
+	virtual std::string toString() const;
 
 	virtual void accept(const ElementVisitor& v) const;
 

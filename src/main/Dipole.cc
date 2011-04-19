@@ -29,7 +29,7 @@ std::string Dipole::getType() const {return "Dipole";}
 std::string Dipole::toString() const {
 	std::stringstream s;
 	s << CurvedElement::toString() << "\n";
-	s << "\tB: " << getMagneticField();
+	s << "\tB: " << getMagneticField() << "\n";
 	s << "\t|B|: " << getMagneticField().norm();
 	return s.str();
 }

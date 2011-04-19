@@ -24,7 +24,11 @@ CurvedElement::CurvedElement(const Vector3D& entry, const Vector3D& exit, double
 
 		//pas possible que le rayon de courbure soit plus petit la moitie
 		//de la distance entre les points d'entree et de sortie
-		if (fabs(1.0 / k) < (exit - entry).norm() / 2) throw IllegalArgumentException("Invalid curvature radius.");
+		if (fabs(1.0 / k) < (exit - entry).norm() / 2) throw IllegalArgumentException("Invalid curvature radius: too small.");
+
+		Vector3D outDirection = (entryPosition - curvatureCenter).cross(exitPosition - curvatureCenter).cross(exitPosition - curvatureCenter);
+		if ((entryPosition - exitPosition).dot(outDirection) > 0) throw IllegalArgumentException("A curved element cannot be more than half a turn.");
+
 
 		Vector3D midpoint = (getEntryPosition() + getExitPosition())/ 2;
 		curvatureCenter = midpoint + 1 / k * sqrt(1.0 - (k * k) / 4 * getDiagonal().normSquare()) * (getDiagonal().unit().cross(Vector3D::k));
@@ -41,13 +45,13 @@ double CurvedElement::getAngle() const {
 }
 
 bool CurvedElement::hasHit(const Particle& particle) const {
-	Vector3D x(particle.getPosition() - entryPosition);
-	if (x == Vector3D::Null) return false;
-	else return (x - Vector3D(x.getX(), x.getY(), 0).unit() / fabs(curvature)).norm() > sectionRadius;
+	Vector3D X(particle.getPosition() - curvatureCenter);
+	Vector3D u = (X - particle.getPosition().getZ() * Vector3D::k).unit();
+	return (X - fabs(1.0 / curvature) * u).norm() > sectionRadius;
 }
 
 bool CurvedElement::isPast(const Particle& particle) const {
-	Vector3D out = (entryPosition - curvatureCenter).cross(exitPosition - curvatureCenter).cross(entryPosition - curvatureCenter);
+	Vector3D out = (entryPosition - curvatureCenter).cross(exitPosition - curvatureCenter).cross(exitPosition - curvatureCenter);
 	return (particle.getPosition() - exitPosition).dot(out) > 0;
 }
 

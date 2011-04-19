@@ -66,10 +66,10 @@ Accelerator* standardAccelerator() {
 }
 
 Accelerator* linear() {
-	FODO element = FODO(Vector3D(0, 0, 0), Vector3D(4, 0, 0), 0.2, 1.0, 5E9);
+	FODO element = FODO(Vector3D(0, 0, 0), Vector3D(4, 0, 0), 0.2, 1.2, 0.1);
 	Accelerator* acc = new Accelerator();
 	Element* celement = acc->add(element);
-	Particle e(Vector3D(0, 0.05, 0.01), constants::ELECTRON_MASS, constants::E, 14E9 * constants::E, Vector3D::i);
+	Particle e(Vector3D(0, 0.15, 0.01), constants::ELECTRON_MASS, constants::E, 14E9 * constants::E, Vector3D::i);
 	Particle* ce = acc->add(e);
 	ce->setElement(celement);
 
@@ -85,12 +85,12 @@ Accelerator* singleDipole() {
 
 	double mass = constants::ELECTRON_MASS;
 	double charge = constants::E;
-	double energy = 14 * 1E9 * constants::E;
+	double energy = 1 * 1E9 * constants::E;
 
 
 	Particle particle = Particle(entry, mass, charge, energy, direction);
 	double Bz = particle.getGamma() * particle.getMass() * curvature * particle.getVelocity().norm() / particle.getCharge();
-	std::cout << Bz << std::endl;
+	std::cout << "|B:|" << Bz << std::endl;
 	Dipole element = Dipole(entry, exit, sectionRadius, curvature, Vector3D::k * Bz);
 
 	Accelerator* acc = new Accelerator();
@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     vhc::Stage window;
-    Accelerator* acc = singleDipole();
+    Accelerator* acc = linear();
     window.accelerator = acc;
     window.showFullScreen();
 

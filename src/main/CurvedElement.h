@@ -17,10 +17,14 @@
 
 namespace vhc {
 
-/** Represente un element courbe. En plus de posseder les proprietes generales d'un element,
- *  un element courbe a de plus une courbure et un centre de courbure.
- *  ==> TODO ajouter explication de la courbure
- *  Le centre de courbure est calcule avec la courbure et les positions des faces d'entree et de sortie d'un element. */
+/** Classe de base pour elements courbes. En plus de posseder les proprietes generales d'un element,
+ *  un element courbe une courbure et un centre de courbure.
+ *  La courbure est donnee par l'inverse du rayon de courbure dont le signe indique le sens de courbure par
+ *  rapport à l’orientation donnée par l’opposé de l’axe vertical (Vector3D::k);
+ *
+ *  Le centre de courbure est calcule avec la courbure et les positions des faces d'entree et de sortie d'un element.
+ *
+ *  <b>ATTENTION:</b> un element courbe ne peut faire plus d'un demi tour! */
 class CurvedElement: public Element {
 
 protected:

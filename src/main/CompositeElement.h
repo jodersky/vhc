@@ -38,16 +38,14 @@ public:
 	/** Determine si une particule a passe cet element, donc passe le dernier element composant. */
 	virtual bool isPast(const Particle& particle) const;
 
-	/** Retourne le vecteur résultant du champ magnétique de tous les éléments, à une certaine position donnée.*/
 	virtual Vector3D magneticFieldAt(const Vector3D& position) const;
 
-	/** Retourne le vecteur résultant du champ électrique de tous les éléments, à une certaine position donnée.*/
 	virtual Vector3D electricFieldAt(const Vector3D& position) const;
 
-	// TODO une explication simple.....lol
 	virtual void accept(const ElementVisitor& v) const;
 
-	/** Retourne cet élément composé sous forme de chaîne de caractères.*/
+	virtual std::string getType() const;
+
 	virtual std::string toString() const;
 
 };
