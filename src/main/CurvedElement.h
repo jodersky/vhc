@@ -60,7 +60,10 @@ public:
 	/** Retourne l'angle entre la position d'entree, le centre de courbure et la position de sortie. */
 	double getAngle() const;
 
+	/** Retourne le type ("Cuved Element") de cet élément.*/
 	virtual std::string getType() const;
+
+	/** Retourne cet élément courbe sous forme de chaîne de caractères.*/
 	virtual std::string toString() const;
 
 };

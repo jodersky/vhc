@@ -106,8 +106,10 @@ public:
 	 *  dans des implementations concretes. */
 	virtual std::string getType() const;
 
+	/** Retourne une représentation de cet élément sous forme de chaînes de caractères.*/
 	virtual std::string toString() const;
 
+	//TODO expl.
 	virtual void accept(const ElementVisitor& v) const = 0;
 };
 

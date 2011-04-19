@@ -45,13 +45,19 @@ public:
 	 *  Ceci correspondrait en realite a une correction du champ a l'aide d'electroaimants. */
 	void setMagneticField(const Vector3D& field);
 
+	/** Retourne le vecteur du champ magnétique de cet élément, à une certaine position donnée.*/
 	virtual Vector3D magneticFieldAt(const Vector3D& position) const;
 
+	/** Retourne le type ("Dipole") de cet élément.*/
 	virtual std::string getType() const;
+
+	/** Retourne le dipole sous forme de chaîne de caractères.*/
 	virtual std::string toString() const;
 
+	// TODO explication simple
 	virtual void accept(const ElementVisitor& v) const;
 
+	/** Redéfinition du constructeur de copie hérité de la classe 'cloneable'.*/
 	virtual Dipole* clone() const;
 
 

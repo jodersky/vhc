@@ -16,7 +16,8 @@
 
 namespace vhc {
 
-
+/** Représente un accélérateur. Cette classe contient en particulier une méthode
+ *  qui fait évoluer les particules qu'elle contient. */
 class Accelerator {
 private :
 
@@ -28,14 +29,13 @@ private :
 
 protected:
 
-	/* Attributs d'un accélérateur : une collection d'éléments, et une de particules. */
+	/** Attributs d'un accélérateur : une collection d'éléments, et une de particules. */
 	std::vector< Element* > elementCollec;
 	std::vector< Particle* > particleCollec;
 
 public:
 
 	/** Constructeur d'un accélérateur. */
-	// Pour l'instant j'ai décidé que l'accélérateur possède deux containers (cf. slide35)
 	Accelerator ():
 		elementCollec(0),
 		particleCollec(0)
@@ -43,14 +43,10 @@ public:
 
 	virtual ~Accelerator() {clear();}
 
-	/* Retourne un pointeur sur un élément de l'accélérateur,
-	 * il n'y a pas besoin d'avoir l'élément lui-même.
-	 * Question : où mettre le 'delete' ? */
+	/** Retourne un pointeur sur un élément de l'accélérateur.*/
 	Element* getElement(int rank) const { return elementCollec[rank]; }
 
-	/* Retourne un pointeur sur une particule de l'accélérateur,
-	 * il n'y a pas besoin d'avoir la particule elle-même.
-	 * Question : où mettre le 'delete' ? */
+	/* Retourne un pointeur sur une particule de l'accélérateur.*/
 	Particle* getParticle(int rank) const { return particleCollec[rank];}
 
 	/** Retourne une représentation en chaîne de caractères de cet accélérateur. */
@@ -85,16 +81,18 @@ public:
 		elementCollec.clear();
 	}
 
+	/** Retourne la liste des éléments de l'accélérateur.*/
 	const std::vector< Element* >& getElements() const {
 		return elementCollec;
 	}
 
+	/** Retourne la liste des particules de l'accélérateur.*/
 	const std::vector< Particle* >& getParticles() const {
 		return particleCollec;
 	}
 
 
-	/** Fait évoluer l'accélérateur d'un lapse de temps dt. */
+	/** Fait évoluer l'accélérateur d'un laps de temps dt. */
 	void step(double dt) {
 
 		for (int i = 0; i < particleCollec.size(); ++i) {
