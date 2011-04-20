@@ -21,7 +21,7 @@
 
 using namespace vhc;
 
-std::vector< Particle > createParticles(const Vector3D& position, int n, double mass = constants::ELECTRON_MASS, double charge = constants::E, double energy = 0, Vector3D direction = Vector3D::Null) {
+std::vector< Particle > createParticles(const Vector3D& position, int n, double mass = constants::ELECTRON_MASS, double charge = constants::E, double energy = 0, Vector3D direction = Vector3D::i) {
 	std::vector< Particle > v;
 
 	double r = 0.1;
@@ -29,7 +29,7 @@ std::vector< Particle > createParticles(const Vector3D& position, int n, double 
 	for (int i = 0; i < n; ++i) {
 		double x = (rand() % 1000) / 1000.0 * r;
 		double y = (rand() % 1000) / 1000.0 * sqrt(r * r - x * x);
-		double z = (rand() % 1000) / 1000.0 * sqrt(r * r - y * y - x * x);;
+		double z = (rand() % 1000) / 1000.0 * sqrt(r * r - y * y - x * x);
 		v.push_back(Particle(position + Vector3D(x, y, z), mass, charge, energy, direction));
 	}
 
@@ -66,7 +66,7 @@ Accelerator* standardAccelerator() {
 }
 
 Accelerator* linear() {
-	FODO element = FODO(Vector3D(0, 0, 0), Vector3D(4, 0, 0), 0.2, 1.2, 0.1);
+	FODO element = FODO(Vector3D(0, 0, 0), Vector3D(4, 0, 0), 0.2, 0.2, 120);
 	Accelerator* acc = new Accelerator();
 	Element* celement = acc->add(element);
 	Particle e(Vector3D(0, 0.15, 0.01), constants::ELECTRON_MASS, constants::E, 14E9 * constants::E, Vector3D::i);
@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     vhc::Stage window;
-    Accelerator* acc = linear();
+    Accelerator* acc = singleDipole();
     window.accelerator = acc;
     window.showFullScreen();
 

@@ -23,7 +23,10 @@ Vector3D Quadrupole::magneticFieldAt(const Vector3D& position) const {
 	Vector3D d = getDiagonal().unit();
 	Vector3D y = x - x.dot(d) * d;
 	Vector3D u = Vector3D::k.cross(d);
-	return focalizingCoefficient * (y.dot(u) * Vector3D::k + position.getZ() * u);
+	if ((x.dot(d) >= 0) && ((position - getExitPosition()).dot(-d) >= 0))
+		return focalizingCoefficient * (y.dot(u) * Vector3D::k + position.getZ() * u);
+	else
+		return Vector3D::Null;
 }
 
 double Quadrupole::getFocalizingCoefficient() const {
