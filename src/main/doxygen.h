@@ -9,6 +9,7 @@
 
 /**@mainpage
  * Page principale.
+ * <b>tchigidididi</b>
  *
  */
 

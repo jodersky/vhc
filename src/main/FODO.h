@@ -15,6 +15,8 @@
 
 namespace vhc {
 
+/** Représente une maille FODO, qui est un élément magnétique droit, composé d'un quadrupôle, d'une section droite, d'un autre quadrupôle «opposé», et d'une autre section droite.
+ */
 class FODO: public CompositeElement {
 
 private:

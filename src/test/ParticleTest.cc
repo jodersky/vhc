@@ -55,8 +55,8 @@ int main() {
 		cout << "t = " << t << endl;
 		step(h);
 		t += h;
-		cin.get(c);
-	} while (c != 'c' && !hit);
+		//cin.get(c);
+	} while (false);
 
 	if (hit) {
 		cout << "Particle hit the wall!!!" << endl;

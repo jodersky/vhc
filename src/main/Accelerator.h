@@ -18,7 +18,7 @@ namespace vhc {
 
 /** Représente un accélérateur. Cette classe contient en particulier une méthode
  *  qui fait évoluer les particules qu'elle contient. */
-class Accelerator {
+class Accelerator: public Printable{
 private :
 
 	/** Constructeur de copie ne faisant rien. */
@@ -128,6 +128,11 @@ public:
 
 	}
 
+	void* stepMonteCarlo();
+
+	void* stepDeterministBackUp();
+
+	void* stepDeterminist();
 
 };
 
