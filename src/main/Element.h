@@ -38,6 +38,10 @@ protected:
 	/** Rayon de la chambre à vide. */
 	double sectionRadius;
 
+	/** Pointeur sur l'élément precedent.
+	 *  NULL si aucun element n'existe. */
+	Element *previous;
+
 	/** Pointeur sur l'élément suivant.
 	 *  NULL si aucun element n'existe. */
 	Element *next;
@@ -58,11 +62,17 @@ public:
 	 *  ATTENTION: La delocation de memoire est sous la responsabilite de l'appelant. */
 	virtual Element* clone() const = 0;
 
-	/** Determine si la particule donnee a heurte le bord de cet element. */
-	virtual bool hasHit(const Particle& particle) const = 0;
+	virtual bool isBefore(const Vector3D& position) const = 0;
+	bool isBefore(const Particle& particle) const;
 
-	/** Determine si la particule donnee a passe cet element. */
-	virtual bool isPast(const Particle& particle) const = 0;
+	virtual bool isBeside(const Vector3D& position) const = 0;
+	bool isBeside(const Particle& particle) const;
+
+	virtual bool isAfter(const Vector3D& position) const = 0;
+	bool isAfter(const Particle& particle) const;
+
+	bool contains(const Vector3D& position) const;
+	bool contains(const Particle& particle) const;
 
 	/** Retourne le champ magnetique, a l'interieur de cet element a la position donnee. */
 	virtual Vector3D magneticFieldAt(const Vector3D& position) const;
@@ -93,7 +103,13 @@ public:
 	//void setSectionRadius(double r) {sectionRadius = r;}
 
 	/** Retourne un pointeur l'element suivant. NULL s'il n'existe pas. */
-	Element* getNext() const;
+	Element* const getPrevious() const;
+
+	/** Assigne un pointeur sur l'element suivant. */
+	void setPrevious(Element* p);
+
+	/** Retourne un pointeur sur l'element suivant. NULL s'il n'existe pas. */
+	Element* const getNext() const;
 
 	/** Assigne un pointeur sur l'element suivant. */
 	void setNext(Element* n);
@@ -111,6 +127,7 @@ public:
 
 	//TODO expl.
 	virtual void accept(const ElementVisitor& v) const = 0;
+
 };
 
 }

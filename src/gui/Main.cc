@@ -9,6 +9,7 @@
 #include <QApplication>
 #include <QWidget>
 #include <cmath>
+#include "exceptions.h"
 #include "Stage.h"
 #include "Accelerator.h"
 #include "StraightElement.h"
@@ -112,14 +113,16 @@ Accelerator* singleDipole() {
 
 int main(int argc, char *argv[])
 {
+	try {
+
     QApplication app(argc, argv);
 
     vhc::Stage window;
-    Accelerator* acc = singleDipole();
+    Accelerator* acc = linear();
     window.accelerator = acc;
-    window.showFullScreen();
+    //window.showFullScreen();
 
-    //window.resize(QSize(500, 500));
+    window.resize(QSize(500, 500));
     window.setWindowTitle("Virtual Hadron Collider");
     window.show();
 
@@ -127,4 +130,7 @@ int main(int argc, char *argv[])
 
     delete acc; acc = NULL;
 
+	} catch (Exception& ex){
+    	std::cerr << ex.toString() << "\n";
+    }
 }

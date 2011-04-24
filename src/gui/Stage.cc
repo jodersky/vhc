@@ -137,7 +137,7 @@ void Stage::mouseMoveEvent(QMouseEvent* event) {
 	int dpitch = -event->y() + center.y();
 	camera.addHeading(1.0 * dheading * frameTime / 4000);
 	camera.addPitch(1.0 * dpitch * frameTime / 4000);
-	QCursor::setPos(center);
+	QCursor::setPos(QWidget::mapToGlobal(center));
 	update();
 }
 

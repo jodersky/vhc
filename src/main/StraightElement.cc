@@ -15,16 +15,20 @@ StraightElement::StraightElement(const Vector3D& entry, const Vector3D& exit, do
 
 StraightElement::~StraightElement() {};
 
+bool StraightElement::isBefore(const Vector3D& position) const {
+	const Vector3D v(position - exitPosition);
+	return (-getDiagonal()).dot(v) > getDiagonal().normSquare();
+}
 
-bool StraightElement::hasHit(const Particle& particle) const {
-	Vector3D a(particle.getPosition() - entryPosition);
-	const Vector3D b = (particle.getPosition() - entryPosition);
-	return (a.cross(b)).norm() / getDiagonal().norm() > sectionRadius;
+bool StraightElement::isBeside(const Vector3D& position) const {
+	Vector3D X = Vector3D(position - entryPosition);
+	Vector3D d = getDiagonal().unit();
+	return (X - X.dot(d) * d).norm() > sectionRadius;
 };
 
-bool StraightElement::isPast(const Particle& particle) const {
-	const Vector3D v(particle.getPosition() - entryPosition);
-	return getDiagonal().dot(v) > getDiagonal().dot(getDiagonal());
+bool StraightElement::isAfter(const Vector3D& position) const {
+	const Vector3D v(position - entryPosition);
+	return getDiagonal().dot(v) > getDiagonal().normSquare();
 }
 
 std::string StraightElement::getType() const {return "Straight Element";}

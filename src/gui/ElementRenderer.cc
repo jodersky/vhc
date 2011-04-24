@@ -60,7 +60,7 @@ void ElementRenderer::visit(const Quadrupole* quadrupole) const {
 
 
 void ElementRenderer::visit(const Dipole* dipole) const {
-	glColor4d(0.2, 0, 0.4, 0.9);
+	glColor4d(0.8, 0.4, 0, 0.9);
 	glPushMatrix();
 	glTranslated(dipole->getCurvatureCenter().getX(), dipole->getCurvatureCenter().getY(), dipole->getCurvatureCenter().getZ());
 	Vector3D d = dipole->getExitPosition() - dipole->getCurvatureCenter();

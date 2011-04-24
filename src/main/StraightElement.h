@@ -24,9 +24,11 @@ public:
 
 	virtual ~StraightElement();
 
-	virtual bool hasHit(const Particle& particle) const;
+	virtual bool isBefore(const Vector3D& position) const;
 
-	virtual bool isPast(const Particle& particle) const;
+	virtual bool isBeside(const Vector3D& position) const;
+
+	virtual bool isAfter(const Vector3D& position) const;
 
 	virtual std::string getType() const;
 	virtual std::string toString() const;

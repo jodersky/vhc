@@ -15,16 +15,19 @@ CompositeElement::CompositeElement(const Vector3D& entry, const Vector3D& exit, 
 
 CompositeElement::~CompositeElement() {};
 
-bool CompositeElement::hasHit(const Particle& particle) const {
+bool CompositeElement::isBefore(const Vector3D& position) const {
+	return elements.front()->isBefore(position);
+}
+
+bool CompositeElement::isBeside(const Vector3D& position) const {
 	for (int i(0); i < elements.size(); ++i) {
-		if (elements[i]->hasHit(particle)) return true;
+		if (elements[i]->isBeside(position)) return true;
 	}
 	return false;
 }
 
-bool CompositeElement::isPast(const Particle& particle) const {
-	if (elements[elements.size() - 1]->isPast(particle)) return true;
-	else return false;
+bool CompositeElement::isAfter(const Vector3D& position) const {
+	return elements.back()->isAfter(position);
 }
 
 Vector3D CompositeElement::magneticFieldAt(const Vector3D& position) const {

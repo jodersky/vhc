@@ -5,6 +5,7 @@
  *      Author: Jakob Odersky
  */
 
+#include <math.h>
 #include <sstream>
 #include "Vector3D.h"
 #include "exceptions.h"
@@ -51,6 +52,8 @@ double Vector3D::norm() const {
 	return normCache;
 }
 
+double Vector3D::minNorm() const {return min(x, min(y, z));}
+
 double Vector3D::normSquare() const {return dot(*this);}
 
 std::string Vector3D::toString() const {
@@ -68,6 +71,8 @@ Vector3D Vector3D::rotate(const Vector3D& axis, double t) const {
 	const Vector3D& a = ~axis;
 	return x * cos(t) + a * x.dot(a) * (1-cos(t)) +  a.cross(x) * sin(t);
 }
+
+bool Vector3D::ae(const Vector3D& u, const Vector3D& v, double epsilon) {return (u - v).norm() <= epsilon;}
 
 //c.f. header
 Vector3D const Vector3D::Null = Vector3D(0.0, 0.0, 0.0);

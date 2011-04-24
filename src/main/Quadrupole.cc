@@ -19,14 +19,12 @@ Quadrupole::Quadrupole(const Vector3D& entry, const Vector3D& exit, double secti
 Quadrupole::~Quadrupole() {};
 
 Vector3D Quadrupole::magneticFieldAt(const Vector3D& position) const {
+	if (!Quadrupole::contains(position)) return Vector3D::Null;
 	Vector3D x = position - getEntryPosition();
 	Vector3D d = getDiagonal().unit();
 	Vector3D y = x - x.dot(d) * d;
 	Vector3D u = Vector3D::k.cross(d);
-	if ((x.dot(d) >= 0) && ((position - getExitPosition()).dot(-d) >= 0))
-		return focalizingCoefficient * (y.dot(u) * Vector3D::k + position.getZ() * u);
-	else
-		return Vector3D::Null;
+	return focalizingCoefficient * (y.dot(u) * Vector3D::k + position.getZ() * u);
 }
 
 double Quadrupole::getFocalizingCoefficient() const {

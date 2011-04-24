@@ -32,11 +32,11 @@ public:
 	CompositeElement(const Vector3D& entry, const Vector3D& exit, double sectionRadius, Element* next = NULL);
 	virtual ~CompositeElement();
 
-	/** Determine si une particule a heurte le bord de cet element, donc d'un des elements composants. */
-	virtual bool hasHit(const Particle& particle) const;
+	virtual bool isBefore(const Vector3D& position) const;
 
-	/** Determine si une particule a passe cet element, donc passe le dernier element composant. */
-	virtual bool isPast(const Particle& particle) const;
+	virtual bool isBeside(const Vector3D& position) const;
+
+	virtual bool isAfter(const Vector3D& position) const;
 
 	virtual Vector3D magneticFieldAt(const Vector3D& position) const;
 

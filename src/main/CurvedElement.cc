@@ -13,7 +13,6 @@
 using namespace std;
 namespace vhc {
 
-	/** Cf. CurvedElement.h */
 CurvedElement::CurvedElement(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double curvature, Element* next):
 		Element(entry, exit, sectionRadius, next),
 		curvature(curvature),
@@ -44,15 +43,20 @@ double CurvedElement::getAngle() const {
 	return acos((entryPosition - curvatureCenter).unit().dot((exitPosition - curvatureCenter).unit()));
 }
 
-bool CurvedElement::hasHit(const Particle& particle) const {
-	Vector3D X(particle.getPosition() - curvatureCenter);
-	Vector3D u = (X - particle.getPosition().getZ() * Vector3D::k).unit();
+bool CurvedElement::isBefore(const Vector3D& position) const {
+	Vector3D out = (exitPosition - curvatureCenter).cross(entryPosition - curvatureCenter).cross(entryPosition - curvatureCenter);
+	return (position - entryPosition).dot(out) > 0;
+}
+
+bool CurvedElement::isBeside(const Vector3D& position) const {
+	Vector3D X(position - curvatureCenter);
+	Vector3D u = (X - position.getZ() * Vector3D::k).unit();
 	return (X - fabs(1.0 / curvature) * u).norm() > sectionRadius;
 }
 
-bool CurvedElement::isPast(const Particle& particle) const {
+bool CurvedElement::isAfter(const Vector3D& position) const {
 	Vector3D out = (entryPosition - curvatureCenter).cross(exitPosition - curvatureCenter).cross(exitPosition - curvatureCenter);
-	return (particle.getPosition() - exitPosition).dot(out) > 0;
+	return (position - exitPosition).dot(out) > 0;
 }
 
 std::string CurvedElement::getType() const {return "Curved Element";}

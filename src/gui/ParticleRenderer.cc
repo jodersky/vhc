@@ -12,12 +12,11 @@
 namespace vhc {
 
 ParticleRenderer::ParticleRenderer() {
-	//Auto-generated constructor stub
 
 }
 
 ParticleRenderer::~ParticleRenderer() {
-	//Auto-generated destructor stub
+
 }
 
 void ParticleRenderer::render(const Particle& particle) const {

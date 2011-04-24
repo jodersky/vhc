@@ -8,7 +8,7 @@
 #ifndef VECTOR3D_H_
 #define VECTOR3D_H_
 
-#include <math.h>
+#include <limits>
 #include "Printable.h"
 
 namespace vhc {
@@ -93,8 +93,11 @@ public:
 	/** Retourne le vecteur unitaire */
 	Vector3D unit() const;
 
-	/** Retourne la norme du vecteur. */
+	/** Retourne la norme euclidienne du vecteur. */
 	double norm() const;
+
+	/** Retourne la norme de ce vecteur correspondant au minimum des composantes. */
+	double minNorm() const;
 
 	/** Retourne la norme du vecteur au carre. */
 	double normSquare() const;
@@ -111,6 +114,9 @@ public:
 	/** Rotation vectorielle. Retourne le vecteur courant, évalué dans la formule en <code>a</code>,
 	 * le vecteur de l'axe, et en <code>t</code>, l'angle de rotation. */
 	Vector3D rotate(const Vector3D& axis, double t) const;
+
+	/** Verifie si les vecteurs <code>u</code> et <code>v</code> sont approximativement égaux, i.e. que la norme de leur difference est plus petit qu'un epsilon. */
+	static bool ae(const Vector3D& u, const Vector3D& v, double epsilon = std::numeric_limits<double>::epsilon());
 
 	/** Vecteur nul. (0,0,0) */
 	static const Vector3D Null;

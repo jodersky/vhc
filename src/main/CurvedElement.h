@@ -45,15 +45,14 @@ public:
 	 *  @param next pointeur sur l'element suivant */
 	CurvedElement(const Vector3D& entry, const Vector3D& exit, double sectionRadius, double curvature, Element* next = NULL);
 
-
+	/** Destructeur virtuel. */
 	virtual ~CurvedElement();
-	//virtual CurvedElement* clone() const {return new CurvedElement(*this);}
 
-	//TODO !!! erreurs dans l'algorithme
-	virtual bool hasHit(const Particle& particle) const;
+	virtual bool isBefore(const Vector3D& position) const;
 
-	//TODO !!! erreurs dans l'algorithme
-	virtual bool isPast(const Particle& particle) const;
+	virtual bool isBeside(const Vector3D& position) const;
+
+	virtual bool isAfter(const Vector3D& position) const;
 
 	/** Retourne la courbure. */
 	double getCurvature() const;
