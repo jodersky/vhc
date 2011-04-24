@@ -71,6 +71,7 @@ public:
 		return p;
 	}
 
+	/** Ferme l'accelerateur. */
 	void close() {
 		for (int i = 0; i < elementCollec.size(); ++i) {
 			//element i
@@ -84,6 +85,28 @@ public:
 				current->setNext(next);
 				next->setPrevious(current);
 			} else throw UnsupportedOperationException("Cannot close accelerator. Two succeeding elements are not physically connected! (not close enough)");
+		}
+
+
+		//rajouter les particules dans leurs elements respectifs
+		for (int i = 0; i < particleCollec.size(); ++i) {
+
+			for (int j = 0; j < elementCollec.size(); ++j) {
+
+				if (elementCollec[j]->contains(*particleCollec[i])) {
+					particleCollec[i]->setElement(elementCollec[j]);
+					break;
+				}
+			}
+
+			//si une particule n'est pas contenue dans un element elle est supprimee
+			if (particleCollec[i]->getElement() == NULL) {
+				delete particleCollec[i];
+				particleCollec[i] = particleCollec[particleCollec.size() - 1];
+				particleCollec.pop_back();
+				--i;
+			}
+
 		}
 
 	}
@@ -118,30 +141,17 @@ public:
 	void step(double dt) {
 
 		for (int i = 0; i < particleCollec.size(); ++i) {
-			Particle* particle = particleCollec[i];
+			Particle& particle = *particleCollec[i];
 
-			std::cout << "element: " << (particle->getElement()->toString()) << "\n";
+			particle.applyMagneticForce(particle.getElement()->magneticFieldAt(particle.getPosition()), dt);
 
-			std::cout << "B field at particle position: " << (particle->getElement()->magneticFieldAt(particle->getPosition())) << "\n";
-			std::cout << "B field at entry position: " << (particle->getElement()->magneticFieldAt(particle->getElement()->getEntryPosition())) << "\n";
+			Vector3D a = particle.getForce() / (particle.getGamma() * particle.getMass());
+			particle.setVelocity(particle.getVelocity() + a * dt);
 
-			std::cout << "real stuff\n";
-			particle->applyMagneticForce(particle->getElement()->magneticFieldAt(particle->getPosition()), dt);
-
-			std::cout.flush();
-
-			Vector3D a = particle->getForce() / (particle->getGamma() * particle->getMass());
-			particle->setVelocity(particle->getVelocity() + a * dt);
-		}
-
-
-
-		for (int i = 0; i < particleCollec.size(); ++i) {
-			Particle& particle = *(particleCollec[i]);
 			particle.setPosition(particle.getPosition() + particle.getVelocity() * dt);
 			particle.setForce(Vector3D::Null);
 
-			if (particle.getElement()->isBeside(particle)) std::cout << "Particle hit wall!" << std::endl;
+			//if (particle.getElement()->isBeside(particle)) std::cout << "Particle hit wall!" << std::endl;
 			if (particle.getElement()->isAfter(particle)) { // si la particule est passee, qui sait si elle est dans l'element suivant?
 				if (!particle.getElement()->isConnected()) throw Exception("Element in accelerator not connected.");
 				else particle.setElement(particle.getElement()->getNext());

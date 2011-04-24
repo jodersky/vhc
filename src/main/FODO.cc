@@ -28,16 +28,20 @@ FODO::FODO(const Vector3D& entry, const Vector3D& exit, double sectionRadius, do
 	if (l < 0) throw IllegalArgumentException("Length of straight elements must be less than half of FODO length.");
 
 	Vector3D d = getDiagonal().unit();
+
 	focalizingQuadrupole = new Quadrupole(entry, entry + d * l, sectionRadius, focalizingCoefficient);
 	elements.push_back(focalizingQuadrupole);
+
 	straightElement1 = new StraightElement(focalizingQuadrupole->getExitPosition(), focalizingQuadrupole->getExitPosition() + d * L, sectionRadius);
 	elements.push_back(straightElement1);
+
 	defocalizingQuadrupole = new Quadrupole(straightElement1->getExitPosition(), straightElement1->getExitPosition() + d * l, sectionRadius, -focalizingCoefficient);
 	elements.push_back(defocalizingQuadrupole);
-	straightElement2 = new StraightElement(defocalizingQuadrupole->getExitPosition(), defocalizingQuadrupole->getExitPosition() + d * L, sectionRadius);
+
+	straightElement2 = new StraightElement(defocalizingQuadrupole->getExitPosition(), exit, sectionRadius);
 	elements.push_back(straightElement2);
 
-	//connection des elements
+	//connexion des elements
 	for (int i(0); i < elements.size() - 1; i++) {
 		elements[i]->setNext(elements[i+1]);
 	}

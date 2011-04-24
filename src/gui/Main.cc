@@ -20,9 +20,10 @@
 #include "constants.h"
 #include <vector>
 
+using namespace std;
 using namespace vhc;
 
-std::vector< Particle > createParticles(const Vector3D& position, int n, double mass = constants::ELECTRON_MASS, double charge = constants::E, double energy = 0, Vector3D direction = Vector3D::i) {
+std::vector< Particle > createParticles(const Vector3D& position, int n, double mass = constants::ELECTRON_MASS, double charge = constants::E, double energy = 1E9 * constants::E, Vector3D direction = Vector3D::i) {
 	std::vector< Particle > v;
 
 	double r = 0.1;
@@ -37,6 +38,79 @@ std::vector< Particle > createParticles(const Vector3D& position, int n, double 
 	return v;
 }
 
+
+Accelerator* standard() {
+/*
+ * L'accélérateur est constitué des 20 éléments suivants :
+Quadrupole     :  in  = (3, 2, 0) ; out = (3, 1, 0) ; Re = 0.1 ; b = 1.2
+Section droite :  in  = (3, 1, 0) ; out = (3, 0, 0) ; Re = 0.1
+Quadrupole     :  in  = (3, 0, 0) ; out = (3, -1, 0) ; Re = 0.1 ; b = -1.2
+Section droite :  in  = (3, -1, 0) ; out = (3, -2, 0) ; Re = 0.1
+Dipole         :  in  = (3, -2, 0) ; out = (2, -3, 0) ; Re = 0.1 ; Rc = 1 ; Cc = (2, -2, 0) ; B=(0, 0, 5.89158)
+Quadrupole     :  in  = (2, -3, 0) ; out = (1, -3, 0) ; Re = 0.1 ; b = 1.2
+Section droite :  in  = (1, -3, 0) ; out = (0, -3, 0) ; Re = 0.1
+Quadrupole     :  in  = (0, -3, 0) ; out = (-1, -3, 0) ; Re = 0.1 ; b = -1.2
+Section droite :  in  = (-1, -3, 0) ; out = (-2, -3, 0) ; Re = 0.1
+Dipole         :  in  = (-2, -3, 0) ; out = (-3, -2, 0) ; Re = 0.1 ; Rc = 1 ; Cc = (-2, -2, 0) ; B=(0, 0, 5.89158)
+Quadrupole     :  in  = (-3, -2, 0) ; out = (-3, -1, 0) ; Re = 0.1 ; b = 1.2
+Section droite :  in  = (-3, -1, 0) ; out = (-3, 0, 0) ; Re = 0.1
+Quadrupole     :  in  = (-3, 0, 0) ; out = (-3, 1, 0) ; Re = 0.1 ; b = -1.2
+Section droite :  in  = (-3, 1, 0) ; out = (-3, 2, 0) ; Re = 0.1
+Dipole         :  in  = (-3, 2, 0) ; out = (-2, 3, 0) ; Re = 0.1 ; Rc = 1 ; Cc = (-2, 2, 0) ; B=(0, 0, 5.89158)
+Quadrupole     :  in  = (-2, 3, 0) ; out = (-1, 3, 0) ; Re = 0.1 ; b = 1.2
+Section droite :  in  = (-1, 3, 0) ; out = (0, 3, 0) ; Re = 0.1
+Quadrupole     :  in  = (0, 3, 0) ; out = (1, 3, 0) ; Re = 0.1 ; b = -1.2
+Section droite :  in  = (1, 3, 0) ; out = (2, 3, 0) ; Re = 0.1
+Dipole         :  in  = (2, 3, 0) ; out = (3, 2, 0) ; Re = 0.1 ; Rc = 1 ; Cc = (2, 2, 0) ; B=(0, 0, 5.89158)
+ *
+ *
+ *L'accélérateur contient les 2 particules suivantes :
+Une particule :
+  position : (3.01, 0, 0)
+  vitesse  : (0, -2.64754e+08, 0)
+  gamma    : 2.13158
+  energie (GeV) : 2
+  masse   (GeV/c^2) : 0.938272
+  charge   : 1.60217653e-19
+  force    : ( 0 ; 0 ; 0 )
+
+Une particule :
+  position : (2.99, 0, 0)
+  vitesse  : (0, -2.64754e+08, 0)
+  gamma    : 2.13158
+  energie (GeV) : 2
+  masse   (GeV/c^2) : 0.938272
+  charge   : 1.60217653e-19
+  force    : ( 0 ; 0 ; 0 )
+ *
+ */
+
+	FODO e1 = FODO(Vector3D(3, 2, 0), Vector3D(3, -2, 0), 0.1, 1.0, 1.2);
+	Dipole e2 = Dipole(e1.getExitPosition(), Vector3D(2, -3, 0), 0.1, 1, Vector3D(0, 0, 5.89158));
+	FODO e3 = FODO(e2.getExitPosition(), Vector3D(-2, -3, 0), 0.1, 1, 1.2);
+	Dipole e4 = Dipole(e3.getExitPosition(), Vector3D(-3, -2, 0), 0.1, 1, Vector3D(0, 0, 5.89158));
+	FODO e5 = FODO(e4.getExitPosition(), Vector3D(-3, 2, 0), 0.1, 1.0, 1.2);
+	Dipole e6 = Dipole(e5.getExitPosition(), Vector3D(-2, 3, 0), 0.1, 1, Vector3D(0, 0, 5.89158));
+	FODO e7 = FODO(e6.getExitPosition(), Vector3D(2, 3, 0), 0.1, 1.0, 1.2);
+	Dipole e8 = Dipole(e7.getExitPosition(), e1.getEntryPosition(), 0.1, 1, Vector3D(0, 0, 5.89158));
+	Accelerator* acc = new Accelerator();
+	acc->add(e1);
+	acc->add(e2);
+	acc->add(e3);
+	acc->add(e4);
+	acc->add(e5);
+	acc->add(e6);
+	acc->add(e7);
+	acc->add(e8);
+
+	Particle p1 = Particle(Vector3D(3.01, 0, 0), constants::PROTON_MASS, constants::E, 2 * constants::GeV, -Vector3D::j);
+	Particle p2 = Particle(Vector3D(2.99, 0, 0), constants::PROTON_MASS, constants::E, 2 * constants::GeV, -Vector3D::j);
+	acc->add(p1);
+	acc->add(p2);
+	acc->close();
+
+	return acc;
+}
 
 Accelerator* standardAccelerator() {
 	FODO e1 = FODO(Vector3D(3, 2, 0), Vector3D(3, -2, 0), 0.2, 1.0, 5.0);
@@ -57,11 +131,13 @@ Accelerator* standardAccelerator() {
 	acc->add(e7);
 	acc->add(e8);
 
-	std::vector< Particle > ps = createParticles(e1.getEntryPosition(), 1000);
+	std::vector< Particle > ps = createParticles(e1.getEntryPosition(), 100000);
 
 	for (int i = 0; i < ps.size(); ++i) {
 		acc->add(ps[i]);
 	}
+
+	acc->close();
 
 	return acc;
 }
@@ -118,8 +194,13 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     vhc::Stage window;
-    Accelerator* acc = linear();
+    Accelerator* acc = standard();
+    cout << (*acc) << endl;
+    cout.flush();
     window.accelerator = acc;
+
+
+
     //window.showFullScreen();
 
     window.resize(QSize(500, 500));
@@ -134,3 +215,5 @@ int main(int argc, char *argv[])
     	std::cerr << ex.toString() << "\n";
     }
 }
+
+

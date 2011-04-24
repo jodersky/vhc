@@ -10,6 +10,8 @@
 
 namespace vhc {
 
+Printable::~Printable() {};
+
 //c.f. header
 std::ostream& operator<< (std::ostream& output, const Printable& p) {
 	output << p.toString();

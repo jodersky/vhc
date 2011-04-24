@@ -38,8 +38,8 @@ void Quadrupole::setFocalizingCoefficient(double value) {
 std::string Quadrupole::getType() const {return "Quadrupole";}
 std::string Quadrupole::toString() const {
 	std::stringstream s;
-	s << Element::toString() << "\n";
-	s << "\tfocalizing coefficient: " << focalizingCoefficient;
+	s << StraightElement::toString() << " ; "
+	  << "b = " << focalizingCoefficient;
 	return s.str();
 }
 

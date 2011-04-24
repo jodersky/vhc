@@ -7,7 +7,10 @@
 
 
 #include <sstream>
+#include <iomanip>
 #include "Element.h"
+
+using namespace std;
 
 namespace vhc {
 
@@ -57,15 +60,14 @@ void Element::setNext(Element* n) {next = n;}
 
 bool Element::isConnected() const {return next != NULL;}
 
-std::string Element::getType() const {return "Element";}
+string Element::getType() const {return "Element";}
 
-std::string Element::toString() const {
-	std::stringstream s;
-	s << getType() << ":\n";
-	s << "\tentry: " << getEntryPosition()	<<	"\n";
-	s << "\texit: " << getExitPosition()	<<	"\n";
-	s << "\tsection radius: " << getSectionRadius()	<<	"\n";
-	s << "\tconnected: " << (isConnected() ? "true" : "false");
+string Element::toString() const {
+	stringstream s;
+	s << left << setfill(' ') << setw(20) << getType() << ": ";
+	s << "in = " << getEntryPosition() << " ; "
+	  << "out = " << getExitPosition()	<<	" ; "
+	  << "Rs = " << getSectionRadius();
 	return s.str();
 }
 

@@ -17,6 +17,8 @@ class Printable {
 
 public:
 
+	virtual ~Printable();
+
 	/** Retourne une représentation en chaîne de caractères de cet objet imprimable. */
 	virtual std::string toString() const = 0;
 

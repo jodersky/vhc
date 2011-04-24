@@ -5,8 +5,10 @@
  *      Author: jakob
  */
 
+#include <iomanip>
 #include "CompositeElement.h"
 
+using namespace std;
 namespace vhc {
 
 CompositeElement::CompositeElement(const Vector3D& entry, const Vector3D& exit, double sectionRadius, Element* next):
@@ -56,8 +58,10 @@ std::string CompositeElement::getType() const {return "CompositeElement";}
 
 std::string CompositeElement::toString() const {
 	std::stringstream s;
+	s << Element::toString() << ":\n";
 	for (int i(0); i < elements.size(); ++i) {
-		s << elements[i]->toString() << "\n";
+		s << "\t" << elements[i]->toString();
+		if (i != elements.size() - 1) s << "\n";
 	}
 	return s.str();
 }

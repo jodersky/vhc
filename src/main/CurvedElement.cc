@@ -62,10 +62,9 @@ bool CurvedElement::isAfter(const Vector3D& position) const {
 std::string CurvedElement::getType() const {return "Curved Element";}
 std::string CurvedElement::toString() const {
 	std::stringstream s;
-	s << Element::toString() << "\n";
-	s << "\tcurvature: "		<< getCurvature() 		<< "\n";
-	s << "\tcurvature radius: "	<< 1.0 / getCurvature() << "\n";
-	s << "\tcurvature center: "	<< getCurvatureCenter();
+	s << Element::toString() << " "
+	  << "k = "	<< getCurvature() << " ; "
+	  << "Cc =  " << getCurvatureCenter();
 	return s.str();
 }
 

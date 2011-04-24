@@ -67,11 +67,11 @@ std::string Particle::toString() const {
 	s << "Particle:"	<< "\n";
 	s << "\tposition: "	<< position	<< "\n";
 	s << "\tvelocity: "	<< velocity	<< "\n";
-	s << "\t|v|: "		<< velocity.norm() << "\n";
+	s << "\tforce:    "	<< force;
+	s << "\tnorm: "		<< velocity.norm() << "\n";
 	s << "\tgamma: "	<< gamma << "\n";
 	s << "\tmass:     "	<< mass		<< "\n";
 	s << "\tcharge:   "	<< charge	<< "\n";
-	s << "\tforce:    "	<< force;
 	return s.str();
 }
 

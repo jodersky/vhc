@@ -33,9 +33,7 @@ bool StraightElement::isAfter(const Vector3D& position) const {
 
 std::string StraightElement::getType() const {return "Straight Element";}
 std::string StraightElement::toString() const {
-	std::stringstream s;
-	s << Element::toString();
-	return s.str();
+	return Element::toString();
 }
 
 void StraightElement::accept(const ElementVisitor& v) const {v.visit(this);}

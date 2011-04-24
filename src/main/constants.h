@@ -28,6 +28,8 @@ const double PROTON_MASS = 1.672623E-27;
 /** Masse d'un électron [kg]. */
 const double ELECTRON_MASS = 9.109383E-31;
 
+const double GeV = 1E9 * E;
+
 }
 
 }
