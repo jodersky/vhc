@@ -50,15 +50,15 @@ Vector3D Element::getExitPosition() const {return exitPosition;}
 
 double Element::getSectionRadius() const {return sectionRadius;}
 
-Element* const Element::getPrevious() const {return previous;}
+Element* Element::getPrevious() const {return previous;}
 
 void Element::setPrevious(Element* p) {previous = p;}
 
-Element* const Element::getNext() const {return next;}
+Element* Element::getNext() const {return next;}
 
 void Element::setNext(Element* n) {next = n;}
 
-bool Element::isConnected() const {return next != NULL;}
+bool Element::isConnected() const {return previous != NULL && next != NULL;}
 
 string Element::getType() const {return "Element";}
 

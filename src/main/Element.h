@@ -103,13 +103,13 @@ public:
 	//void setSectionRadius(double r) {sectionRadius = r;}
 
 	/** Retourne un pointeur l'element suivant. NULL s'il n'existe pas. */
-	Element* const getPrevious() const;
+	Element* getPrevious() const;
 
 	/** Assigne un pointeur sur l'element suivant. */
 	void setPrevious(Element* p);
 
 	/** Retourne un pointeur sur l'element suivant. NULL s'il n'existe pas. */
-	Element* const getNext() const;
+	Element* getNext() const;
 
 	/** Assigne un pointeur sur l'element suivant. */
 	void setNext(Element* n);

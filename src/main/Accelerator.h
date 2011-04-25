@@ -151,7 +151,7 @@ public:
 			particle.setPosition(particle.getPosition() + particle.getVelocity() * dt);
 			particle.setForce(Vector3D::Null);
 
-			//if (particle.getElement()->isBeside(particle)) std::cout << "Particle hit wall!" << std::endl;
+			if (particle.getElement()->isBeside(particle)) std::cout << "Particle hit wall!" << std::endl;
 			if (particle.getElement()->isAfter(particle)) { // si la particule est passee, qui sait si elle est dans l'element suivant?
 				if (!particle.getElement()->isConnected()) throw Exception("Element in accelerator not connected.");
 				else particle.setElement(particle.getElement()->getNext());
