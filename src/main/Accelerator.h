@@ -26,7 +26,7 @@ private :
 	Accelerator (Accelerator const& other) {}
 
 	/** Opérateur '=' ne faisant rien. */
-	void operator= (Accelerator const& other) const {}
+	void operator= (Accelerator const& other) {}
 
 protected:
 
@@ -148,7 +148,7 @@ public:
 			Vector3D a = particle.getForce() / (particle.getGamma() * particle.getMass());
 			particle.setVelocity(particle.getVelocity() + a * dt);
 
-			particle.setPosition(particle.getPosition() + particle.getVelocity() * dt);
+			particle.translate(particle.getVelocity() * dt);
 			particle.setForce(Vector3D::Null);
 
 			if (particle.getElement()->isBeside(particle)) std::cout << "Particle hit wall!" << std::endl;

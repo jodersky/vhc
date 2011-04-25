@@ -86,6 +86,62 @@ Vector3D const Vector3D::j = Vector3D(0.0, 1.0, 0.0);
 //c.f. header
 Vector3D const Vector3D::k = Vector3D(0.0, 0.0, 1.0);
 
+MutableVector3D::MutableVector3D(double _x, double _y, double _z): Vector3D(_x, _y, _z) {};
+MutableVector3D::MutableVector3D(const Vector3D& v): Vector3D(v.getX(), v.getY(), v.getZ()) {};
+
+void MutableVector3D::update() {
+	normCache = -1;
+}
+
+void MutableVector3D::setX(double x) {
+	this->x = x;
+	update();
+}
+
+void MutableVector3D::setY(double y) {
+	this->y = y;
+	update();
+}
+
+void MutableVector3D::setZ(double z) {
+	this->z = z;
+	update();
+}
+
+void MutableVector3D::operator=(const Vector3D& v) {
+	x = v.getX();
+	y = v.getY();
+	z = v.getZ();
+	update();
+}
+
+void MutableVector3D::operator+=(const Vector3D& v) {
+	x += v.getX();
+	y += v.getY();
+	z += v.getZ();
+	update();
+}
+
+void MutableVector3D::operator-=(const Vector3D& v) {
+	x -= v.getX();
+	y -= v.getY();
+	z -= v.getZ();
+	update();
+}
+
+void MutableVector3D::operator*=(double n) {
+	x *= n;
+	y *= n;
+	z *= n;
+	update();
+}
+
+void MutableVector3D::operator/=(double n) {
+	x /= n;
+	y /= n;
+	z /= n;
+}
+
 //c.f. header
 Vector3D operator* (double n, const Vector3D& v) {
 	return v * n;

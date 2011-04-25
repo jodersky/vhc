@@ -26,13 +26,13 @@ class Particle: public Printable, public Cloneable {
 private:
 
 	/** Position de cette particule. [m] */
-	Vector3D position;
+	MutableVector3D position;
 
 	/** Vitesse de cette particule. [m/s] */
-	Vector3D velocity;
+	MutableVector3D velocity;
 
 	/** Force résultante sur cette particule. [N] */
-	Vector3D force;
+	MutableVector3D force;
 
 	/** Masse de cette particule. [kg] */
 	double mass;
@@ -68,6 +68,9 @@ public:
 
 	/** Affecte la position de cette particule. [m] */
 	void setPosition(const Vector3D& pos);
+
+	/** Translate cette particule. */
+	void translate(const Vector3D& dx);
 
 	/** Retourne la force résultante sur cette particule. [N] */
 	Vector3D getForce() const;

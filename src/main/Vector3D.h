@@ -21,12 +21,10 @@ namespace vhc {
  *  Ainsi, chaque opération sur un vecteur retourne une nouvelle instance. La
  *  performance ainsi perdue est minimale pour une classe ne contenant que trois
  *  champs.
- *  Les méthodes d'un vecteur sont toutes très simples et implémentées dans le header,
- *  afin d'être développées 'inline' durant la compilation, ce qui est plus rapide.
  */
 class Vector3D: public Printable {
 
-private:
+protected:
 	/** Composante x. */
 	double x;
 
@@ -129,6 +127,42 @@ public:
 
 	/** Vecteur unitaire, d'axe z. (0, 0, 1) */
 	static const Vector3D k;
+
+};
+
+/** Un vecteur mutable de dimension trois. Contrairement a sa super classe, les composantes des instances
+ *  d'un vecteur mutable peuvent varier.
+ *  Bien que le raisonement sur une classe mutable soit plus difficile (i.e. on ne peut pas facilement savoir si quelqu'un l'a
+ *  modifiee), elle peur apporter un gain de performance.
+ *  L'utilisation de cette classe n'est donc pas recommendee sauf pour des cas ou un vecteur changerait tres souvent comme
+ *  les coordonnees d'une particule par exemple. */
+class MutableVector3D: public Vector3D {
+
+private:
+
+	/** Methode pour mettre a jour ce vecteur (reinisialier toute sorte de cache etc...). Appele quand ce vecteur est modifie. */
+	void update();
+
+public:
+
+	MutableVector3D(double _x, double _y, double _z);
+	MutableVector3D(const Vector3D& v);
+
+	/** Assigne une valeur x a la premiere composante de ce vecteur. */
+	void setX(double x);
+
+	/** Assigne une valeur y a la deuxieme composante de ce vecteur. */
+	void setY(double y);
+
+	/** Assigne une valeur z a la deuxieme composante de ce vecteur. */
+	void setZ(double z);
+
+	void operator=(const Vector3D& v);
+
+	void operator+=(const Vector3D& v);
+	void operator-=(const Vector3D& v);
+	void operator*=(double n);
+	void operator/=(double n);
 
 };
 

@@ -97,6 +97,9 @@ opérateurs
 Ces méthodes s'appuient entre-elles, par exemple la méthode `opposée' retourne
  le vecteur multiplié par moins un et la méthode `soustraction' additionne
  l'opposé.
+ C'est à partir de cette idee que nous avons aussi implémenté une norme
+ au carré (=produit scalaire du vecteur avec lui-même) et une norm (=racine
+ de la norme au carré).
  Ces appels consécutifs diminuent la performance d'une façon minimale mais
  évitent un duplicage de code considérable.
 \end_layout
@@ -108,7 +111,8 @@ Un vecteur est complètement invariable.
  De même, tous les opérations internes du sens mathématique (qui renvoyent
  un vecteur), renvoyent une nouvelle instance d'un vecteur.
  En aucun cas l'instance d'un vecteur n'est modifiée! Ceci facilite énormément
- le raisonement sur toute variable de type vecteur.
+ le raisonement sur toute variable de type vecteur, c'est-à-dire qu'on peut
+ toujours être sûr que personne n'a modifié le vecteur sur lequel on travaille.
  De plus, l'invariance d'un vecteur paraît naturelle, comme celle d'un nombre
  réel.
 \end_layout
@@ -117,6 +121,15 @@ Un vecteur est complètement invariable.
 Quelques vecteurs remarquables sont définis comme variables statiques constantes.
  Parmi ceux-ci notamment le vecteur nulle (Null) et les vecteurs unitaires
  i, j, k selon respectivement les axes x, y et z.
+\end_layout
+
+\begin_layout Standard
+Pour contourner la perte de performance due à l'immutabilité des vecteurs,
+ nous avons rajouté un classe `MutableVector3D'.
+ Cette classe représente des vecteurs mutables lesquelles peuvent changer
+ leurs coordonnées.
+ Ces vecteurs sont presque exclusivement utilisés pour représenter des champs
+ qui varient souvent tel que la position d'une particule.
 \end_layout
 
 \begin_layout Section*
@@ -128,6 +141,11 @@ Nous n'avons pas rajouté un constructeur de copie.
  Comme la classe `Vector3D' est invariable et ne contient pas de pointeurs
  ou références sur d'autres objets mutables, elle n'a pas d'état et donc
  l'utilisation du constructeur de copie par défaut suffit.
+\end_layout
+
+\begin_layout Standard
+En revanche la classe `MutableVector3D' contient un constructeur de copie
+ qui copie les champs d'un vecteur donné.
 \end_layout
 
 \begin_layout Section*
@@ -158,6 +176,8 @@ En ajoutant un constructeur par coordonnées sphériques, les attributs de
  la classe ne devraient pas forcémant être changées.
  Il serait toute à fait envisageable, de garder les coordonnées carthésiennes
  comme attributs et de convertir les coordonnées sphériques avec le constructeur.
+ L'accès et la modification des coordonnées shpériques pourrait égelement
+ se faire par un méthode convertissant les deux types de coordonnées.
 \end_layout
 
 \begin_layout Subsection*
@@ -207,24 +227,6 @@ Question P5.1
 \end_layout
 
 \begin_layout Standard
-
-\emph on
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-color{red}{Réponse incohérente! La question conçernant l'énergie me perturbe...}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 Les membres d'une particule représentant le facteur gamma
 \begin_inset Formula $\gamma$
 \end_inset
@@ -265,7 +267,7 @@ si il est défini comme variable, il faudrait le mettre à jour à chaque fois
 Contrairement à un attribut, une méthode est évaluée à chaque fois qu'on
  l'appelle.
  Ceci a l'avantage que si le résultat d'une méthode dépend d'une variable,
- la variable pourra être modifiée sans considération de la méthode.
+ la variable pourra être modifiée sans autre considération.
  Ainsi, si le facteur gamma est une méthode, une mise à jour de la vitesse
  pourra être effectuée directement sans explicitement changer 
 \begin_inset Formula $\gamma$
@@ -276,44 +278,20 @@ Contrairement à un attribut, une méthode est évaluée à chaque fois qu'on
 
 \begin_layout Standard
 Dans le cas de notre projet, nous avons décidés d'implémenter l'énergie
- sous forme d'attribut et le facteur gamma sous forme de méthode.
+ sous forme de méthode et le facteur gamma sous forme d'attribut.
  Ceci pour plusieurs raisons:
 \end_layout
 
 \begin_layout Enumerate
-Au cours de la simulation, la vitesse sera changée très fréquemment, beaucoup
- plus que les appels à gamma.
- Une implémentation de gamma sous forme de méthode améliore donc la performance.
+Au cours de la simulation, le facteur gamma est accédé autant de fois que
+ la vitesse, il est donc plus rapide de n'evoluer une racine qu'une seule
+ fois pour un pas de temps.
 \end_layout
 
 \begin_layout Enumerate
-Le premier argument pourrait s'appliquer également à l'énergie, or il faut
- remarquer que l'énergie est une grandeur spécifiée durant la création d'une
- particule et que en fait la vitesse dépend de l'énergie
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-Complément mathématique: 
-\begin_inset Quotes eld
-\end_inset
-
-Aux énergies atteintes dans un accélérateur, les particules sont tellement
- proches de la vitesse de la lumière qu'il faudrait garder au moins 7 décimales
- pour que la vitesse permette de connaître l'énergie de façon assez précise.
- On caractérise donc plutôt une particule en termes d'énergie totale que
- de vitesse.
-\begin_inset Quotes erd
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-.
- On pourrait alors penser à définir la vitesse comme méthode mais d'après
- l'argument 1, ce serait complètement absurde au niveau de la performance.
+L'énergie est accédée beaucoup plus rarement que la vitesse mais dépend
+ quand même de cette dernière, ainsi nous avons décidé de l'implémenter
+ sous forme de méthode.
 \end_layout
 
 \begin_layout Section*
@@ -321,130 +299,34 @@ Question P6.1
 \end_layout
 
 \begin_layout Standard
-Pour représenter et organiser les 
-\family typewriter
-\size small
-Element
-\family default
-\size default
-s, nous avons choisi dans ce projet de coder les 
-\family typewriter
-\size small
-Element
-\family default
-\size default
-s 
-\family typewriter
-\size small
-[Magnetic (StraightElement
-\family default
-\size default
- et 
-\family typewriter
-\size small
-CurvedElement)
-\family default
-\size default
- et 
-\family typewriter
-\size small
-Electric
-\family default
-\size default
-] sous formes de classes.
- Concrètement, la classe 
-\family typewriter
-\size small
-Element
-\family default
-\size default
- est la classe grand-mère, les trois classes filles sont les classes
-\family typewriter
-\size small
- StraightElement
-\family default
-\size default
-, 
-\family typewriter
-\size small
-CurvedElement
-\family default
-\size default
- et 
-\family typewriter
-\size small
-Magnetic
-\family default
-\size default
-.
- Les trois classes petites-filles sont 
-\family typewriter
-\size small
-MagneticStraightElement
-\family default
-\size default
-, 
-\family typewriter
-\size small
-MagneticCurvedElement
-\family default
-\size default
- et 
-\family typewriter
-\size small
-Electric
-\family default
-\size default
-, où 
-\family typewriter
-\size small
-MagneticStraightElement
-\family default
-\size default
- hérite à la fois de 
-\family typewriter
-\size small
-Magnetic
-\family default
-\size default
- et de 
-\family typewriter
-\size small
-StraightElement
-\family default
-\size default
-, et où 
-\family typewriter
-\size small
-MagneticCurvedElement
-\family default
-\size default
- hérite de 
-\family typewriter
-\size small
-Magnetic
-\family default
-\size default
- et de 
-\family typewriter
-\size small
-CurvedElement
-\family default
-\size default
-.
- 
-\family typewriter
-\size small
-Electric
-\family default
-\size default
- n'hérite 'que' de 
-\family typewriter
-\size small
-StraightElement
-\family default
-\size default
-.
+Pour représenter et organiser les éléments, nous avons créé une classe abtsraite
+ `Element'.
+ Celle-ci contient tous les attributs généraux d'un élément.
+ De plus, elle contient des méthodes virtuelles pures tels que la détermination
+ si une particule a heurté le bord ou est passé au suivant.
+\end_layout
+
+\begin_layout Standard
+Dans la hierarchie en dessous de `Element' se trouvent deux classes representant
+s les élements droits et courbes.
+ Ceux-ci implémentent tout méthode relatif à la géométrie d'un élément (p.ex.
+ les méthodes mentionés ci-dessus).
+\end_layout
+
+\begin_layout Standard
+Finalement, en dessous de ces classes se trouvent les implémentations concrètes
+ telles que les quadripoles, dipoles, etc...
+\end_layout
+
+\begin_layout Standard
+Nous n'avons pas faits de classes séparés pour des élements générants un
+ champ électrique ou magnétique car nous considérons qu'un élément ne générant
+ pas de champ 
+\emph on
+possède
+\emph default
+ un champ nul.
+ (voir question P6.2)
 \end_layout
 
 \begin_layout Section*
@@ -452,43 +334,18 @@ Question P6.2
 \end_layout
 
 \begin_layout Standard
-Les champs magnétiques et électriques sont représentés à l'aide d'un 
-\family typewriter
-\size small
-Vector3D
-\family default
-\size default
- indiquant la direction et l'intensité du champ, et nous allons nous arranger
- pour que sa norme soit initialisée une fois pour toutes (pour garder l'intensit
-é de champ constante).
- Ainsi, à chaque nouvelle manipulation (modification d'orientation) du 
-\family typewriter
-\size small
-Vector3D
-\family default
-\size default
- 
-\family typewriter
-\size small
-field
-\family default
-\size default
-, nous ferons appel à la méthode 
-\family typewriter
-\size small
-rotate
-\family default
-\size default
-.
- Ce faisant, puisque la rotation est une isométrie, nous pouvons définir
- n'importe quelle orientation que pourrait prendre le champ, en nous assurant
- d'avoir une intensité de champ constante.
+Les champs magnétiques et électriques sont représentés par les méthodes
+ `magneticFieldAt' et `electricFieldAt'.
+ Ces méthodes prennent comme paramètre une position et renvoyent un vecteur
+ représentant le champ à cette position.
 \end_layout
 
 \begin_layout Standard
-En effet, en physique on représente les lignes de champ par des lignes parrallèl
-es, continues, et nous disons que le champ a une certaine intensité, qui
- reste la même tout le long des lignes.
+Ceci représente concrètement les lignes de champs à un endroit donné.
+\end_layout
+
+\begin_layout Standard
+En effet, en physique on représente les lignes de champ par des lignes continues.
  Or dans ce projet, cela ne nous intéresse pas de représenter ces lignes.
  Puisque les seules interactions de ces champs avec les particules invoquent
  des vecteurs représentant l'intensité et la direction du champ à l'endroit
@@ -515,10 +372,10 @@ Question P6.3
 Nous représentons le centre de courbure 
 \family typewriter
 \size small
-centerOfCurvature
+curvatureCenter
 \family default
 \size default
- à l'aide d'un 
+ à l'aide d'un attribut du type 
 \family typewriter
 \size small
 Vector3D
@@ -530,24 +387,7 @@ Vector3D
 k
 \family default
 \size default
- à une fonction statique, qui nous renvoie 
-\series bold
-la
-\series default
- position du centre de courbure (cf.
- constructeur de 
-\family typewriter
-\size small
-curved
-\family default
-\size default
- dans 
-\family typewriter
-\size small
-CurvedElement.cc
-\family default
-\size default
-).
+ au constructeur des éléments courbes.
 \end_layout
 
 \begin_layout Standard
@@ -555,8 +395,8 @@ En effet, le centre de courbure d'une courbe est défini d'une manière unique
  si nous avons :
 \end_layout
 
-\begin_layout Standard
-- une position d'entrée 
+\begin_layout Itemize
+une position d'entrée 
 \family typewriter
 \size small
 entry
@@ -565,8 +405,8 @@ entry
 ;
 \end_layout
 
-\begin_layout Standard
-- une position de sortie 
+\begin_layout Itemize
+une position de sortie 
 \family typewriter
 \size small
 exit
@@ -575,8 +415,8 @@ exit
 ;
 \end_layout
 
-\begin_layout Standard
-- une courbure
+\begin_layout Itemize
+une courbure
 \family typewriter
 \size small
  k
@@ -591,9 +431,9 @@ curvatureRadius
  ) avec son signe !;
 \end_layout
 
-\begin_layout Standard
-- une convention à l'aide de laquelle nous savons, en fonction du signe
- du rayon, de quel côté de l'Element la courbe se courbe.
+\begin_layout Itemize
+une convention à l'aide de laquelle nous savons, en fonction du signe du
+ rayon, de quel côté de l'Element la courbe se courbe.
 \begin_inset Foot
 status open
 
@@ -661,24 +501,24 @@ Question P7.1
 \end_layout
 
 \begin_layout Standard
-La classe
+La classe 
 \family typewriter
 \size small
- Accelerator
+Accelerator
+\family sans
+ 
 \family default
 \size default
- est conçue de manière à ce que les détails d'implémentation soient inexistants,
- tout est dans la partie publique, sauf les attributs dans l'espace 
-\shape italic
-protected
-\shape default
-, afin de pouvoir y avoir accès depuis l'interne.
- Par ailleurs, en ce qui concerne les méthodes de deux ou trois lignes,
- à savoir la plupart, sont déclarées 
-\shape italic
-inline
-\shape default
-.
+un accélerateur.
+ Elle contient une collection de particules et d'élements (en attributs).
+ De plus, nous avons décidé qu'un accélérateur sera entièrement responsable
+ de la gestion de ses particules et elements.
+ Cela implique que lors de l'ajout d'un de ces derniers, il sera copié.
+\end_layout
+
+\begin_layout Standard
+Cette copie entraîne d'eutres conséquences tel que le rajout d'un méthode
+ `clone' dans les éléments et particules.
 \end_layout
 
 \begin_layout Section*
@@ -699,31 +539,16 @@ Accelerator
 
 \begin_layout Standard
 L'opérateur '=' : de même que pour le constructeur de copie, sa déclaration
- en privé empêche la comparaison entre 
-\family typewriter
-\size small
-Accelerator
-\family default
-\size default
-s, puisque cet opérateur a déjà été surchargé pour les 
-\family typewriter
-\size small
-Element
-\family default
-\size default
-s, nous ne voudrions pas de confusion avec la classe 
-\family typewriter
-\size small
-Accelerator
-\family default
-\size default
-, elle-même composée de divers 
-\family typewriter
-\size small
-Element
-\family default
-\size default
-s.
+ en privé empêche la copie d'un accélérateur vers un autre.
+\end_layout
+
+\begin_layout Standard
+Ces restrictions sont présents pour éviter des problèmes de responsabilités
+ d'allocation et de délocation de mémoire (car un accélérateur contient
+ beaucoup de pointeurs d'éléments et de particules qui eux-mêmes pointent
+ vers des particules).
+ Mais aussi d'un point de vue logique: comment serait-ce physiquement possible
+ de copier un accélérateur dans un état donné avec tous ses particules?
 \end_layout
 
 \begin_layout Section*

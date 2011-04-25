@@ -33,14 +33,16 @@ Vector3D Particle::getPosition() const {return position;}
 
 void Particle::setPosition(const Vector3D& pos) {position = pos;}
 
+void Particle::translate(const Vector3D& dx) {position += dx;}
+
 Vector3D Particle::getForce() const {return force;}
 
 void Particle::setForce(const Vector3D& f) {force = f;}
 
-void Particle::applyForce(const Vector3D& f) {force = force + f;}
+void Particle::applyForce(const Vector3D& f) {force += f;}
 
 void Particle::applyMagneticForce(const Vector3D& b, double dt) {
-	if (b != Vector3D::Null) {
+	if (dt != 0 && b != Vector3D::Null) {
 		Vector3D f = charge * velocity.cross(b);
 		applyForce(f.rotate(velocity.cross(f), (dt * f.norm()) / (2 * gamma * mass * velocity.norm())));
 	}

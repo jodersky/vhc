@@ -16,18 +16,37 @@ using namespace std;
 using namespace vhc;
 
 
-bool printTest();
-
 int main() {
-	//equality test
-	assert(Vector3D(1, 2, 3) == Vector3D(1, 2, 3));
-	assert(Vector3D(1, 2.4, 3) != Vector3D(1, 2, 3));
+	Vector3D vect1(1.0, 2, -0.1);
+	Vector3D vect2(2.6, 3.5, 4.1);
+	Vector3D vect3 = vect1;
+
+	cout << "Vecteur 1 :";
+	cout << vect1;
+
+	cout << "Vecteur 2 :";
+	cout << vect2;
+
+	cout << "Le vecteur 1 est ";
+	if (Vector3D::ae(vect1, vect2)) {
+	    cout << "egal au";
+	} else {
+	    cout << "différent du";
+	}
+	cout << " vecteur 2," << endl << "et est";
+	if (Vector3D::ae(vect1, vect3)) {
+	    cout << "egal au";
+	} else {
+	    cout << "différent du";
+	}
+	cout << " vecteur 3." << endl;
+
 
 	//addition test
-	assert(Vector3D(1, -0.9, 57683) + Vector3D(-1, 0.9, -57683) == Vector3D::Null);
+	assert(Vector3D::ae(Vector3D(1, -0.9, 57683) + Vector3D(-1, 0.9, -57683), Vector3D::Null));
 
 	//addition, multiplication test
-	assert(Vector3D(4, 0, 16) / 4 == -Vector3D(0.25, 0, 1) * -4);
+	assert(Vector3D::ae(Vector3D(4, 0, 16) / 4, -Vector3D(0.25, 0, 1) * -4));
 
 	//length test
 	assert(Vector3D(0,3,4).norm() == 5);
@@ -49,18 +68,4 @@ int main() {
 	cout << "Vector3D: tests completed successfully" << endl;
 
 	return 0;
-}
-
-bool printTest() {
-	cout << "PRINT TEST" << endl;
-	cout << Vector3D(1,2,3) << endl;
-	char answer;
-	do {
-		cout << "Was 'Vector3D(1,2,3)' displayed? (y/n)" << endl;
-		cin >> answer;
-	} while (answer != 'y' && answer != 'n');
-	cout << "END PRINT TEST" << endl;
-
-	if (answer == 'y') return true;
-	else return false;
 }
