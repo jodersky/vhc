@@ -29,13 +29,13 @@ FODO::FODO(const Vector3D& entry, const Vector3D& exit, double sectionRadius, do
 
 	Vector3D d = getDiagonal().unit();
 
-	focalizingQuadrupole = new Quadrupole(entry, entry + d * l, sectionRadius, focalizingCoefficient);
+	focalizingQuadrupole = new Quadrupole(entry, entry + d * l, sectionRadius, this->focalizingCoefficient);
 	elements.push_back(focalizingQuadrupole);
 
 	straightElement1 = new StraightElement(focalizingQuadrupole->getExitPosition(), focalizingQuadrupole->getExitPosition() + d * L, sectionRadius);
 	elements.push_back(straightElement1);
 
-	defocalizingQuadrupole = new Quadrupole(straightElement1->getExitPosition(), straightElement1->getExitPosition() + d * l, sectionRadius, -focalizingCoefficient);
+	defocalizingQuadrupole = new Quadrupole(straightElement1->getExitPosition(), straightElement1->getExitPosition() + d * l, sectionRadius, -this->focalizingCoefficient);
 	elements.push_back(defocalizingQuadrupole);
 
 	straightElement2 = new StraightElement(defocalizingQuadrupole->getExitPosition(), exit, sectionRadius);

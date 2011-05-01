@@ -33,17 +33,17 @@ bool CompositeElement::isAfter(const Vector3D& position) const {
 }
 
 Vector3D CompositeElement::magneticFieldAt(const Vector3D& position) const {
-	Vector3D b = Vector3D::Null;
+	MutableVector3D b = Vector3D::Null;
 	for (int i(0); i < elements.size(); i++) {
-		b = b + elements[i]->magneticFieldAt(position);
+		b += elements[i]->magneticFieldAt(position);
 	}
 	return b;
 }
 
 Vector3D CompositeElement::electricFieldAt(const Vector3D& position) const {
-	Vector3D e = Vector3D::Null;
+	MutableVector3D e = Vector3D::Null;
 	for (int i(0); i < elements.size(); i++) {
-		e = e + elements[i]->electricFieldAt(position);
+		e += elements[i]->electricFieldAt(position);
 	}
 	return e;
 }

@@ -85,14 +85,16 @@ Une particule :
  *
  */
 
-	FODO e1 = FODO(Vector3D(3, 2, 0), Vector3D(3, -2, 0), 0.1, 1.0, 1.2);
-	Dipole e2 = Dipole(e1.getExitPosition(), Vector3D(2, -3, 0), 0.1, 1, Vector3D(0, 0, 5.89158));
-	FODO e3 = FODO(e2.getExitPosition(), Vector3D(-2, -3, 0), 0.1, 1, 1.2);
-	Dipole e4 = Dipole(e3.getExitPosition(), Vector3D(-3, -2, 0), 0.1, 1, Vector3D(0, 0, 5.89158));
-	FODO e5 = FODO(e4.getExitPosition(), Vector3D(-3, 2, 0), 0.1, 1.0, 1.2);
-	Dipole e6 = Dipole(e5.getExitPosition(), Vector3D(-2, 3, 0), 0.1, 1, Vector3D(0, 0, 5.89158));
-	FODO e7 = FODO(e6.getExitPosition(), Vector3D(2, 3, 0), 0.1, 1.0, 1.2);
-	Dipole e8 = Dipole(e7.getExitPosition(), e1.getEntryPosition(), 0.1, 1, Vector3D(0, 0, 5.89158));
+	double B = 5.8915820038873;
+	double b = 1.2;
+	FODO e1 = FODO(Vector3D(3, 2, 0), Vector3D(3, -2, 0), 0.1, 1.0, b);
+	Dipole e2 = Dipole(e1.getExitPosition(), Vector3D(2, -3, 0), 0.1, 1, Vector3D(0, 0, B));
+	FODO e3 = FODO(e2.getExitPosition(), Vector3D(-2, -3, 0), 0.1, 1, b);
+	Dipole e4 = Dipole(e3.getExitPosition(), Vector3D(-3, -2, 0), 0.1, 1, Vector3D(0, 0, B));
+	FODO e5 = FODO(e4.getExitPosition(), Vector3D(-3, 2, 0), 0.1, 1.0, b);
+	Dipole e6 = Dipole(e5.getExitPosition(), Vector3D(-2, 3, 0), 0.1, 1, Vector3D(0, 0, B));
+	FODO e7 = FODO(e6.getExitPosition(), Vector3D(2, 3, 0), 0.1, 1.0, b);
+	Dipole e8 = Dipole(e7.getExitPosition(), e1.getEntryPosition(), 0.1, 1, Vector3D(0, 0, B));
 	Accelerator* acc = new Accelerator();
 	acc->add(e1);
 	acc->add(e2);
@@ -103,7 +105,7 @@ Une particule :
 	acc->add(e7);
 	acc->add(e8);
 
-	Particle p1 = Particle(Vector3D(3.01, 0, 0), constants::PROTON_MASS, constants::E, 2 * constants::GeV, -Vector3D::j);
+	Particle p1 = Particle(Vector3D(3.00, 0, 0), constants::PROTON_MASS, constants::E, 2 * constants::GeV, -Vector3D::j);
 	Particle p2 = Particle(Vector3D(2.99, 0, 0), constants::PROTON_MASS, constants::E, 2 * constants::GeV, -Vector3D::j);
 	acc->add(p1);
 	acc->add(p2);
@@ -143,16 +145,20 @@ Accelerator* standardAccelerator() {
 }
 
 Accelerator* linear() {
-	FODO element = FODO(Vector3D(0, 0, 0), Vector3D(4, 0, 0), 0.2, 0.2, 120);
 	Accelerator* acc = new Accelerator();
-	Element* celement = acc->add(element);
-	Particle e(Vector3D(0, 0.15, 0.01), constants::ELECTRON_MASS, constants::E, 14E9 * constants::E, Vector3D::i);
-	Particle* ce = acc->add(e);
-	ce->setElement(celement);
+
+	for(int i = 0; i < 10; ++i) {
+		FODO e = FODO(Vector3D(4, 0, 0) * i, Vector3D(4, 0, 0) * (i + 1), 0.1, 1, 1.2);
+		acc->add(e);
+	}
+
+	Particle e(Vector3D(0, 0.05, 0.01), constants::PROTON_MASS, constants::E, 2 * constants::GeV, Vector3D::i);
+	acc->add(e);
+	acc->close();
 
 	return acc;
 }
-
+/*
 Accelerator* singleDipole() {
 	Vector3D entry = Vector3D(0, 2, 0);
 	Vector3D exit =  Vector3D(2, 0, 0);
@@ -172,7 +178,7 @@ Accelerator* singleDipole() {
 
 	Accelerator* acc = new Accelerator();
 
-	Element* celement = acc->add(element);
+	Element*\ celement = acc->add(element);
 
 	std::vector< Particle > ps = createParticles(element.getEntryPosition(), 10, constants::ELECTRON_MASS, constants::E, energy, direction);
 
@@ -184,7 +190,7 @@ Accelerator* singleDipole() {
 	Particle* cparticle = acc->add(particle);
 	cparticle->setElement(celement);
 	return acc;
-}
+}*/
 
 
 int main(int argc, char *argv[])
@@ -199,17 +205,15 @@ int main(int argc, char *argv[])
     cout.flush();
     window.accelerator = acc;
 
+    window.setWindowTitle("Virtual Hadron Collider");
+    window.resize(QSize(500, 500));
+    window.show();
 
 
     window.showFullScreen();
 
-    //window.resize(QSize(500, 500));
-    window.setWindowTitle("Virtual Hadron Collider");
-    window.show();
-
+    //app.setActiveWindow(&window);
     return app.exec();
-
-    delete acc; acc = NULL;
 
 	} catch (Exception& ex){
     	std::cerr << ex.toString() << "\n";

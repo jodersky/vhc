@@ -7,8 +7,11 @@
 
 #include <iostream>
 #include <assert.h>
+#include "exceptions.h"
+#include "CurvedElement.h"
 #include "Dipole.h"
 #include "FODO.h"
+#include "Quadrupole.h"
 #include "Vector3D.h"
 
 using namespace std;
@@ -25,22 +28,38 @@ int main() {
 	cout << *fodo << endl;
 	delete fodo; fodo = NULL;
 
-/*
-	CurvedElement* c = new CurvedElement(Vector3D(0,1,0), Vector3D(1,0,0), 0.2, 1);
-	cout << *c << endl;
-	delete c; c = NULL;
-
 	//test d'initialisation illegale
 	bool caught = false;
 	try {
-		CurvedElement(Vector3D(0,0,0), Vector3D(1,0,0), 0.2, 1.0 / 0.4);
+		Dipole(Vector3D(0,0,0), Vector3D(1,0,0), 0.2, 1.0 / 0.4, Vector3D(1,2,3));
 		//                                                   ^ le rayon de courbure est trop petit
 	} catch (Exception& e) {
 		caught = true;
 	};
 	assert(caught);
 
-*/
+	Quadrupole* fq = new Quadrupole(Vector3D(0,0,0), Vector3D(1, 0, 0), 0.1, 1.2);
+
+	//containement test
+	assert(fq->isBefore(Vector3D(-0.1,0,0)));
+	assert(fq->isBefore(Vector3D(-0.1,0.2,0)));
+	assert(fq->isBefore(Vector3D(-0.1,3,5)));
+
+	assert(fq->isBeside(Vector3D(0.1,0.2,0)));
+	assert(fq->isBeside(Vector3D(0.3,0,3)));
+	assert(fq->isBeside(Vector3D(0.5,-2,-4)));
+
+	assert(fq->isAfter(Vector3D(1.1,0,0)));
+	assert(fq->isAfter(Vector3D(1.3,0.3,-0.2)));
+	assert(fq->isAfter(Vector3D(1.001,-0.04,0.02)));
+
+	assert(fq->contains(Vector3D(0.5,0,0)));
+	assert(fq->contains(Vector3D(0.99,0.1, 0)));
+	assert(fq->contains(Vector3D(0.1,0.02,-0.02)));
+
+	delete fq; fq = NULL;
+
+
 	return 0;
 }
 

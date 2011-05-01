@@ -559,10 +559,11 @@ Question P8.1
 En termes de POO, cela signifie que la méthode 
 \family typewriter
 \size small
-hasHit
+heurte_bord
 \family default
 \size default
- est virtuelle (même virtuelle pure à l'intérieur de la classe 
+ (`isBeside' dans notre cas) est virtuelle (même virtuelle pure à l'intérieur
+ de la classe 
 \family typewriter
 \size small
 Element
@@ -583,9 +584,9 @@ Element
 \family default
 \size default
  est 
-\shape italic
+\emph on
 abstraite
-\shape default
+\emph default
 .
 \end_layout
 
@@ -594,28 +595,7 @@ Question P8.3
 \end_layout
 
 \begin_layout Standard
-La méthode 
-\family typewriter
-\size small
-Printable
-\family default
-\size default
- est elle aussi 
-\shape italic
-abstraite
-\shape default
-, on y a implément une méthode générique 
-\family typewriter
-\size small
-toString
-\family default
-\size default
-.
- Cette méthode est 
-\shape italic
-virtuelle pure
-\shape default
-.
+La méthode `dessine' est elle aussi virtuelle pure dans la classe dessinable.
 \end_layout
 
 \begin_layout Section*

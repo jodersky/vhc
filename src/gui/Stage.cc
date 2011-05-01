@@ -6,9 +6,12 @@
  */
 
 #include <iostream>
+#include <list>
+#include <algorithm>
 #include "util.h"
 #include "Stage.h"
 
+using namespace std;
 using namespace vhc::util;
 
 namespace vhc {
@@ -22,14 +25,14 @@ Stage::Stage(QWidget* parent):
 		displayMode(FILL),
 		keys(0),
 		frameTime(0),
-		h(1E-11),
+		h(1E-12),
 		paused(true) {
 
 	timer = new QTimer(this);
 
 
 	connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-	timer->start(1000.0/60);
+	timer->start(1000.0/100);
 
 	setMouseTracking(true);
 }
@@ -65,6 +68,8 @@ void Stage::paintGL() {
 	renderText(0,24,QString("camera coordinates: ") + camera.getPosition().toString().c_str());
 	renderText(0,36,QString("heading: ") + QString::number(camera.getHeading()));
 	renderText(0,48,QString("pitch: ") + QString::number(camera.getPitch()));
+	//renderText(0,60,QString("") + accelerator->getParticle(0)->getElement()->magneticFieldAt(accelerator->getParticle(0)->getPosition()).toString().c_str());
+	//renderText(0,72,QString("") + accelerator->getParticle(0)->toString().c_str());
 	axes();
 
 
@@ -73,7 +78,6 @@ void Stage::paintGL() {
 	glColor3d(0.5, 0.5, 0.5);
 	grid(20);
 	glPopMatrix();
-
 //	glScaled (100.0, 100.0, 100.0);
 
 
@@ -98,15 +102,16 @@ void Stage::paintGL() {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
-		for (unsigned int i = 0; i < accelerator->getElements().size(); ++i) {
-			elementRenderer.render(*(accelerator->getElements()[i]));
+		for (list<Element*>::const_iterator i = accelerator->getElements().begin(); i != accelerator->getElements().end(); ++i) {
+			elementRenderer.render(**i);
 		}
+
 		glEnable(GL_DEPTH_TEST);
 		glDisable(GL_BLEND);
 
 		glColor3d(0, 0, 1);
-		for (unsigned int i = 0; i < accelerator->getParticles().size(); ++i) {
-			particleRenderer.render(*(accelerator->getParticles()[i]));
+		for (list<Particle*>::const_iterator i = accelerator->getParticles().begin(); i != accelerator->getParticles().end(); ++i) {
+			particleRenderer.render(**i);
 		}
 	}
 
@@ -123,7 +128,7 @@ void Stage::paintGL() {
 		camera.move(mv);
 	}
 
-	if (!paused) accelerator->step(h * frameTime / 1000 * 100);
+	if (!paused) for (int i = 0; i < 100; ++i) accelerator->step(h);
 
 	glColor3d(1,1,0);
 	util::crosshair();
