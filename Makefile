@@ -28,7 +28,7 @@ export BINDIR = $(BASEDIR)/bin
 # CXXFLAGS += -g                      # pour debugger
 # CXXFLAGS += -pg                     # pour profiler
 # LDFLAGS  += -pg                     # pour profiler
-# CXXFLAGS += -O2                     # pour optimiser la vitesse
+ CXXFLAGS += -O2                     # pour optimiser la vitesse
 
 export CXXFLAGS
 
@@ -49,6 +49,11 @@ test-build: build
 gui-build: build
 	@echo "Building GUI..."
 	cd $(SRCDIR)/gui; qmake; make all
+	@echo "Done building GUI."
+
+gui-build-noqmake: build
+	@echo "Building GUI..."
+	cd $(SRCDIR)/gui; make all
 	@echo "Done building GUI."
 
 # Genere la documentation

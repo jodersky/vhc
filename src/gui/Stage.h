@@ -16,15 +16,10 @@
 #include "ParticleRenderer.h"
 #include "Element.h"
 #include "Accelerator.h"
+#include "util.h"
 
 
 namespace vhc {
-
-enum DisplayMode {
-	FILL = 0,
-	WIREFRAME = 1,
-	POINTS = 2
-};
 
 class Stage: public QGLWidget {
 
@@ -39,6 +34,8 @@ public:
 	Accelerator* accelerator;
 
 protected:
+
+	void displayText(QString text[], int size);
 
 	void initializeGL();
 	void resizeGL (int width, int height);
@@ -64,7 +61,7 @@ private:
 	ElementRenderer elementRenderer;
 	ParticleRenderer particleRenderer;
 
-	DisplayMode displayMode;
+	util::DisplayMode displayMode;
 
 	int keys;
 	QPoint center;

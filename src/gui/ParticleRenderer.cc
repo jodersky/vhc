@@ -9,9 +9,11 @@
 #include "ParticleRenderer.h"
 #include "util.h"
 
+using namespace vhc::util;
+
 namespace vhc {
 
-ParticleRenderer::ParticleRenderer() {
+ParticleRenderer::ParticleRenderer(): _drawSpheres(false) {
 
 }
 
@@ -22,11 +24,20 @@ ParticleRenderer::~ParticleRenderer() {
 void ParticleRenderer::render(const Particle& particle) const {
 	glPushMatrix();
 	glTranslated(particle.getPosition().getX(), particle.getPosition().getY(), particle.getPosition().getZ());
-	glBegin(GL_POINTS);
-	//glVertex3d(0, 0, 0);
-	util::sphere(0.01);
-	glEnd();
+
+	if (_drawSpheres) {
+		glBegin(GL_POINTS);
+		glVertex3d(0, 0, 0);
+		glEnd();
+	}
+	else {
+		util::sphere(0.01);
+	}
 	glPopMatrix();
+}
+
+void ParticleRenderer::drawSpheres(bool value) {
+	_drawSpheres = value;
 }
 
 }

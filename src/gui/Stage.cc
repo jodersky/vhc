@@ -25,7 +25,7 @@ Stage::Stage(QWidget* parent):
 		displayMode(FILL),
 		keys(0),
 		frameTime(0),
-		h(1E-12),
+		h(1E-11),
 		paused(true) {
 
 	timer = new QTimer(this);
@@ -58,16 +58,31 @@ void Stage::resizeGL (int width, int height) {
 	glMatrixMode (GL_MODELVIEW);
 }
 
+void Stage::displayText(QString text[], int size) {
+	for (int i = 0; i < size; ++i) {
+		renderText(0, (i + 1) * 12, text[i]);
+	}
+}
+
 void Stage::paintGL() {
 	//time.start();
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
 	camera.setView();
-	renderText(0,12,QString("fps: ") + QString::number(1E3 / frameTime));
-	renderText(0,24,QString("camera coordinates: ") + camera.getPosition().toString().c_str());
-	renderText(0,36,QString("heading: ") + QString::number(camera.getHeading()));
-	renderText(0,48,QString("pitch: ") + QString::number(camera.getPitch()));
+	QString text[] = {
+			QString("-----simulation-----"),
+			QString("fps: ") + QString::number(1E3 / frameTime),
+			QString("status: ") + (paused ? QString("paused") : QString("running")),
+			QString("-----camera-----"),
+			QString("coordinates: ") + camera.getPosition().toString().c_str(),
+			QString("heading: ") + QString::number(camera.getHeading()),
+			QString("pitch: ") + QString::number(camera.getPitch()),
+			QString("-----accelerator-----"),
+			QString("Elements: ") + QString::number(accelerator->getElements().size()),
+			QString("Particles: ") + QString::number(accelerator->getParticles().size())
+	};
+	displayText(text, 10);
 	//renderText(0,60,QString("") + accelerator->getParticle(0)->getElement()->magneticFieldAt(accelerator->getParticle(0)->getPosition()).toString().c_str());
 	//renderText(0,72,QString("") + accelerator->getParticle(0)->toString().c_str());
 	axes();
@@ -128,7 +143,7 @@ void Stage::paintGL() {
 		camera.move(mv);
 	}
 
-	if (!paused) for (int i = 0; i < 100; ++i) accelerator->step(h);
+	if (!paused) accelerator->step(h);
 
 	glColor3d(1,1,0);
 	util::crosshair();

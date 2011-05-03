@@ -9,6 +9,7 @@
 #include "StraightElement.h"
 #include "Quadrupole.h"
 #include "FODO.h"
+#include "exceptions.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -69,10 +70,12 @@ int main() {
 	a.add(*p1);
 	a.add(*p2);
 
-	//TODO a.close();
+	a.enableLinear(true);
+	a.close();
 
 	cout << a << endl;
 	a.clear();
+
 
 	return 0;
 }

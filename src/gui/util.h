@@ -13,6 +13,12 @@ namespace vhc {
 /** Contient des fonctions utilitaires. */
 namespace util {
 
+enum DisplayMode {
+	FILL = 0,
+	WIREFRAME = 1,
+	POINTS = 2
+};
+
 /** Dessine un tore autour de l'origine, sur le plan xy.
  *  @param R rayon du tore
  *  @param r rayon du "cylindre" du tore

@@ -23,7 +23,7 @@
 using namespace std;
 using namespace vhc;
 
-std::vector< Particle > createParticles(const Vector3D& position, int n, double mass = constants::ELECTRON_MASS, double charge = constants::E, double energy = 1E9 * constants::E, Vector3D direction = Vector3D::i) {
+std::vector< Particle > createParticles(const Vector3D& position, int n, double mass = constants::PROTON_MASS, double charge = constants::E, double energy = 2E9 * constants::E, Vector3D direction = -Vector3D::j) {
 	std::vector< Particle > v;
 
 	double r = 0.1;
@@ -105,11 +105,28 @@ Une particule :
 	acc->add(e7);
 	acc->add(e8);
 
+	acc->close();
+
+	//proton
 	Particle p1 = Particle(Vector3D(3.00, 0, 0), constants::PROTON_MASS, constants::E, 2 * constants::GeV, -Vector3D::j);
 	Particle p2 = Particle(Vector3D(2.99, 0, 0), constants::PROTON_MASS, constants::E, 2 * constants::GeV, -Vector3D::j);
 	acc->add(p1);
 	acc->add(p2);
-	acc->close();
+
+	//anti-proton
+	Particle ap1 = Particle(Vector3D(3.00, 0, 0), constants::PROTON_MASS, -constants::E, 2 * constants::GeV, Vector3D::j);
+	Particle ap2 = Particle(Vector3D(2.99, 0, 0), constants::PROTON_MASS, -constants::E, 2 * constants::GeV, Vector3D::j);
+	acc->add(ap1);
+	acc->add(ap2);
+
+
+
+	/*std::vector< Particle > ps = createParticles(e1.getEntryPosition(), 1000);
+
+	for (int i = 0; i < ps.size(); ++i) {
+		acc->add(ps[i]);
+	}*/
+
 
 	return acc;
 }
@@ -201,8 +218,6 @@ int main(int argc, char *argv[])
 
     vhc::Stage window;
     Accelerator* acc = standard();
-    cout << (*acc) << endl;
-    cout.flush();
     window.accelerator = acc;
 
     window.setWindowTitle("Virtual Hadron Collider");

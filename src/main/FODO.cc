@@ -45,6 +45,9 @@ FODO::FODO(const Vector3D& entry, const Vector3D& exit, double sectionRadius, do
 	for (int i(0); i < elements.size() - 1; i++) {
 		elements[i]->setNext(elements[i+1]);
 	}
+	for (int i(elements.size() - 1); i > 0; i--) {
+		elements[i]->setPrevious(elements[i-1]);
+	}
 
 }
 
