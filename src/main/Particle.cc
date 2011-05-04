@@ -44,7 +44,7 @@ void Particle::applyForce(const Vector3D& f) {force += f;}
 void Particle::applyMagneticForce(const Vector3D& b, double dt) {
 	if (dt != 0 && b != Vector3D::Null) {
 		Vector3D f = charge * velocity.cross(b);
-		applyForce(f.rotate(velocity.cross(f), (dt * f.norm()) / (2 * gamma * mass * velocity.norm())));
+		applyForce(f.rotate(velocity.cross(f), asin((dt * f.norm()) / (2 * gamma * mass * velocity.norm()))));
 	}
 }
 

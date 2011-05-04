@@ -16,7 +16,6 @@
 using namespace std;
 using namespace vhc;
 
-//TODO erreur sur l'affichage de p1 ===> "NAN"  <========
 /** Affiche la réponse de l'exercice P.10 de l'étape 5 (semaine 6) du projet.*/
 int main() {
 
@@ -49,18 +48,18 @@ int main() {
 			1.2);
 
 	Particle* p1 = new Particle(
-			Vector3D( 1.00984,-0.191837,0 ),
-			0.938272,
-			1.60217653e-19,
-			2,
-			Vector3D(-210200,-2.64754e+08,0));
+			Vector3D( 1.00984,-0.191837,0 ),//position
+			constants::PROTON_MASS,//mass
+			constants::E,//charge
+			2*constants::GeV,//energy
+			Vector3D(-1,-1,0));//direction
 
 	Particle* p2 = new Particle(
 			Vector3D(0.99016,-0.191837,0),
-			0.938272,
-			1.60217653e-19,
-			2,
-			Vector3D(210200,-2.64754e+08,0));
+			constants::PROTON_MASS,//mass
+			constants::E,//charge
+			2*constants::GeV,//energy
+			Vector3D(1,-1,0));//direction
 
 	a.add(*d);
 	a.add(*s);
@@ -69,9 +68,8 @@ int main() {
 	a.add(*p1);
 	a.add(*p2);
 
-	//TODO a.close();
-
 	cout << a << endl;
+
 	a.clear();
 
 	return 0;

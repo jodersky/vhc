@@ -8,6 +8,7 @@
 
 #include "Accelerator.h"
 #include "Dipole.h"
+#include "FODO.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -15,9 +16,14 @@
 
 using namespace std;
 using namespace vhc;
-/** lance le test*/
-//TODO erreur sur l'affichage de p1 ===> "NAN"  <=========
-int main() {
+
+//TODO erreur sur l'affichage des particules en général  ===> "NAN"  <=========
+
+/** Test d'affichage.*/
+void printTest() {
+
+	cout<<"This is the print test running."<<endl;
+
 	Accelerator a;
 
 	Dipole* d = new Dipole(Vector3D(1,0,0), Vector3D(0,-1,0), 0.1, 1, Vector3D(0,0,7), NULL);
@@ -34,6 +40,8 @@ int main() {
 
 	Accelerator empty;
 
+
+	//TODO la maille FODO n'est pas comptée comme un seul élément qui en contient d'autres, mais comme un seul.
 	cout << "Inspecting first accelerator..." << endl
 		 << a << endl
 		 << "Inspecting second accelerator..." << endl
@@ -43,6 +51,55 @@ int main() {
 
 	a.clear();
 	b.clear();
+}
+
+/** Construit un accélérateur standard sans particule et renvoie un pointeur dessus.*/
+Accelerator* standardAccelerator() {
+	FODO e1 = FODO(Vector3D(3, 2, 0), Vector3D(3, -2, 0), 0.2, 1.0, 5.0);
+	Dipole e2 = Dipole(e1.getExitPosition(), Vector3D(2, -3, 0), 0.2, 1);
+	FODO e3 = FODO(e2.getExitPosition(), Vector3D(-2, -3, 0), 0.2, 1, 5.0);
+	Dipole e4 = Dipole(e3.getExitPosition(), Vector3D(-3, -2, 0), 0.2, 1);
+	FODO e5 = FODO(e4.getExitPosition(), Vector3D(-3, 2, 0), 0.2, 1.0, 5.0);
+	Dipole e6 = Dipole(e5.getExitPosition(), Vector3D(-2, 3, 0), 0.2, 1);
+	FODO e7 = FODO(e6.getExitPosition(), Vector3D(2, 3, 0), 0.2, 1.0, 5.0);
+	Dipole e8 = Dipole(e7.getExitPosition(), e1.getEntryPosition(), 0.2, 1);
+	Accelerator* acc = new Accelerator();
+	acc->add(e1);
+	acc->add(e2);
+	acc->add(e3);
+	acc->add(e4);
+	acc->add(e5);
+	acc->add(e6);
+	acc->add(e7);
+	acc->add(e8);
+
+	acc->close();
+
+	return acc;
+}
+
+/** Test de simulateur.*/
+void simulatorTest() {
+
+	cout<<"This is the simulator test running."<<endl;
+
+	Accelerator* a = standardAccelerator();
+
+	Particle p1 (a->getElements().front()->getEntryPosition(), 9.11E-31, constants::E);
+
+	a->step(1.);
+
+	a->clear();
+
+	delete a;
+}
+
+/** Lance les tests.*/
+int main() {
+
+	simulatorTest();
+
+	printTest();
 
 	return 0;
 }
