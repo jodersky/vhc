@@ -27,8 +27,19 @@ void printTest() {
 	Accelerator a;
 
 	Dipole* d = new Dipole(Vector3D(1,0,0), Vector3D(0,-1,0), 0.1, 1, Vector3D(0,0,7), NULL);
-	Particle* p1 = new Particle(Vector3D( 1.00984,-0.191837,0 ), 0.938272, 1.60217653e-19, 2, Vector3D(-210200,-2.64754e+08,0));
-	Particle* p2 = new Particle(Vector3D(0.99016,-0.191837,0), 0.938272, 1.60217653e-19, 2, Vector3D(210200,-2.64754e+08,0));
+	Particle* p1 = new Particle(
+			Vector3D( 1.00984,-0.191837,0 ),//position
+			constants::PROTON_MASS,//mass
+			constants::E,//charge
+			2*constants::GeV,//energy
+			Vector3D(-1,-1,0));//direction
+
+	Particle* p2 = new Particle(
+			Vector3D(0.99016,-0.191837,0),
+			constants::PROTON_MASS,//mass
+			constants::E,//charge
+			2*constants::GeV,//energy
+			Vector3D(1,-1,0));//direction
 
 	a.add(*d);
 	a.add(*p1);

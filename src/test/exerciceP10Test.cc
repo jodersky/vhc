@@ -68,6 +68,10 @@ int main() {
 	a.add(*p1);
 	a.add(*p2);
 
+	a.enableLinear(true);
+
+	a.close();
+
 	cout << a << endl;
 
 	a.clear();
