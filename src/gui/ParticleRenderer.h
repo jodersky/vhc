@@ -25,7 +25,9 @@ public:
 	virtual ~ParticleRenderer();
 	void render(const Particle& particle) const;
 
-	void drawSpheres(bool value);
+	void enableDrawSpheres(bool value);
+
+	bool isDrawSpheresEnabled() const;
 
 
 };

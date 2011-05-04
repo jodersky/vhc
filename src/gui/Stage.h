@@ -12,6 +12,7 @@
 #include <QGLWidget>
 #include <QtOpenGL>
 #include "Camera.h"
+#include "KeyManager.h"
 #include "ElementRenderer.h"
 #include "ParticleRenderer.h"
 #include "Element.h"
@@ -29,6 +30,18 @@ public:
 
 	Stage(QWidget* parent = NULL);
 	virtual ~Stage();
+
+	Camera& getCamera();
+
+	void setDisplayMode(util::DisplayMode value);
+	util::DisplayMode getDisplayMode() const;
+
+	bool isRunning() const;
+	void setRunning(bool value);
+
+	ElementRenderer& getElementRenderer();
+	ParticleRenderer& getParticleRenderer();
+
 
 	//TODO !!! temporary
 	Accelerator* accelerator;
@@ -48,9 +61,9 @@ protected:
 	void mouseMoveEvent(QMouseEvent* event);
 
 private:
-
-
 	Camera camera;
+	KeyManager keyManager;
+
 	QTimer* timer;
 	QTime time;
 	int frameTime; //ms
@@ -63,7 +76,6 @@ private:
 
 	util::DisplayMode displayMode;
 
-	int keys;
 	QPoint center;
 
 };

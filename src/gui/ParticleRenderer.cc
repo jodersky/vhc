@@ -22,22 +22,29 @@ ParticleRenderer::~ParticleRenderer() {
 }
 
 void ParticleRenderer::render(const Particle& particle) const {
-	glPushMatrix();
-	glTranslated(particle.getPosition().getX(), particle.getPosition().getY(), particle.getPosition().getZ());
 
-	if (_drawSpheres) {
+	double pos[] = {particle.getPosition().getX(), particle.getPosition().getY(), particle.getPosition().getZ()};
+
+	if (!_drawSpheres) {
 		glBegin(GL_POINTS);
-		glVertex3d(0, 0, 0);
+		glVertex3dv(pos);
 		glEnd();
 	}
 	else {
+		glPushMatrix();
+		glTranslated(pos[0], pos[1], pos[2]);
 		util::sphere(0.01);
+		glPopMatrix();
 	}
-	glPopMatrix();
+
 }
 
-void ParticleRenderer::drawSpheres(bool value) {
+void ParticleRenderer::enableDrawSpheres(bool value) {
 	_drawSpheres = value;
+}
+
+bool ParticleRenderer::isDrawSpheresEnabled() const {
+	return _drawSpheres;
 }
 
 }

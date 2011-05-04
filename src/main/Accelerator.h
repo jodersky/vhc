@@ -17,52 +17,14 @@ namespace vhc {
 /** Représente un accélérateur. Cette classe contient en particulier une méthode
  *  qui fait évoluer les particules qu'elle contient. */
 class Accelerator: public Printable {
-private:
 
-	/** Constructeur de copie ne faisant rien. */
-	Accelerator (Accelerator const& other) {}
-
-	/** Opérateur '=' ne faisant rien. */
-	void operator= (Accelerator const& other) {}
-
-protected:
+public:
 
 	typedef std::list<Particle*> ParticleCollection;
 	typedef std::list<Element*>  ElementCollection;
 
 	typedef ParticleCollection::iterator ParticleIterator;
 	typedef ElementCollection::iterator ElementIterator;
-
-
-	/** Collection d'elements contenus dans cet accelerateur. */
-	ElementCollection elementCollec;
-
-	/** Collection de particules contenus danc cet accelerateur. */
-	ParticleCollection particleCollec;
-
-	/** Autorise les accelerateurs lineaires.
-	 *  @see enableLinear */
-	bool allowLinear;
-
-	/** Indique l'etat ferme de l'accelarateur.
-	 *  @see close */
-	bool closed;
-
-	/** Initialize les particules en leur attribuant l'element dans lequel ils sont contenus.
-	 *  Les particules non-contenus sont supprimes de l'accelerateur. */
-	void initializeParticles();
-
-	/** Met a jour les particules en leur attribuant l'element dans lequel ils sont contenus.
-	 *  Contrairement a <code>initializeParticles()</code>, les elements consideres sont:
-	 *  - l'element actuel de la particule
-	 *  - l'element precedent
-	 *  - l'element suivant
-	 *  Si la particule se situe a cote de son element, elle est supprimee de l'accelerateur.
-	 *  Attention: si la particule saute un element, elle est tout de meme consideree comme etant dans l'element suivant (ou precedent)! Ceci
-	 *  peut survenir si un element est trop petit ou si la simulation est faite avec des pas de temps trop grands. */
-	void updateParticles();
-
-public:
 
 	/** Cree un nouveau accelerateur vide.
 	 *  */
@@ -105,6 +67,44 @@ public:
 
 	/** Retourne une représentation en chaîne de caractères de cet accélérateur. */
 	virtual std::string toString() const;
+
+private:
+
+	/** Constructeur de copie ne faisant rien. */
+	Accelerator (Accelerator const& other) {}
+
+	/** Opérateur '=' ne faisant rien. */
+	void operator= (Accelerator const& other) {}
+
+protected:
+
+	/** Collection d'elements contenus dans cet accelerateur. */
+	ElementCollection elementCollec;
+
+	/** Collection de particules contenus danc cet accelerateur. */
+	ParticleCollection particleCollec;
+
+	/** Autorise les accelerateurs lineaires.
+	 *  @see enableLinear */
+	bool allowLinear;
+
+	/** Indique l'etat ferme de l'accelarateur.
+	 *  @see close */
+	bool closed;
+
+	/** Initialize les particules en leur attribuant l'element dans lequel ils sont contenus.
+	 *  Les particules non-contenus sont supprimes de l'accelerateur. */
+	void initializeParticles();
+
+	/** Met a jour les particules en leur attribuant l'element dans lequel ils sont contenus.
+	 *  Contrairement a <code>initializeParticles()</code>, les elements consideres sont:
+	 *  - l'element actuel de la particule
+	 *  - l'element precedent
+	 *  - l'element suivant
+	 *  Si la particule se situe a cote de son element, elle est supprimee de l'accelerateur.
+	 *  Attention: si la particule saute un element, elle est tout de meme consideree comme etant dans l'element suivant (ou precedent)! Ceci
+	 *  peut survenir si un element est trop petit ou si la simulation est faite avec des pas de temps trop grands. */
+	void updateParticles();
 };
 
 }

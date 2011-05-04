@@ -225,7 +225,7 @@ int main(int argc, char *argv[])
     window.show();
 
 
-    window.showFullScreen();
+    //window.showFullScreen();
 
     //app.setActiveWindow(&window);
     return app.exec();

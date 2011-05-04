@@ -18,12 +18,12 @@ namespace vhc {
 
 Stage::Stage(QWidget* parent):
 		QGLWidget (parent),
-		accelerator(NULL),
 		camera(),
+		keyManager(*this),
+		accelerator(NULL),
 		elementRenderer(),
 		particleRenderer(),
 		displayMode(FILL),
-		keys(0),
 		frameTime(0),
 		h(1E-11),
 		paused(true) {
@@ -130,18 +130,17 @@ void Stage::paintGL() {
 		}
 	}
 
-	if (keys != 0) {
 		double dt = frameTime;
 		double s = 0.002;
-		Vector3D mv = Vector3D::Null;
-		if (keys & 1) mv = mv - Vector3D::j * dt * s;
-		if (keys & 2) mv = mv - Vector3D::i * dt * s;
-		if (keys & 4) mv = mv + Vector3D::j * dt * s;
-		if (keys & 8) mv = mv + Vector3D::i * dt * s;
-		if (keys & 16) mv = mv + Vector3D::k * dt * s;
-		if (keys & 32) mv = mv - Vector3D::k * dt * s;
+		MutableVector3D mv = Vector3D::Null;
+		if (keyManager.isPressed(Qt::Key_A)) mv -= Vector3D::j * dt * s;
+		if (keyManager.isPressed(Qt::Key_W)) mv -= Vector3D::i * dt * s;
+		if (keyManager.isPressed(Qt::Key_D)) mv += Vector3D::j * dt * s;
+		if (keyManager.isPressed(Qt::Key_S)) mv += Vector3D::i * dt * s;
+		if (keyManager.isPressed(Qt::Key_PageUp)) mv += Vector3D::k * dt * s;
+		if (keyManager.isPressed(Qt::Key_PageDown)) mv -= Vector3D::k * dt * s;
 		camera.move(mv);
-	}
+
 
 	if (!paused) accelerator->step(h);
 
@@ -158,90 +157,42 @@ void Stage::mouseMoveEvent(QMouseEvent* event) {
 	camera.addHeading(1.0 * dheading * frameTime / 4000);
 	camera.addPitch(1.0 * dpitch * frameTime / 4000);
 	QCursor::setPos(QWidget::mapToGlobal(center));
-	update();
 }
 
 void Stage::keyPressEvent (QKeyEvent* event) {
-	switch (event->key()) {
-		case Qt::Key_Escape:
-			qApp->quit();
-			break;
-		case Qt::Key_A:
-			keys |= 1;
-			break;
-		case Qt::Key_W:
-			keys |= 2;
-			break;
-		case Qt::Key_D:
-			keys |= 4;
-			break;
-		case Qt::Key_S:
-			keys |= 8;
-			break;
-		case Qt::Key_PageUp:
-			keys |= 16;
-			break;
-		case Qt::Key_PageDown:
-			keys |= 32;
-			break;
-		case Qt::Key_Up:
-			camera.addPitch(2 *  M_PI / 100);
-			break;
-		case Qt::Key_Down:
-			camera.addPitch(-2 *  M_PI / 100);
-			break;
-		case Qt::Key_Right:
-			camera.addHeading(-2 *  M_PI / 100);
-			break;
-		case Qt::Key_Left:
-			camera.addHeading(2 *  M_PI / 100);
-			break;
-		case Qt::Key_R:
-			break;
-		case Qt::Key_1:
-			displayMode = FILL;
-			break;
-		case Qt::Key_2:
-			displayMode = WIREFRAME;
-			break;
-		case Qt::Key_3:
-			displayMode = POINTS;
-			break;
-		case Qt::Key_Return:
-			accelerator->step(h);
-			break;
-		case Qt::Key_Space:
-			paused = !paused;
-			break;
-		default:
-			break;
-	}
-	update();
+	keyManager.press(event->key());
 }
 
 void Stage::keyReleaseEvent (QKeyEvent* event) {
-	switch (event->key()) {
-			case Qt::Key_A:
-				keys &= ~1;
-				break;
-			case Qt::Key_W:
-				keys &= ~2;
-				break;
-			case Qt::Key_D:
-				keys &= ~4;
-				break;
-			case Qt::Key_S:
-				keys &= ~8;
-				break;
-			case Qt::Key_PageUp:
-				keys &= ~16;
-				break;
-			case Qt::Key_PageDown:
-				keys &= ~32;
-				break;
-			default:
-				break;
-	}
+	keyManager.release(event->key());
+}
+
+Camera& Stage::getCamera() {
+	return camera;
+}
+
+DisplayMode Stage::getDisplayMode() const {
+	return displayMode;
+}
+
+void Stage::setDisplayMode(DisplayMode value) {
+	displayMode = value;
+}
+
+bool Stage::isRunning() const {
+	return !paused;
+}
+
+void Stage::setRunning(bool value) {
+	paused = !value;
+}
+
+ElementRenderer& Stage::getElementRenderer(){
+	return elementRenderer;
+}
+
+ParticleRenderer& Stage::getParticleRenderer() {;
+	return particleRenderer;
 }
 
 }
