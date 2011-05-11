@@ -23,7 +23,8 @@ public:
 
 	ParticleRenderer();
 	virtual ~ParticleRenderer();
-	void render(const Particle& particle) const;
+
+	virtual void render(const Particle& particle) const;
 
 	void enableDrawSpheres(bool value);
 

@@ -19,6 +19,15 @@ enum DisplayMode {
 	POINTS = 2
 };
 
+/** Classe utilitaire pour verifier une relation d'heritage.
+ *  Cette classe ne compile que si A est une sous-classe de B
+ *  voir http://www2.research.att.com/~bs/bs_faq2.html#constraints pour plus d'informations. */
+template<class A, class B>
+struct DerivedFrom {
+	static void constraints(A* p) { A* pb = p; }
+	DerivedFrom() { void(*p)(A*) = constraints; }
+};
+
 /** Dessine un tore autour de l'origine, sur le plan xy.
  *  @param R rayon du tore
  *  @param r rayon du "cylindre" du tore

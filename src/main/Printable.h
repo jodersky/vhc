@@ -8,6 +8,7 @@
 #ifndef PRINTABLE_H_
 #define PRINTABLE_H_
 
+#include <sstream>
 #include <string>
 
 namespace vhc {
@@ -21,6 +22,8 @@ public:
 
 	/** Retourne une représentation en chaîne de caractères de cet objet imprimable. */
 	virtual std::string toString() const = 0;
+
+	//virtual std::stringstream toStream(std::stringstream s) const = 0;
 
 };
 

@@ -42,6 +42,8 @@ public:
 
 	virtual Vector3D electricFieldAt(const Vector3D& position) const;
 
+	virtual Vector3D getHorizontalAt(const Vector3D& position) const;
+
 	virtual void accept(const ElementVisitor& v) const;
 
 	virtual std::string getType() const;

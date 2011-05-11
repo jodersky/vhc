@@ -16,8 +16,8 @@ StraightElement::StraightElement(const Vector3D& entry, const Vector3D& exit, do
 StraightElement::~StraightElement() {};
 
 bool StraightElement::isBefore(const Vector3D& position) const {
-	const Vector3D v(position - exitPosition);
-	return (-getDiagonal()).dot(v) > getDiagonal().normSquare();
+	const Vector3D v(position - entryPosition);
+	return (-getDiagonal()).dot(v) > 0;//getDiagonal().normSquare();
 }
 
 bool StraightElement::isBeside(const Vector3D& position) const {
@@ -27,8 +27,12 @@ bool StraightElement::isBeside(const Vector3D& position) const {
 };
 
 bool StraightElement::isAfter(const Vector3D& position) const {
-	const Vector3D v(position - entryPosition);
-	return getDiagonal().dot(v) > getDiagonal().normSquare();
+	const Vector3D v(position - exitPosition);
+	return getDiagonal().dot(v) > 0;
+}
+
+Vector3D StraightElement::getHorizontalAt(const Vector3D& position) const {
+	return Vector3D::k.cross(getDiagonal());
 }
 
 std::string StraightElement::getType() const {return "Straight Element";}

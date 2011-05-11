@@ -28,7 +28,7 @@ Particle* standpart(Accelerator* acc){
 			constants::PROTON_MASS,//mass
 			constants::E,//charge
 			2*constants::GeV,//energy
-			Vector3D(-1,-1,0));//direction
+			Vector3D(1, 0,0));//direction
 
 	return sp;
 };
@@ -36,7 +36,7 @@ Particle* standpart(Accelerator* acc){
 // Ce fichier teste les simulations de chaque type différent d'Element existant.
 int main() {
 
-	Dipole* d = new Dipole(Vector3D(0,0,0), Vector3D(1,2,0), 0.2, 0.2, Vector3D::Null, NULL);
+	Dipole* d = new Dipole(Vector3D(0,0,0), Vector3D(1,0,0), 0.2, 0.2, Vector3D::Null, NULL);
 	Accelerator* a1 = new Accelerator();
 	a1->add(*d);
 

@@ -31,8 +31,8 @@ Stage::Stage(QWidget* parent):
 	timer = new QTimer(this);
 
 
-	connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-	timer->start(1000.0/100);
+	connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));
+	timer->start(1);
 
 	setMouseTracking(true);
 }
@@ -80,9 +80,10 @@ void Stage::paintGL() {
 			QString("pitch: ") + QString::number(camera.getPitch()),
 			QString("-----accelerator-----"),
 			QString("Elements: ") + QString::number(accelerator->getElements().size()),
-			QString("Particles: ") + QString::number(accelerator->getParticles().size())
+			QString("Particles: ") + QString::number(accelerator->getParticles().size()),
+			QString("") + accelerator->getParticles().front()->toString().c_str()
 	};
-	displayText(text, 10);
+	displayText(text, 11);
 	//renderText(0,60,QString("") + accelerator->getParticle(0)->getElement()->magneticFieldAt(accelerator->getParticle(0)->getPosition()).toString().c_str());
 	//renderText(0,72,QString("") + accelerator->getParticle(0)->toString().c_str());
 	axes();
@@ -125,6 +126,7 @@ void Stage::paintGL() {
 		glDisable(GL_BLEND);
 
 		glColor3d(0, 0, 1);
+
 		for (list<Particle*>::const_iterator i = accelerator->getParticles().begin(); i != accelerator->getParticles().end(); ++i) {
 			particleRenderer.render(**i);
 		}

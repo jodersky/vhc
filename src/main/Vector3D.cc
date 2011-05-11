@@ -69,7 +69,7 @@ double Vector3D::tripleProduct(const Vector3D& v, const Vector3D& w) const { ret
 Vector3D Vector3D::rotate(const Vector3D& axis, double t) const {
 	const Vector3D& x = *this;
 	const Vector3D& a = ~axis;
-	return x * cos(t) + a * x.dot(a) * (1-cos(t)) +  a.cross(x) * sin(t);
+	return cos(t) * x +  (1-cos(t)) * x.dot(a) * a + sin(t) * a.cross(x);
 }
 
 bool Vector3D::ae(const Vector3D& u, const Vector3D& v, double epsilon) {return (u - v).norm() <= epsilon;}

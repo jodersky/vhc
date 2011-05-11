@@ -48,6 +48,12 @@ Vector3D CompositeElement::electricFieldAt(const Vector3D& position) const {
 	return e;
 }
 
+Vector3D CompositeElement::getHorizontalAt(const Vector3D& position) const {
+	for (int i(0); i < elements.size(); i++) {
+		if (elements[i]->contains(position)) return elements[i]->getHorizontalAt(position);
+	}
+}
+
 void CompositeElement::accept(const ElementVisitor& v) const {
 	for (int i(0); i < elements.size(); ++i) {
 		elements[i]->accept(v);

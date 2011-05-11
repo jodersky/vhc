@@ -54,6 +54,8 @@ public:
 
 	virtual bool isAfter(const Vector3D& position) const;
 
+	virtual Vector3D getHorizontalAt(const Vector3D& position) const;
+
 	/** Retourne la courbure. */
 	double getCurvature() const;
 

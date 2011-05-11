@@ -61,22 +61,26 @@ protected:
 	void mouseMoveEvent(QMouseEvent* event);
 
 private:
-	Camera camera;
+	//io
 	KeyManager keyManager;
 
+	//graphics
+	Camera camera;
+	ElementRenderer elementRenderer;
+	ParticleRenderer particleRenderer;
+	QPoint center;
+	util::DisplayMode displayMode;
+
+	//simulation
 	QTimer* timer;
 	QTime time;
 	int frameTime; //ms
-
 	double h;
 	bool paused;
 
-	ElementRenderer elementRenderer;
-	ParticleRenderer particleRenderer;
 
-	util::DisplayMode displayMode;
 
-	QPoint center;
+
 
 };
 

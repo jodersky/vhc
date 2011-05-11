@@ -74,6 +74,8 @@ public:
 	bool contains(const Vector3D& position) const;
 	bool contains(const Particle& particle) const;
 
+	virtual Vector3D getHorizontalAt(const Vector3D& position) const = 0;
+
 	/** Retourne le champ magnetique, a l'interieur de cet element a la position donnee. */
 	virtual Vector3D magneticFieldAt(const Vector3D& position) const;
 

@@ -144,13 +144,15 @@ void Accelerator::step(double dt) {
 	for (ParticleIterator i = particleCollec.begin(); i != particleCollec.end(); ++i) {
 		Particle& particle = **i;
 
+		particle.setForce(Vector3D::Null);
+
 		particle.applyMagneticForce(particle.getElement()->magneticFieldAt(particle.getPosition()), dt);
 
 		Vector3D a = particle.getForce() / (particle.getGamma() * particle.getMass());
 		particle.setVelocity(particle.getVelocity() + a * dt);
 
 		particle.translate(particle.getVelocity() * dt);
-		particle.setForce(Vector3D::Null);
+
 	}
 
 

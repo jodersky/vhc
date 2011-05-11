@@ -35,6 +35,8 @@ public:
 
 	virtual void accept(const ElementVisitor& v) const;
 
+	virtual Vector3D getHorizontalAt(const Vector3D& position) const;
+
 	virtual StraightElement* clone() const;
 
 };

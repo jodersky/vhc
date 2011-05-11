@@ -14,7 +14,7 @@ namespace vhc {
 namespace constants {
 
 /** Vitesse de la lumière dans le vide [m/s]. */
-const double C = 299792458;
+const double C = 299792458.0;
 
 /** Vitesse de la lumière dans le vide au carré [m/s]. */
 const double C2 = C * C;

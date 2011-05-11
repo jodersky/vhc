@@ -59,6 +59,11 @@ bool CurvedElement::isAfter(const Vector3D& position) const {
 	return (position - exitPosition).dot(out) > 0;
 }
 
+Vector3D CurvedElement::getHorizontalAt(const Vector3D& position) const {
+	Vector3D X(position - curvatureCenter);
+	return (X - position.getZ() * Vector3D::k).unit();
+}
+
 std::string CurvedElement::getType() const {return "Curved Element";}
 std::string CurvedElement::toString() const {
 	std::stringstream s;
