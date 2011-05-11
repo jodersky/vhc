@@ -19,6 +19,8 @@
 using namespace std;
 using namespace vhc;
 
+//TODO ne marche pas.....=(
+
 Particle* standpart(Accelerator* acc){
 
 	Particle* sp = new Particle(
@@ -31,6 +33,7 @@ Particle* standpart(Accelerator* acc){
 	return sp;
 };
 
+// Ce fichier teste les simulations de chaque type différent d'Element existant.
 int main() {
 
 	Dipole* d = new Dipole(Vector3D(0,0,0), Vector3D(1,2,0), 0.2, 0.2, Vector3D::Null, NULL);
@@ -62,8 +65,10 @@ int main() {
 
 		va[i]->close();
 
+		//nbr d'iterations de la simulation
 		int it(100);
 
+		//etat initial
 		cout<<*va[i]<<endl;
 
 		//test de simulation
