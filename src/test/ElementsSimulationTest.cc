@@ -19,12 +19,10 @@
 using namespace std;
 using namespace vhc;
 
-//TODO ne marche pas.....=(
-
 Particle* standpart(Accelerator* acc){
 
 	Particle* sp = new Particle(
-			acc->getElements().front()->getEntryPosition(),//position
+			acc->getElements().front()->getExitPosition(),//position, on le met à la fin des éléments
 			constants::PROTON_MASS,//mass
 			constants::E,//charge
 			2*constants::GeV,//energy
@@ -66,7 +64,7 @@ int main() {
 		va[i]->close();
 
 		//nbr d'iterations de la simulation
-		int it(100);
+		int it(14);
 
 		//etat initial
 		cout<<*va[i]<<endl;
@@ -74,7 +72,9 @@ int main() {
 		//test de simulation
 		for(unsigned int j(0); j<it; ++j){
 			va[i]->step(10E-11);
-			cout<<"after "<<j+1<<" step :"<<endl << (va[i]->getParticles().size())<<endl;
+			if(!(va[i]->getParticles().empty())){
+				cout<<"after "<<j+1<<" step :"<<endl << (va[i]->getParticles().front()->toString())<<endl;
+			}
 		}
 
 	}
