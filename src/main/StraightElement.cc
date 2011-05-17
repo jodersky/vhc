@@ -31,6 +31,10 @@ bool StraightElement::isAfter(const Vector3D& position) const {
 	return getDiagonal().dot(v) > 0;
 }
 
+double StraightElement::getLength() const {
+	return getDiagonal().norm();
+}
+
 Vector3D StraightElement::getHorizontalAt(const Vector3D& position) const {
 	return Vector3D::k.cross(getDiagonal());
 }

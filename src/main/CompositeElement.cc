@@ -40,6 +40,14 @@ Vector3D CompositeElement::magneticFieldAt(const Vector3D& position) const {
 	return b;
 }
 
+double CompositeElement::getLength() const {
+	double l = 0;
+	for (int i(0); i < elements.size(); ++i) {
+		l += elements[i]->getLength();
+	}
+	return l;
+}
+
 Vector3D CompositeElement::electricFieldAt(const Vector3D& position) const {
 	MutableVector3D e = Vector3D::Null;
 	for (int i(0); i < elements.size(); i++) {

@@ -26,8 +26,7 @@ public:
 	typedef ParticleCollection::iterator ParticleIterator;
 	typedef ElementCollection::iterator ElementIterator;
 
-	/** Cree un nouveau accelerateur vide.
-	 *  */
+	/** Cree un nouveau accelerateur vide. */
 	Accelerator ();
 
 	virtual ~Accelerator();

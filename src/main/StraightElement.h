@@ -30,6 +30,8 @@ public:
 
 	virtual bool isAfter(const Vector3D& position) const;
 
+	virtual double getLength() const;
+
 	virtual std::string getType() const;
 	virtual std::string toString() const;
 

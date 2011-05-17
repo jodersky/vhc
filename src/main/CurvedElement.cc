@@ -59,6 +59,10 @@ bool CurvedElement::isAfter(const Vector3D& position) const {
 	return (position - exitPosition).dot(out) > 0;
 }
 
+double CurvedElement::getLength() const {
+	return getAngle() / getCurvature();
+}
+
 Vector3D CurvedElement::getHorizontalAt(const Vector3D& position) const {
 	Vector3D X(position - curvatureCenter);
 	return (X - position.getZ() * Vector3D::k).unit();

@@ -38,6 +38,8 @@ public:
 
 	virtual bool isAfter(const Vector3D& position) const;
 
+	virtual double getLength() const;
+
 	virtual Vector3D magneticFieldAt(const Vector3D& position) const;
 
 	virtual Vector3D electricFieldAt(const Vector3D& position) const;

@@ -101,6 +101,8 @@ public:
 	/** Retourne le rayon de la section de cet element. */
 	double getSectionRadius() const;
 
+	virtual double getLength() const = 0;
+
 	/** Assigne le rayon de la section de cet element. */
 	//void setSectionRadius(double r) {sectionRadius = r;}
 

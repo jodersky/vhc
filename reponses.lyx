@@ -660,5 +660,14 @@ Question P10.3
 Question P10.4
 \end_layout
 
+\begin_layout Section*
+Question P12.1
+\end_layout
+
+\begin_layout Standard
+Comme tous ces propriétés changent pendant l'evolution de la simulation,
+ nous les avons implémentés en tant que méthodes.
+\end_layout
+
 \end_body
 \end_document
