@@ -13,16 +13,25 @@ using namespace std;
 
 namespace vhc {
 
-Beam::Beam(const Particle& referenceParticle, int quantity, int lambda): referenceParticle(referenceParticle), quantity(quantity), lambda(lambda) {
-	init(referenceParticle, quantity, lambda);
-}
+Beam::Beam(const Particle& referenceParticle, int quantity, int lambda):
+		referenceParticle(referenceParticle),
+		quantity(quantity),
+		lambda(lambda) {}
 
 Beam::~Beam() {
-	for (list<Particle*>::iterator i = particles.begin(); i != particles.end(); ++i) {
+	clear();
+}
+
+void Beam::clear() {
+	for (ParticleCollection::iterator i = particles.begin(); i != particles.end(); ++i) {
 		delete *i;
 		*i = NULL;
 	}
 	particles.clear();
+}
+
+int Beam::getQuantity() const {
+	return quantity;
 }
 
 int Beam::getSize() const {
@@ -33,8 +42,53 @@ int Beam::getLambda() const {
 	return lambda;
 }
 
-const Particle& Beam::getReferenceParticle() const {
+Particle& Beam::getReferenceParticle() {
 	return referenceParticle;
+}
+
+Beam::ParticleCollection& Beam::getParticles() {return particles;}
+
+void Beam::updateParticles() {
+	for (ParticleCollection::iterator i = particles.begin(); i != particles.end(); ++i) {
+		Particle& particle = **i;
+		if (particle.getElement()->isAfter(particle)) {
+			if (particle.getElement()->getNext() == NULL) {
+				delete *i;
+				i = particles.erase(i);
+				--i;
+				//cout << "Particle reached end of accelerator. Removed from simulation" << std::endl;
+			} else particle.setElement(particle.getElement()->getNext());
+		} else if (particle.getElement()->isBefore(particle)) {
+			if (particle.getElement()->getPrevious() == NULL) {
+				delete *i;
+				i = particles.erase(i);
+				--i;
+				//cout << "Particle reached beginning of accelerator. Removed from simulation" << std::endl;
+			} else particle.setElement(particle.getElement()->getPrevious());
+		} else if (particle.getElement()->isBeside(particle)) {
+			//std::cout << "Particle hit wall. Removed from simulation" << std::endl;
+			delete *i;
+			i = particles.erase(i);
+			--i;
+		}
+	}
+}
+
+void Beam::step(double dt) {
+	for (ParticleCollection::iterator i = particles.begin(); i != particles.end(); ++i) {
+		Particle& particle = **i;
+
+		particle.applyMagneticForce(particle.getElement()->magneticFieldAt(particle.getPosition()), dt);
+
+		Vector3D a = particle.getForce() / (particle.getGamma() * particle.getMass());
+		particle.setVelocity(particle.getVelocity() + a * dt);
+
+		particle.translate(particle.getVelocity() * dt);
+
+		particle.setForce(Vector3D::Null);
+	}
+
+	updateParticles();
 }
 
 double Beam::getVR2() const {

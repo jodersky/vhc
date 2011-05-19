@@ -118,7 +118,7 @@ void Stage::paintGL() {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
-		for (list<Element*>::const_iterator i = accelerator->getElements().begin(); i != accelerator->getElements().end(); ++i) {
+		for (Accelerator::ElementCollection::const_iterator i = accelerator->getElements().begin(); i != accelerator->getElements().end(); ++i) {
 			elementRenderer.render(**i);
 		}
 
@@ -127,7 +127,8 @@ void Stage::paintGL() {
 
 		glColor3d(0, 0, 1);
 
-		for (list<Particle*>::const_iterator i = accelerator->getParticles().begin(); i != accelerator->getParticles().end(); ++i) {
+		Accelerator::ParticleCollection particles = accelerator->getParticles();
+		for (Accelerator::ParticleCollection::const_iterator i = particles.begin(); i != particles.end(); ++i) {
 			particleRenderer.render(**i);
 		}
 	}
@@ -144,7 +145,7 @@ void Stage::paintGL() {
 		camera.move(mv);
 
 
-	if (!paused) accelerator->step(h);
+	if (!paused) for (int i = 0; i < 10; ++i) accelerator->step(h);
 
 	glColor3d(1,1,0);
 	util::crosshair();

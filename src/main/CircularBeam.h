@@ -14,13 +14,12 @@ namespace vhc {
 
 class CircularBeam: public Beam {
 
-protected:
-
-	virtual void init(const Particle& referenceParticle, int quantity, int lambda) = 0;
 
 public:
 	CircularBeam(const Particle& referenceParticle, int quantity, int lambda);
 	virtual ~CircularBeam();
+
+	virtual void initializeParticles();
 
 	virtual CircularBeam* clone() const;
 };

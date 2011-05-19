@@ -17,6 +17,7 @@
 #include "FODO.h"
 #include "Vector3D.h"
 #include "constants.h"
+#include "SingleBeam.h"
 
 using namespace vhc;
 using namespace std;
@@ -57,8 +58,6 @@ Accelerator* standard() {
 	acc->add(e7);
 	acc->add(e8);
 
-	acc->close();
-
 	Particle p1 = Particle(Vector3D(3.00, 0, 0), constants::PROTON_MASS, constants::E, 2 * constants::GeV, -Vector3D::j);
 	Particle p2 = Particle(Vector3D(2.99, 0, 0), constants::PROTON_MASS, constants::E, 2 * constants::GeV, -Vector3D::j);
 	acc->add(p1);
@@ -70,7 +69,7 @@ Accelerator* standard() {
 		acc->add(ps[i]);
 	}
 
-
+	acc->close();
 	return acc;
 }
 
@@ -82,7 +81,10 @@ int main() {
 	int steps = 1000;
 	double dt = 1E-11;
 
-	cout << "Simulating " << steps << " steps with " << accelerator->getParticles().size() << " particles...";
+	cout << "Simulating " << steps << " steps with " << accelerator->getParticles().size() << " particles in " << accelerator->getBeams().size() << " beams...";
+	for (Accelerator::BeamCollection::const_iterator i = accelerator->getBeams().begin(); i != accelerator->getBeams().end(); ++i) {
+		cout << (**i).getParticles().size();
+		}
 	cout.flush();
 	int t0 = clock();
 	for (int i = 0; i < steps; ++i) {

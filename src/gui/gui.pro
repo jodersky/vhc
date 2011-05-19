@@ -10,8 +10,8 @@ LIBS += -L$(BINDIR)/main -lvhc
 QT += opengl
 
 #CONFIG += DEBUG
-#QMAKE_CXXFLAGS_DEBUG += -pg
-#QMAKE_LFLAGS_DEBUG += -pg
+#QMAKE_CXXFLAGS_DEBUG += -g
+#QMAKE_LFLAGS_DEBUG += -g
 
 
 # Input

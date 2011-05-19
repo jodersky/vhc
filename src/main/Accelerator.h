@@ -10,6 +10,7 @@
 #include <list>
 #include "Vector3D.h"
 #include "Particle.h"
+#include "Beam.h"
 #include "Element.h"
 
 namespace vhc {
@@ -22,6 +23,7 @@ public:
 
 	typedef std::list<Particle*> ParticleCollection;
 	typedef std::list<Element*>  ElementCollection;
+	typedef std::list<Beam*> BeamCollection;
 
 	typedef ParticleCollection::iterator ParticleIterator;
 	typedef ElementCollection::iterator ElementIterator;
@@ -35,8 +37,9 @@ public:
 	 *  L'accelerateur est ouvert en ajoutant un element. */
 	Element& add(const Element& element);
 
-	/** Copie une particule dans l'accélérateur. */
-	Particle& add(const Particle& particle);
+	Beam& add(const Beam& beam);
+
+	Beam& add(const Particle& particle);
 
 	/** Retourne la liste d'elements contenus dans cet accelerateur.
 	 *  <b>ATTENTION:</b> les elements peuvent etre supprimes sans preavis par l'accelerateur! */
@@ -45,6 +48,8 @@ public:
 	/** Retourne la liste des particules contenus dans cet accelerateur.
 	 *  <b>ATTENTION:</b> les particules peuvent etre supprimes sans preavis par l'accelerateur! */
 	const ParticleCollection & getParticles() const;
+
+	const BeamCollection& getBeams() const;
 
 	/** Ferme l'accelerateur.
 	 *  En invoquant cette methode, la continuite des elements est verifiee et les particules sont attribues leurs elements respectifs.
@@ -78,10 +83,9 @@ private:
 protected:
 
 	/** Collection d'elements contenus dans cet accelerateur. */
-	ElementCollection elementCollec;
+	ElementCollection elements;
 
-	/** Collection de particules contenus danc cet accelerateur. */
-	ParticleCollection particleCollec;
+	BeamCollection beams;
 
 	/** Autorise les accelerateurs lineaires.
 	 *  @see enableLinear */
@@ -91,19 +95,11 @@ protected:
 	 *  @see close */
 	bool closed;
 
-	/** Initialize les particules en leur attribuant l'element dans lequel ils sont contenus.
-	 *  Les particules non-contenus sont supprimes de l'accelerateur. */
-	void initializeParticles();
+	/** Initialize les faisceaux.
+	 *  Les faisceaux dont la particule de refernce n'est pas contenue dans un element
+	 *  sont supprimes de l'accelerateur. */
+	void initializeBeams();
 
-	/** Met a jour les particules en leur attribuant l'element dans lequel ils sont contenus.
-	 *  Contrairement a <code>initializeParticles()</code>, les elements consideres sont:
-	 *  - l'element actuel de la particule
-	 *  - l'element precedent
-	 *  - l'element suivant
-	 *  Si la particule se situe a cote de son element, elle est supprimee de l'accelerateur.
-	 *  Attention: si la particule saute un element, elle est tout de meme consideree comme etant dans l'element suivant (ou precedent)! Ceci
-	 *  peut survenir si un element est trop petit ou si la simulation est faite avec des pas de temps trop grands. */
-	void updateParticles();
 };
 
 }

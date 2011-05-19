@@ -14,15 +14,91 @@
 
 namespace vhc {
 
-class Beam {
+class Beam: public Cloneable {
+
+public:
+
+	typedef std::list<Particle*> ParticleCollection;
+
+	/** Cree un nouveau faisceaux.
+	 *  <b>ATTENTION:</b> un `Beam' est abstrait et n'initialise pas les particules a partir de la reference.
+	 *  C'est au client de faire cela! */
+	Beam(const Particle& referenceParticle, int quantity, int lambda);
+
+	virtual ~Beam();
+
+
+	ParticleCollection& getParticles();
+
+	/** Met a jour les particules en leur attribuant l'element dans lequel ils sont contenus.
+	 *  Contrairement a <code>Accelerator::initializeBeams()</code>, les elements consideres sont:
+	 *  - l'element actuel de la particule
+	 *  - l'element precedent
+	 *  - l'element suivant
+	 *  Si la particule se situe a cote de son element, elle est supprimee de l'accelerateur.
+	 *  Attention: si la particule saute un element, elle est tout de meme consideree comme etant dans l'element suivant (ou precedent)! Ceci
+	 *  peut survenir si un element est trop petit ou si la simulation est faite avec des pas de temps trop grands. */
+	void updateParticles();
+
+	virtual void initializeParticles() = 0;
+
+	void step(double dt);
+
+	/** Retourne la quantite de particules contenus dans ce faisceau. */
+	int getQuantity() const;
+
+	/** Retourne la quantite de macroparticules contenus dans ce faisceau. */
+	int getSize() const;
+
+	/** Retourne le coefficient des macroparticules. */
+	int getLambda() const;
+
+	/** Retourne la particule de reference. */
+	Particle& getReferenceParticle();
+
+	/** Retourne l'energie moyenne des particules dans ce faisceau. */
+	double getAverageEnergy() const;
+
+	/** Retourne l'emmitance verticale de ce faisceau. */
+	double getVerticalEmittance() const;
+
+	/** Retourne l'emmitance horizontale de ce faisceau. */
+	double getHorizontalEmittance() const;
+
+	void clear();
+
+	virtual Beam* clone() const = 0;
+
+
+
+
+	//-------------------------------------------------------------------
+
+	/** Retourne coefficient des ellipses de phases vertical. */
+	double getVerticalA11() const;
+
+	/** Retourne coefficient des ellipses de phases vertical. */
+	double getVerticalA12() const;
+
+	/** Retourne coefficient des ellipses de phases vertical. */
+	double getVerticalA22() const;
+
+	/** Retourne coefficient des ellipses de phases horizontal. */
+	double getHorizontalA11() const;
+
+	/** Retourne coefficient des ellipses de phases horizontal. */
+	double getHorizontalA12() const;
+
+	/** Retourne coefficient des ellipses de phases horizontal. */
+	double getHorizontalA22() const;
 
 protected:
 
 	/** Particule de reference. */
 	Particle referenceParticle;
 
-	/** Particules contenus dans ce faisceau. */
-	std::list<Particle*> particles;
+	/** (Macro-)Particules contenus dans ce faisceau. */
+	ParticleCollection particles;
 
 	/** Coefficient des macrosparticules. */
 	int lambda;
@@ -53,55 +129,7 @@ protected:
 	 *  (<r*v>^2 vertical du complement) */
 	double getVRV2() const;
 
-	/** Initialise ce faisceau a partir de la particule de reference. Comme il s'agit d'une sorte de factory method (au sens vraiment large),
-	 *  la responsabilite de gestion des particules appartient a ce faisceau (et non a la sous-classe). */
-	virtual void init(const Particle& referenceParticle, int quantity, int lambda) = 0;
 
-
-public:
-
-	/** Cree un nouveau faisceaux.
-	 *  <b>ATTENTION:</b> un `Beam' est abstrait et n'initialise pas les particules a partir de la reference.
-	 *  C'est au client de faire cela! */
-	Beam(const Particle& referenceParticle, int quantity, int lambda);
-
-	virtual ~Beam();
-
-	/** Retourne la quantite de particules contenus dans ce faisceau. */
-	int getSize() const;
-
-	/** Retourne le coefficient des macroparticules. */
-	int getLambda() const;
-
-	/** Retourne la particule de reference. */
-	const Particle& getReferenceParticle() const;
-
-	/** Retourne l'energie moyenne des particules dans ce faisceau. */
-	double getAverageEnergy() const;
-
-	/** Retourne l'emmitance verticale de ce faisceau. */
-	double getVerticalEmittance() const;
-
-	/** Retourne l'emmitance horizontale de ce faisceau. */
-	double getHorizontalEmittance() const;
-
-	/** Retourne coefficient des ellipses de phases vertical. */
-	double getVerticalA11() const;
-
-	/** Retourne coefficient des ellipses de phases vertical. */
-	double getVerticalA12() const;
-
-	/** Retourne coefficient des ellipses de phases vertical. */
-	double getVerticalA22() const;
-
-	/** Retourne coefficient des ellipses de phases horizontal. */
-	double getHorizontalA11() const;
-
-	/** Retourne coefficient des ellipses de phases horizontal. */
-	double getHorizontalA12() const;
-
-	/** Retourne coefficient des ellipses de phases horizontal. */
-	double getHorizontalA22() const;
 
 };
 

@@ -21,6 +21,7 @@
 #include "Vector3D.h"
 #include "constants.h"
 #include <vector>
+#include "CircularBeam.h"
 
 using namespace std;
 using namespace vhc;
@@ -129,7 +130,6 @@ Une particule :
 	//acc->add(e7);
 	acc->add(e8);
 
-	acc->close();
 
 	//proton
 	Particle p1 = Particle(Vector3D(3.01, 0, 0), constants::PROTON_MASS, constants::E, 2 * constants::GeV, -Vector3D::j);
@@ -143,7 +143,9 @@ Une particule :
 	acc->add(ap1);
 	acc->add(ap2);
 
+	acc->add(CircularBeam(p1, 10, 1));
 
+	acc->close();
 
 	/*std::vector< Particle > ps = createParticles(e1.getEntryPosition(), 1000);
 
