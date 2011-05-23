@@ -12,6 +12,7 @@
 
 namespace vhc {
 
+/** Represente un faisceau dont les particules sont unifomement repartis dans une suite d'elements. */
 class CircularBeam: public Beam {
 
 

@@ -25,7 +25,7 @@ Stage::Stage(QWidget* parent):
 		particleRenderer(),
 		displayMode(FILL),
 		frameTime(0),
-		h(1E-11),
+		h(1E-12),
 		paused(true) {
 
 	timer = new QTimer(this);
@@ -145,7 +145,7 @@ void Stage::paintGL() {
 		camera.move(mv);
 
 
-	if (!paused) for (int i = 0; i < 10; ++i) accelerator->step(h);
+	if (!paused) for (int i = 0; i < 30; ++i) accelerator->step(h);
 
 	glColor3d(1,1,0);
 	util::crosshair();

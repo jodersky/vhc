@@ -50,7 +50,15 @@ void Particle::applyMagneticForce(const Vector3D& b, double dt) {
 
 double Particle::getMass() const {return mass;}
 
+void Particle::setMass(double m) {
+	mass = m;
+}
+
 double Particle::getCharge() const {return charge;}
+
+void Particle::setCharge(double q) {
+	charge = q;
+}
 
 
 Vector3D Particle::getVelocity() const {return velocity;}

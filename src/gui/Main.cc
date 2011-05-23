@@ -22,6 +22,7 @@
 #include "constants.h"
 #include <vector>
 #include "CircularBeam.h"
+#include "Bunch.h"
 
 using namespace std;
 using namespace vhc;
@@ -143,7 +144,15 @@ Une particule :
 	acc->add(ap1);
 	acc->add(ap2);
 
-	acc->add(CircularBeam(p1, 10, 1));
+	acc->add(CircularBeam(p1, 20, 1));
+
+	double emittance = 5E-6; //m
+	double A_12 = 0.02; //1/m
+	double A_22 = 4;//E-19; // s² m-1 (dépend totalement de l'accélérateur)
+	double length = 300E-12 * constants::C;
+	double stdDev = 0.1;
+	acc->add(Bunch(p1, 500, 1, stdDev, length, emittance, A_12, A_22));
+	acc->add(Bunch(ap1, 500, 1, stdDev, length, emittance, A_12, A_22));
 
 	acc->close();
 

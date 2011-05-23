@@ -88,8 +88,14 @@ public:
 	/** Retourne la masse de cette particule. [kg] */
 	double getMass() const;
 
+	/** Affecte la masse. */
+	void setMass(double m);
+
 	/** Retourne la charge de cette particule. [C] */
 	double getCharge() const;
+
+	/** Affecte la charge */
+	void setCharge(double q);
 
 	/** Retourne la vitesse de cette particule. [m/s]*/
 	Vector3D getVelocity() const;

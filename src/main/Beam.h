@@ -14,6 +14,7 @@
 
 namespace vhc {
 
+/** Classe de base pour les faisceaux. */
 class Beam: public Cloneable {
 
 public:
@@ -21,6 +22,9 @@ public:
 	typedef std::list<Particle*> ParticleCollection;
 
 	/** Cree un nouveau faisceaux.
+	 *  @param refererenceParticle particule de reference (son element ne joue pas de role)
+	 *  @param quantity la quantite de particules a generer
+	 *  @param lambda le facteur de macroparticules (il y aura lambda fois moins de particules dans le faisceau mais a charges et masses lambdas fois plus grands)
 	 *  <b>ATTENTION:</b> un `Beam' est abstrait et n'initialise pas les particules a partir de la reference.
 	 *  C'est au client de faire cela! */
 	Beam(const Particle& referenceParticle, int quantity, int lambda);
@@ -40,8 +44,11 @@ public:
 	 *  peut survenir si un element est trop petit ou si la simulation est faite avec des pas de temps trop grands. */
 	void updateParticles();
 
+	/** Initialise les particules de ce faisceau.
+	 *  Cette methode est appelee par la classe Accelerator. */
 	virtual void initializeParticles() = 0;
 
+	/** Simule ce faisceau pendant un pas de temps dt. */
 	void step(double dt);
 
 	/** Retourne la quantite de particules contenus dans ce faisceau. */
@@ -65,6 +72,7 @@ public:
 	/** Retourne l'emmitance horizontale de ce faisceau. */
 	double getHorizontalEmittance() const;
 
+	/** Vide ce faisceau en supprimant tous les particules. */
 	void clear();
 
 	virtual Beam* clone() const = 0;
@@ -75,22 +83,22 @@ public:
 	//-------------------------------------------------------------------
 
 	/** Retourne coefficient des ellipses de phases vertical. */
-	double getVerticalA11() const;
+	virtual double getVerticalA11() const;
 
 	/** Retourne coefficient des ellipses de phases vertical. */
-	double getVerticalA12() const;
+	virtual double getVerticalA12() const;
 
 	/** Retourne coefficient des ellipses de phases vertical. */
-	double getVerticalA22() const;
+	virtual double getVerticalA22() const;
 
 	/** Retourne coefficient des ellipses de phases horizontal. */
-	double getHorizontalA11() const;
+	virtual double getHorizontalA11() const;
 
 	/** Retourne coefficient des ellipses de phases horizontal. */
-	double getHorizontalA12() const;
+	virtual double getHorizontalA12() const;
 
 	/** Retourne coefficient des ellipses de phases horizontal. */
-	double getHorizontalA22() const;
+	virtual double getHorizontalA22() const;
 
 protected:
 
