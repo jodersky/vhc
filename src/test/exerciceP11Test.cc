@@ -17,7 +17,7 @@ using namespace std;
 using namespace vhc;
 
 
-// A bannir car ne garantit pas que les entrées-sorties de séléments soient cohérents.
+// Construction par boucle à bannir car ne garantit pas que les entrées-sorties de séléments soient cohérents.
 // De plus il n'extise aucune moyen d'initaliser ces attributs automatiquement.
 Accelerator* creatAcc() {
 

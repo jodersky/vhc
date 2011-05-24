@@ -17,8 +17,6 @@
 using namespace std;
 using namespace vhc;
 
-//TODO erreur sur l'affichage des particules en général  ===> "NAN"  <=========
-
 /** Test d'affichage.*/
 void printTest() {
 

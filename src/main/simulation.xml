@@ -1,0 +1,87 @@
+<System>
+	<Particle>
+		<Position>
+			3.01,0,0
+		<\Position>
+		<Mass>
+			1
+		<\Mass>
+			<!-- ICI PAR RAPPORT A LA MASSE DU PROTON -->
+		<Charge>
+			1
+		<\Charge>
+			<!-- ICI PAR RAPPORT A LA CHARGE DE L'ELECTRON -->
+		<Energy>
+			2
+		<\Energy>
+			<!-- ICI PAR RAPPORT A UN GeV -->
+		<Direction>
+			0,-1,0
+		<\Direction>
+	<\Particle>
+	<Particle>
+		<Position>2.99,0,0<\Position>
+		<Mass>1<\Mass><!-- ICI PAR RAPPORT A LA MASSE DU PROTON -->
+		<Charge>1<\Charge><!-- ICI PAR RAPPORT A LA CHARGE DE L'ELECTRON -->
+		<Energy>2<\Energy><!-- ICI PAR RAPPORT A UN GeV -->
+		<Direction>0,-1,0<\Direction>
+	<\Particle>
+	<Accelerator>
+		<FODO>
+			<EntryPosition>3,2,0<\EntryPosition>
+			<ExitPosition>3,-2,0<\ExitPosition>
+			<SectionRadius>0.2<\SectionRadius>
+			<StraightLenght>1.<\StraightLenght>
+			<FocalizingCoefficient>1.2<\FocalizingCoefficient>
+		<\FODO>
+		<Dipole>
+			<EntryPosition>3,-2,0<\EntryPosition>
+			<ExitPosition>2,-3,0<\ExitPosition>
+			<SectionRadius>0.1<\SectionRadius>
+			<Curvature>1.<\Curvature>
+			<MagneticField>0,0,5.89158<\MagneticField>
+		<\Dipole>
+		<FODO>
+			<EntryPosition>2,-3,0<\EntryPosition>
+			<ExitPosition>-2,-3,0<\ExitPosition>
+			<SectionRadius>0.2<\SectionRadius>
+			<StraightLenght>1.<\StraightLenght>
+			<FocalizingCoefficient>1.2<\FocalizingCoefficient>
+		<\FODO>
+		<Dipole>
+			<EntryPosition>-2,-3,0<\EntryPosition>
+			<ExitPosition>-3,-2,0<\ExitPosition>
+			<SectionRadius>0.1<\SectionRadius>
+			<Curvature>1.<\Curvature>
+			<MagneticField>0,0,5.89158<\MagneticField>
+		<\Dipole>
+		<FODO>
+			<EntryPosition>-3,-2,0<\EntryPosition>
+			<ExitPosition>-3,2,0<\ExitPosition>
+			<SectionRadius>0.2<\SectionRadius>
+			<StraightLenght>1.<\StraightLenght>
+			<FocalizingCoefficient>1.2<\FocalizingCoefficient>
+		<\FODO>
+		<Dipole>
+			<EntryPosition>-3,2,0<\EntryPosition>
+			<ExitPosition>-2,3,0<\ExitPosition>
+			<SectionRadius>0.1<\SectionRadius>
+			<Curvature>1.<\Curvature>
+			<MagneticField>0,0,5.89158<\MagneticField>
+		<\Dipole>
+		<FODO>
+			<EntryPosition>-2,3,0<\EntryPosition>
+			<ExitPosition>2,3,0<\ExitPosition>
+			<SectionRadius>0.2<\SectionRadius>
+			<StraightLenght>1.<\StraightLenght>
+			<FocalizingCoefficient>1.2<\FocalizingCoefficient>
+		<\FODO>
+		<Dipole>
+			<EntryPosition>2,3,0<\EntryPosition>
+			<ExitPosition>3,2,0<\ExitPosition>
+			<SectionRadius>0.1<\SectionRadius>
+			<Curvature>1.<\Curvature>
+			<MagneticField>0,0,5.89158<\MagneticField>
+		<\Dipole>
+	<\Accelerator>
+<\System>

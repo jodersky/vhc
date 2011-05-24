@@ -17,7 +17,7 @@ namespace vhc {
  *  Pour avoir une representation convenable de cette exception, appeller la methode <code>toString()</code>. */
 class Exception: public Printable {
 
-private:
+protected:
 
 	/** Message d'erreur de cette exception. */
 	std::string message;
@@ -67,6 +67,22 @@ public:
 		virtual std::string getExceptionType() const;
 };
 
+class IOException: public Exception {
+public:
+		IOException();
+		IOException(std::string message);
+
+		virtual std::string getExceptionType() const;
+};
+
+class ReadException: public Exception {
+public:
+		ReadException();
+		ReadException(std::string message);
+
+		virtual std::string getExceptionType() const;
+		void addReadExceptionMessage(std::string mess);
+};
 
 }
 

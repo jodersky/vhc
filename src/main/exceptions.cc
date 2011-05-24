@@ -39,5 +39,19 @@ UnsupportedOperationException::UnsupportedOperationException(std::string message
 
 std::string UnsupportedOperationException::getExceptionType() const {return "UnsupportedOperationException";}
 
+
+
+IOException::IOException(): Exception() {};
+IOException::IOException(std::string message): Exception(message) {};
+
+std::string IOException::getExceptionType() const {return "IOException";}
+
+ReadException::ReadException(): Exception() {};
+ReadException::ReadException(std::string message): Exception(message) {};
+
+std::string ReadException::getExceptionType() const {return "ReadException";}
+
+void ReadException::addReadExceptionMessage(std::string mess) {message += (" "+mess);}
+
 }
 
