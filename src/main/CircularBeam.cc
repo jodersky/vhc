@@ -22,7 +22,7 @@ void CircularBeam::initializeParticles() {
 
 	for (int i = 0; i < quantity / lambda; ++i) {
 
-		particles.push_back(new Particle(
+		add(new Particle(
 				element->getEntryPosition(),
 				referenceParticle.getMass() * lambda,
 				referenceParticle.getCharge() * lambda,

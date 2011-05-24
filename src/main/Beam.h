@@ -11,11 +11,12 @@
 #include "Cloneable.h"
 #include "Particle.h"
 #include "Vector3D.h"
+#include "events.h"
 
 namespace vhc {
 
 /** Classe de base pour les faisceaux. */
-class Beam: public Cloneable {
+class Beam: public Cloneable, public Publisher<ParticleAddedEvent>, public Publisher<ParticleRemovedEvent> {
 
 public:
 
@@ -105,13 +106,23 @@ protected:
 	/** Particule de reference. */
 	Particle referenceParticle;
 
-	/** (Macro-)Particules contenus dans ce faisceau. */
+	/** Macroparticules contenus dans ce faisceau. */
 	ParticleCollection particles;
 
 	/** Coefficient des macrosparticules. */
 	int lambda;
 
+	/** Quantite de particules contenus dans ce faisceau. */
 	int quantity;
+
+	/** Methode qui doit etre appelee par toute sous-classe pour ajouter une particule au faisceau. */
+	void add(Particle* particle);
+
+	/** Methode qui doit etre appelee par toute sous-classe pour supprimer une particule du faisceau. */
+	void remove(Particle* particle);
+
+	/** Methode qui doit etre appelee par toute sous-classe pour supprimer une particule du faisceau. */
+	ParticleCollection::iterator erase(ParticleCollection::iterator i);
 
 	/** Retourne la moyenne de la distribution horizontale de la position des particules.
 	 *  (<r^2> horizontal du complement) */

@@ -23,6 +23,7 @@
 #include <vector>
 #include "CircularBeam.h"
 #include "Bunch.h"
+#include "events.h"
 
 using namespace std;
 using namespace vhc;
@@ -57,6 +58,18 @@ Element** FODO(Vector3D entry, Vector3D exit, double Rs, double L, double b) {
 
 	return fodo;
 }
+
+class Foo: public Listener<ParticleAddedEvent>, public Listener<ParticleRemovedEvent> {
+public:
+	virtual void react(const ParticleAddedEvent& event) {
+		cout << "+ Particle added!\n";
+	}
+
+	virtual void react(const ParticleRemovedEvent& event) {
+		cout << "- Particle removed!\n";
+	}
+
+};
 
 Accelerator* standard() {
 /*
@@ -152,7 +165,12 @@ Une particule :
 	double length = 300E-12 * constants::C;
 	double stdDev = 0.1;
 	acc->add(Bunch(p1, 500, 1, stdDev, length, emittance, A_12, A_22));
-	acc->add(Bunch(ap1, 500, 1, stdDev, length, emittance, A_12, A_22));
+
+	Foo* foo = new Foo;
+	Bunch& bch = (Bunch&) acc->add(Bunch(ap1, 500, 1, stdDev, length, emittance, A_12, A_22));
+	bch.Publisher<ParticleAddedEvent>::subscribe(foo);
+	bch.Publisher<ParticleRemovedEvent>::subscribe(foo);
+
 
 	acc->close();
 
@@ -165,7 +183,6 @@ Une particule :
 
 	return acc;
 }
-
 
 int main(int argc, char *argv[])
 {
@@ -182,7 +199,7 @@ int main(int argc, char *argv[])
     window.show();
 
 
-    window.showFullScreen();
+   // window.showFullScreen();
 
     //app.setActiveWindow(&window);
     return app.exec();

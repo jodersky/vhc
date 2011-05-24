@@ -8,6 +8,7 @@
 #ifndef BUNCH_H_
 #define BUNCH_H_
 
+#include <string>
 #include "Beam.h"
 
 namespace vhc {

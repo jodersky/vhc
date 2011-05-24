@@ -27,7 +27,6 @@ Bunch::~Bunch() {
 
 void Bunch::initializeParticles() {
 	create(getLength());
-
 }
 
 void Bunch::create(double dt) {
@@ -83,7 +82,7 @@ void Bunch::create(double dt) {
 		particle->setCharge(getReferenceParticle().getCharge() * getLambda());
 		particle->translate(dp);
 
-		particles.push_back(particle);
+		add(particle);
 	}
 
 }

@@ -22,10 +22,29 @@ Beam::~Beam() {
 	clear();
 }
 
+void Beam::add(Particle* particle) {
+	particles.push_back(particle);
+	Publisher<ParticleAddedEvent>::publish(ParticleAddedEvent(this, particle));
+}
+
+void Beam::remove(Particle* particle) {
+	Publisher<ParticleRemovedEvent>::publish(ParticleRemovedEvent(this, particle));
+	delete particle;
+	particle = NULL;
+	particles.remove(particle);
+}
+
+Beam::ParticleCollection::iterator Beam::erase(Beam::ParticleCollection::iterator i) {
+	Publisher<ParticleRemovedEvent>::publish(ParticleRemovedEvent(this, *i));
+	delete *i;
+	*i = NULL;
+	return particles.erase(i);
+}
+
 void Beam::clear() {
 	for (ParticleCollection::iterator i = particles.begin(); i != particles.end(); ++i) {
-		delete *i;
-		*i = NULL;
+		i = erase(i);
+		--i;
 	}
 	particles.clear();
 }
@@ -53,22 +72,19 @@ void Beam::updateParticles() {
 		Particle& particle = **i;
 		if (particle.getElement()->isAfter(particle)) {
 			if (particle.getElement()->getNext() == NULL) {
-				delete *i;
-				i = particles.erase(i);
+				i = erase(i);
 				--i;
 				//cout << "Particle reached end of accelerator. Removed from simulation" << std::endl;
 			} else particle.setElement(particle.getElement()->getNext());
 		} else if (particle.getElement()->isBefore(particle)) {
 			if (particle.getElement()->getPrevious() == NULL) {
-				delete *i;
-				i = particles.erase(i);
+				i = erase(i);
 				--i;
 				//cout << "Particle reached beginning of accelerator. Removed from simulation" << std::endl;
 			} else particle.setElement(particle.getElement()->getPrevious());
 		} else if (particle.getElement()->isBeside(particle)) {
 			//std::cout << "Particle hit wall. Removed from simulation" << std::endl;
-			delete *i;
-			i = particles.erase(i);
+			i = erase(i);
 			--i;
 		}
 	}
