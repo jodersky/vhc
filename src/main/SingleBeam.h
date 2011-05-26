@@ -13,6 +13,9 @@
 
 namespace vhc {
 
+/** Represente un faisceau ne contenant qu'une seule particule.
+ *  Existante pour des raisons de compatibilite.
+ *  @see Accelerator::add(const Particle& p) */
 class SingleBeam: public vhc::Beam {
 public:
 	SingleBeam(const Particle& particle);

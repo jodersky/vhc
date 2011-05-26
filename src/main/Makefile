@@ -15,7 +15,7 @@ LOCALDIR = main
 # cette règle.
 LOCALOBJS = Vector3D.o Particle.o Printable.o Element.o CurvedElement.o StraightElement.o \
 			CompositeElement.o Dipole.o Quadrupole.o FODO.o ElementVisitor.o Cloneable.o \
-			Accelerator.o exceptions.o Stepper.o Beam.o SingleBeam.o CircularBeam.o \
+			Accelerator.o exceptions.o Beam.o SingleBeam.o CircularBeam.o \
 			random.o Bunch.o events.o Interactor.o BruteForceInteractor.o
 
 OBJS=$(addprefix $(BINDIR)/$(LOCALDIR)/,$(LOCALOBJS))

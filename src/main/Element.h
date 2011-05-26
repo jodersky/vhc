@@ -126,7 +126,8 @@ public:
 	/** Retourne une représentation de cet élément sous forme de chaînes de caractères.*/
 	virtual std::string toString() const;
 
-	//TODO expl.
+	/** Accepte un visiteur d'elements.
+	 *  @see ElementVisitor */
 	virtual void accept(const ElementVisitor& v) const = 0;
 
 };
