@@ -26,7 +26,7 @@ Bunch::~Bunch() {
 }
 
 void Bunch::initializeParticles() {
-	create(getLength());
+	create(getLength() * referenceParticle.getVelocity().norm());
 }
 
 void Bunch::create(double dt) {

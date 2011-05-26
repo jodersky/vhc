@@ -1,20 +1,20 @@
 /*
- * InteractionDetector.cc
+ * SAP.cc
  *
  *  Created on: May 24, 2011
  *      Author: jakob
  */
 
-#include "InteractionDetector.h"
+#include "SAP.h"
 
 namespace vhc {
 
-InteractionDetector::InteractionDetector() {
+SAP::SAP() {
 	// TODO Auto-generated constructor stub
 
 }
 
-InteractionDetector::~InteractionDetector() {
+SAP::~SAP() {
 	// TODO Auto-generated destructor stub
 }
 

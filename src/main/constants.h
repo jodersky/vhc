@@ -28,7 +28,11 @@ const double PROTON_MASS = 1.672623E-27;
 /** Masse d'un électron [kg]. */
 const double ELECTRON_MASS = 9.109383E-31;
 
+/** Conversion de GeV en SI */
 const double GeV = 1E9 * E;
+
+/** Permitivite du vide. */
+const double EPSILON_ZERO = 8.85E-12;
 
 }
 

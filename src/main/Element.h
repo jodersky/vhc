@@ -21,12 +21,6 @@ namespace vhc {
 /** Classe abstraite representant un element d'un accelerateur. */
 class Element: public Printable, public Cloneable {
 
-private:
-
-	/** Empêche la copie d'éléments par le constructeur de copie.
-	 *  Si on veut explicitement copier un element utiliser <code>clone()</code>.*/
-	//Element(const Element& e);
-
 protected:
 
 	/** Position du centre de la face d'entrée. */
@@ -45,6 +39,8 @@ protected:
 	/** Pointeur sur l'élément suivant.
 	 *  NULL si aucun element n'existe. */
 	Element *next;
+
+
 
 public:
 
@@ -101,6 +97,7 @@ public:
 	/** Retourne le rayon de la section de cet element. */
 	double getSectionRadius() const;
 
+	/** Retourne la longueur de cet element. */
 	virtual double getLength() const = 0;
 
 	/** Assigne le rayon de la section de cet element. */
@@ -118,7 +115,7 @@ public:
 	/** Assigne un pointeur sur l'element suivant. */
 	void setNext(Element* n);
 
-	/** Retourne vrai si cet element est connecte a un element suivant, faux sinon. */
+	/** Retourne vrai si cet element est connecte a un element precedent et suivant, faux sinon. */
 	bool isConnected() const;
 
 	/** Retourne une representation en chaine du type de cet element, i.e. du nom de la classe.

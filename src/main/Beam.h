@@ -22,7 +22,7 @@ public:
 
 	typedef std::list<Particle*> ParticleCollection;
 
-	/** Cree un nouveau faisceaux.
+	/** Cree un nouveau faisceau.
 	 *  @param refererenceParticle particule de reference (son element ne joue pas de role)
 	 *  @param quantity la quantite de particules a generer
 	 *  @param lambda le facteur de macroparticules (il y aura lambda fois moins de particules dans le faisceau mais a charges et masses lambdas fois plus grands)
@@ -32,7 +32,7 @@ public:
 
 	virtual ~Beam();
 
-
+	/** Retourne tous les particules contenus dans ce faisceau. */
 	ParticleCollection& getParticles();
 
 	/** Met a jour les particules en leur attribuant l'element dans lequel ils sont contenus.
@@ -78,9 +78,6 @@ public:
 
 	virtual Beam* clone() const = 0;
 
-
-
-
 	//-------------------------------------------------------------------
 
 	/** Retourne coefficient des ellipses de phases vertical. */
@@ -115,13 +112,16 @@ protected:
 	/** Quantite de particules contenus dans ce faisceau. */
 	int quantity;
 
-	/** Methode qui doit etre appelee par toute sous-classe pour ajouter une particule au faisceau. */
+	/** Methode qui doit etre appelee par toute sous-classe pour ajouter une particule au faisceau.
+	 *  Publie un <code>ParticleAddedEvent</code>. */
 	void add(Particle* particle);
 
-	/** Methode qui doit etre appelee par toute sous-classe pour supprimer une particule du faisceau. */
+	/** Methode qui doit etre appelee par toute sous-classe pour supprimer une particule du faisceau.
+	 *  Publie un <code>ParticleRemovedEvent</code>. */
 	void remove(Particle* particle);
 
-	/** Methode qui doit etre appelee par toute sous-classe pour supprimer une particule du faisceau. */
+	/** Methode qui doit etre appelee par toute sous-classe pour supprimer une particule du faisceau.
+	 *  Publie un <code>ParticleRemovedEvent</code>. */
 	ParticleCollection::iterator erase(ParticleCollection::iterator i);
 
 	/** Retourne la moyenne de la distribution horizontale de la position des particules.
@@ -147,8 +147,6 @@ protected:
 	/** Retourne la moyenne de la distribution verticale du produit de la position et de la vitesse des particules.
 	 *  (<r*v>^2 vertical du complement) */
 	double getVRV2() const;
-
-
 
 };
 

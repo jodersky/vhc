@@ -9,6 +9,7 @@
 #include "Accelerator.h"
 #include "exceptions.h"
 #include "SingleBeam.h"
+#include "BruteForceInteractor.h"
 
 using namespace std;
 
@@ -18,8 +19,11 @@ Accelerator::Accelerator():
 		elements(0),
 		beams(0),
 		allowLinear(false),
-		closed(false)
-	{};
+		closed(false),
+		interactor(NULL)
+	{
+	interactor = new BruteForceInteractor;
+	};
 
 Accelerator::~Accelerator() {
 	clear();
@@ -83,6 +87,8 @@ Element& Accelerator::add(const Element& element) {
 Beam& Accelerator::add(const Beam& beam) {
 	Beam* b = beam.clone();
 	beams.push_back(b);
+	b->Publisher<ParticleAddedEvent>::subscribe(interactor);
+	b->Publisher<ParticleRemovedEvent>::subscribe(interactor);
 	closed = false;
 	return *b;
 }
@@ -154,6 +160,8 @@ void Accelerator::clear() {
 void Accelerator::step(double dt) {
 	if (!closed) close();
 
+	interactor->applyInteractions();
+
 	for (BeamCollection::iterator i = beams.begin(); i != beams.end(); ++i) {
 		(**i).step(dt);
 	}
@@ -195,5 +203,6 @@ std::string Accelerator::toString() const {
 
 	return s.str();
 }
+
 
 } //vhc

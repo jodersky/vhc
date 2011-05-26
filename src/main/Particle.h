@@ -20,7 +20,7 @@ namespace vhc {
 class Element; //forward declaration
 
 /** Classe représentant une particule
- * TODO poser question sur l'energie, gamma, qdm*/
+ *  TODO ajouter constructeur qdm*/
 class Particle: public Printable, public Cloneable {
 
 private:
@@ -61,7 +61,6 @@ public:
 	 *  @param energy energie <b>[J]</b>
 	 *  @param direction direction de mouvement de la particule (la longueur du vecteur n'a aucune importance) */
 	Particle(const Vector3D& position, double mass, double charge, double energy, const Vector3D& direction);
-
 
 	/** Retourne la position de cette particule. [m] */
 	Vector3D getPosition() const;
@@ -114,7 +113,10 @@ public:
 
 	virtual Particle* clone() const;
 
+	/** Retourne l'element dans lequel cette particule est contenue. */
 	Element* getElement() const;
+
+	/** Affecte l'element dans lequel cette particule est contenue. */
 	void setElement(Element* element);
 
 };

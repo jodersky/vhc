@@ -642,22 +642,62 @@ Question P10.2
 \end_layout
 
 \begin_layout Standard
-Dans le cadre de la programmation oritentée-objets, il s'agit, pour ne faire
- qu'une seule fois appel à la méthode
-\family typewriter
-\size small
- Printable
-\family default
-\size default
-, de la redéfinir.
+Dans le cadre de la programmation oritentée-objets, on créerait une classe
+ abstraite (p.ex.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Dessinable
+\begin_inset Quotes erd
+\end_inset
+
+) contenant la methode dessine() virtuelle pure.
+ Tout objet dessinable hériterait ensuite de cette classe et implémenterait
+ la méthode.
 \end_layout
 
 \begin_layout Section*
 Question P10.3
 \end_layout
 
+\begin_layout Standard
+La reponse à la dernière question n'implique pas de changement de notre
+ code car, depuis le début du projet, nous avons défini la classe 
+\begin_inset Quotes eld
+\end_inset
+
+Printable
+\begin_inset Quotes erd
+\end_inset
+
+ (
+\begin_inset Quotes eld
+\end_inset
+
+Dessinable
+\begin_inset Quotes erd
+\end_inset
+
+ ci-dessus) et tout nos objets dessinables (notamment l'accelerateur, les
+ particules et les elements) heritent de cette dernière et implémentent
+ la méthode virtuelle pure 
+\begin_inset Quotes eld
+\end_inset
+
+print()
+\begin_inset Quotes erd
+\end_inset
+
+ qui affiche l'objet.
+\end_layout
+
 \begin_layout Section*
 Question P10.4
+\end_layout
+
+\begin_layout Standard
+Voir réponse à question P10.3.
 \end_layout
 
 \begin_layout Section*

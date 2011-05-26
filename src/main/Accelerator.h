@@ -12,6 +12,7 @@
 #include "Particle.h"
 #include "Beam.h"
 #include "Element.h"
+#include "Interactor.h"
 
 namespace vhc {
 
@@ -37,8 +38,12 @@ public:
 	 *  L'accelerateur est ouvert en ajoutant un element. */
 	Element& add(const Element& element);
 
+	/** Copie un faisceau dans cet accelerateur. */
 	Beam& add(const Beam& beam);
 
+	/** Copie une particule dans cet accelerateur.
+	 *  Comme un accelerateur ne contient plus explicitement des particules, un faisceau a une particule et cree.
+	 *  Cet methode reste pour des raisons de compatibilites. */
 	Beam& add(const Particle& particle);
 
 	/** Retourne la liste d'elements contenus dans cet accelerateur.
@@ -49,6 +54,7 @@ public:
 	 *  <b>ATTENTION:</b> les particules peuvent etre supprimes sans preavis par l'accelerateur! */
 	const ParticleCollection & getParticles() const;
 
+	/** Retourne tous les faisceaux de cet accelerateur. */
 	const BeamCollection& getBeams() const;
 
 	/** Ferme l'accelerateur.
@@ -85,7 +91,12 @@ protected:
 	/** Collection d'elements contenus dans cet accelerateur. */
 	ElementCollection elements;
 
+	/** Collection de faisceaux contenus dans cet accelerateur. */
 	BeamCollection beams;
+
+	/** Interacteur de particules.
+	 *  @see vhc::Interactor */
+	Interactor* interactor;
 
 	/** Autorise les accelerateurs lineaires.
 	 *  @see enableLinear */
