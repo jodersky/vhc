@@ -7,17 +7,20 @@
 
 #include "Color.h"
 
+using namespace std;
+
 namespace vhc {
 
-static double Color::red[4] = {1.0,0.0,0.0,1.0};
-static double Color::green[4] = {0.0,1.0,0.0,1.0};
-static double Color::blue[4] = {0.0,0.0,1.0,1.0};
-static double Color::turquoise[4] = {0.0,1.0,1.0,1.0};
-static double Color::purple[4] = {1.0,0.0,1.0,1.0};
-static double Color::yellow[4] = {1.0,1.0,0.0,1.0};
-static double Color::white[4] = {1.0,1.0,1.0,1.0};
-static double Color::black[4] = {0.0,0.0,0.0,1.0};
-static double Color::grey[4] = {0.6,0.6,0.6,1.0};
+//TODO comment importer le tableau statique depuis le header?
+double Color::red[4] = {1,0,0,1};
+double Color::green[4] = {0,1,0,1};
+double Color::blue[4] = {0,0,1,1};
+double Color::turquoise[4] = {0,1,1,1};
+double Color::purple[4] = {1,0,1,1};
+double Color::yellow[4] = {1,1,0,1};
+double Color::white[4] = {1,1,1,1};
+double Color::black[4] = {0,0,0,1};
+double Color::grey[4] = {0.6,0.6,0.6,1};
 
 vector<double> Color::convertTabToVector(double const& tab[4]) {
 	vector <double> tmp;
@@ -27,11 +30,11 @@ vector<double> Color::convertTabToVector(double const& tab[4]) {
 	return tmp;
 }
 
-Color::setColor(vector<double> const& co){
+void Color::setColor(vector<double> const& co){
 	color = co;
 }
 
-Color::setColor(string co) const {
+void Color::setColor(string co) const {
 
 	switch(co){
 	case "red" :
@@ -66,11 +69,11 @@ Color::setColor(string co) const {
 	}
 }
 
-Color::getColor() const {
+vector<double> Color::getColor() const {
 	return color;
 }
 
-Color::getStringColor() const {
+string Color::getStringColor() const {
 
 	string tmp;
 

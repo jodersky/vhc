@@ -11,6 +11,8 @@
 #include <vector>
 #include "exceptions.h"
 
+using namespace std;
+
 namespace vhc {
 
 /** Représente un objet coloré de couleurs suivantes :
