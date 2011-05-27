@@ -6,37 +6,71 @@
  */
 #include <iostream>
 #include <string>
-#include <vector>
-#include <ifstream>
-#include <ofstream>
-#include "Accelerator.h"
+#include <fstream>
 #include "Vector3D.h"
+#include "Accelerator.h"
+#include "Dipole.h"
+#include "FODO.h"
+#include "Quadrupole.h"
+#include "StraightElement.h"
+#include "Particle.h"
 #include "exceptions.h"
 
 #ifndef PARSER_H_
 #define PARSER_H_
 
-namespace vhc {
-
-
 typedef tag string;
 typedef tagStat static tag;
 
+namespace vhc {
+
+/** Cette classe contient une méthode <code>extract<\code> chargée de créer et renvoyer un pointeur
+ * 	sur l'accélérateur contenu dans le .xml. <b>ATTENTION : cette méthode est une "factory method",
+ * 	donc il faut soi-même ajouter le <code>delete<\code> après appel à <code>extract<\code> !<\b>
+ * 	Sont à supprimer : les pointeurs sur chaque particule, element ou accelerateur contenu dans le .xml
+ **/
+
 class Parser {
 public:
-	Parser(string);
-	virtual ~Parser(){}
-	Accelerator* extract(string);
+	Parser();
+
+	/** Constructeur d'un Parseur. Prend en argument le chemin d'accès du fichier à lire. **/
+	Parser(std::string file);
+
+	/**Destructeur virtuel. **/
+	virtual ~Parser();
+
+	/** Méthode chargée de lire le fichier .xml et de renvoyer un pointeur sur l'accélérateur ainsi construit. **/
+	Accelerator* extract();
 private:
+
+	/** Attribut contenant le chemin d'accès du fichier. **/
 	string nameOfFile;
+
+//===========================================constantes=================================================================================
+
+	const double CP;
+	const double EP;
+	const double PROTON_MASSP;
+	const double ELECTRON_MASSP;
+	const double GeVP = 1E9 * EP;
+
 //===========================================balises ouvrantes==========================================================================
 
-	//balises ouvrantes d'un système
+	/** Balises ouvrantes d'un système. **/
 	tagStat system;
 	tagStat accelerator;
 	tagStat comment;
 
-	//balises ouvrantes d'une particule
+	/** Balises ouvrantes des constantes. **/
+	tagStat constants;
+	tagStat dt;
+	tagStat C;
+	tagStat E;
+	tagStat PROTON_MASS;
+	tagStat ELECTRON_MASS;
+
+	/** Balises ouvrantes d'une particule. **/
 	tagStat particle;
 	tagStat position;
 	tagStat mass;
@@ -44,37 +78,45 @@ private:
 	tagStat energy;
 	tagStat direction;
 
-	//balises ouvrantes d'un Element
+	/** Balises ouvrantes d'un Element. **/
 	tagStat entryPos;
 	tagStat exitPos;
 	tagStat sectionRadius;
 
-	//balises ouvrantes d'un dipole
+	/** Balises ouvrantes d'un dipole. **/
 	tagStat dipole;
 	tagStat curvature;
 	tagStat magneticField;
 
-	//balise ouvrantes commune aux quadrupoles et aux fodo
+	/** Balise ouvrantes commune aux quadrupoles et aux fodo. **/
 	tagStat focCoeff;
 
-	//balises ouvrantes d'une FODO
+	/** Balises ouvrantes d'une FODO. **/
 	tagStat fodo;
 	tagStat straightLength;
 
-	//balises ouvrante d'un quadrupole
+	/** Balises ouvrante d'un quadrupole. **/
 	tagStat quadrupole;
 
-	//balises ouvrantes d'une straightElement
+	/** Balises ouvrantes d'une straightElement. **/
 	tagStat straightElement;
 
 //===================================================balises fermantes==================================================================
 
-	//balises fermantes d'un système
+	/** Balises fermantes d'un système. **/
 	tagStat systemCl;
 	tagStat acceleratorCl;
 	tagStat commentCl;
 
-	//balises fermantes d'une particule
+	/** Balises fermantes des constantes. **/
+	tagStat constantsCl;
+	tagStat dtCl;
+	tagStat CCl;
+	tagStat ECl;
+	tagStat PROTON_MASSCl;
+	tagStat ELECTRON_MASSCl;
+
+	/** Balises fermantes d'une particule. **/
 	tagStat particleCl;
 	tagStat positionCl;
 	tagStat massCl;
@@ -82,47 +124,93 @@ private:
 	tagStat energyCl;
 	tagStat directionCl;
 
-	//balises fermantes d'un Element
+	/** Balises fermantes d'un Element. **/
 	tagStat entryPosCl;
 	tagStat exitPosCl;
 	tagStat sectionRadiusCl;
 
-	//balises fermantes d'un dipole
+	/** Balises fermantes d'un dipole. **/
 	tagStat dipoleCl;
 	tagStat curvatureCl;
 	tagStat magneticFieldCl;
 
-	//balise fermantes commune aux quadrupoles et aux fodo
+	/** Balise fermantes commune aux quadrupoles et aux fodo. **/
 	tagStat focCoeffCl;
 
-	//balises fermantes d'une FODO
+	/** Balises fermantes d'une FODO. **/
 	tagStat fodoCl;
 	tagStat straightLengthCl;
 
-	//balises fermantes d'un quadrupole
+	/** Balises fermantes d'un quadrupole. **/
 	tagStat quadrupoleCl;
 
-	//balises fermantes d'une straightElement
+	/** Balises fermantes d'une straightElement. **/
 	tagStat straightElementCl;
 
-//======================================================autres méthodes=================================================================
+//=============================================================méthodes=================================================================
 
-	//méthodes de lectures génériques
-	string readFile(ifstream& file);
+	/** Crée et renvoie un accélérateur par appel de la fonction readFile. **/
+	Accelerator* extract();
 
-	//méthodes gestion balises
-	tag readOpeningBalise(ifstream& file);
-	tag readClosingBalise(ifstream& file);
-	tag findNextBalise(ifstream& file);
+	/** Lit le fichier .xml. **/
+	void readFile(ifstream& file, Accelerator& acc);
 
-	//méthode pour commentaire
-	void jumpComment(ifstream& file);
+		/** Lit la balise system. Cette méthode appelle readConstants et buildAccelerator. **/
+		void readSystem(ifstream& file, Accelerator& acc);
 
-	//méthodes atomiques de lecture
+			/** Affecte les attributs statiques contenant les constantes physiques. **/
+			void readConstants(ifstream& file);
+
+				/** Affecte l'attribut dt. **/
+				void readdt(ifstream& file);
+
+				/** Affecte l'attribut C. **/
+				void readC(ifstream& file);
+
+				/** Affecte l'attribut E. **/
+				void readE(ifstream& file);
+
+				/** Affecte l'attribut PROTON_MASS. **/
+				void readPROTON_MASS(ifstream& file);
+
+				/** Affecte l'attribut ELECTRON_MASS. **/
+				void readELECTRON_MASS(ifstream& file);
+
+			/** Ajoute les différents éléments et particules du fichier dans l'Accelerator passé en argument. **/
+			void buildAccelerator(ifstream& file, Accelerator const& acc);
+
+				/** Construction d'une nouvelle Particle. **/
+				Particle* buildParticle(ifstream& file);
+
+				/** Construction d'une nouvelle FODO. **/
+				FODO* buildFODO(ifstream& file);
+
+				/** Construction d'un nouveau Dipole. **/
+				Dipole* buildDipole(ifstream& file);
+
+				/** Construction d'un nouveau quadrupole.	**/
+				Quadrupole* buildQuadrupole(ifstream& file);
+
+				/** Construction d'un nouveau StraightElement. **/
+				StraightElement* buildStraightElement(ifstream& file);
+
+	/** Lit un char. **/
 	char readOneChar(ifstream& file);
+	/** Lit un int. **/
 	int readOneInt(ifstream& file);
+	/** Lit un double. **/
 	double readOneDouble(ifstream& file);
-	Vector3D readOnePosition(ifstream& file);
+	/** Saute une virgule. **/
+	void readComma(ifstream& file);
+
+	/** Lit un Vector3D. **/
+	Vector3D readVector3D(ifstream& file);
+	/** Lit ue balise. **/
+	tag readOneTag(ifstream& file);
+	/** Cherche et lit une balise fermante. **/
+	void closingTag(ifstream& file);
+	/** Saute un commentaire. **/
+	void jumpComment(ifstream& file);
 
 };
 
