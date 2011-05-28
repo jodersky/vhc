@@ -149,7 +149,7 @@ private:
 			/** Ajoute les différents éléments et particules du fichier dans l'Accelerator passé en argument.
 			 * 	@param file fichier à lire
 			 *  @param acc référence sur un Accelerator déjà construit */
-			void buildAccelerator(ifstream& file, Accelerator const& acc);
+			void buildAccelerator(ifstream& file, Accelerator& acc);
 
 				/** Construction d'une nouvelle Particle.
 				 * 	@param file fichier à lire

@@ -14,7 +14,7 @@ using namespace vhc;
 
 int main(){
 	try{
-		Parser pars("simulation.xml");
+		Parser pars("./simulation.xml");
 
 		Accelerator* a = pars.extract();
 

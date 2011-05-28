@@ -4,9 +4,10 @@
  *  Created on: 11 mai 2011
  *      Author: christian
  */
-#include <isotream>
+#include <iostream>
 #include <string>
 #include "Parser.h"
+#include "exceptions.h"
 
 using namespace std;
 
@@ -15,81 +16,81 @@ namespace vhc {
 //===========================================balises ouvrantes==========================================================================
 
 //balises ouvrantes d'un système
-static tag Parser::system = "<System>";
-static tag Parser::accelerator ="<Accelerator>";
-static tag Parser::comment = "<!--";
+tag Parser::system = "<System>";
+tag Parser::accelerator ="<Accelerator>";
+tag Parser::comment = "<!--";
 
 //balises ouvrantes d'une particule
-static tag Parser::particle ="<Particle>";
-static tag Parser::position = "<Position>";
-static tag Parser::mass = "<Mass>";
-static tag Parser::charge = "<Charge>";
-static tag Parser::energy = "<Energy>";
-static tag Parser::direction = "<Direction>";
+tag Parser::particle ="<Particle>";
+tag Parser::position = "<Position>";
+tag Parser::mass = "<Mass>";
+tag Parser::charge = "<Charge>";
+tag Parser::energy = "<Energy>";
+tag Parser::direction = "<Direction>";
 
 //balises ouvrantes d'un Element
-static tag Parser::entryPos = "<EntryPosition>";
-static tag Parser::exitPos = "<ExitPosition>";
-static tag Parser::sectionRadius = "<SectionRadius>";
+tag Parser::entryPos = "<EntryPosition>";
+tag Parser::exitPos = "<ExitPosition>";
+tag Parser::sectionRadius = "<SectionRadius>";
 
 //balises ouvrantes d'un Dipole
-static tag Parser::dipole ="<Dipole>";
-static tag Parser::curvature = "<Curvature>";
-static tag Parser::magneticField = "<MagneticField>";
+tag Parser::dipole ="<Dipole>";
+tag Parser::curvature = "<Curvature>";
+tag Parser::magneticField = "<MagneticField>";
 
 //balise ouvrante commune aux quadrupoles et aux fodo
-static tag Parser::focCoeff = "<FocalizingCoefficient>";
+tag Parser::focCoeff = "<FocalizingCoefficient>";
 
 //balises ouvrantes d'une FODO
-static tag Parser::fodo ="<FODO>";
-static tag Parser::straightLength = "<StraightLenght>";
+tag Parser::fodo ="<FODO>";
+tag Parser::straightLength = "<StraightLenght>";
 
 //balises ouvrantes d'un Quadrupole
-static tag Parser::quadrupole ="<Quadrupole>";
+tag Parser::quadrupole ="<Quadrupole>";
 
 //balises ouvrantes d'un StraightElement
-static tag Parser::straightElement ="<StraightElement>";
+tag Parser::straightElement ="<StraightElement>";
 
 //===================================================balises fermantes==================================================================
 
 //balises fermantes d'un système
-static tag Parser::systemCl = "<\System>";
-static tag Parser::acceleratorCl ="<\Accelerator>";
-static tag Parser::commentCl = "-->";
+tag Parser::systemCl = "<\System>";
+tag Parser::acceleratorCl ="<\Accelerator>";
+tag Parser::commentCl = "-->";
 
 //balises fermantes d'une particule
-static tag Parser::particleCl ="<\Particle>";
-static tag Parser::positionCl = "<\Position>";
-static tag Parser::massCl = "<\Mass>";
-static tag Parser::chargeCl = "<\Charge>";
-static tag Parser::energyCl = "<\Energy>";
-static tag Parser::directionCl = "<\Direction>";
+tag Parser::particleCl ="<\Particle>";
+tag Parser::positionCl = "<\Position>";
+tag Parser::massCl = "<\Mass>";
+tag Parser::chargeCl = "<\Charge>";
+tag Parser::energyCl = "<\Energy>";
+tag Parser::directionCl = "<\Direction>";
 
 //balises fermantes d'un Element
-static tag Parser::entryPosCl = "<\EntryPosition>";
-static tag Parser::exitPosCl = "<\ExitPosition>";
-static tag Parser::sectionRadiusCl = "<\SectionRadius>";
+tag Parser::entryPosCl = "<\EntryPosition>";
+tag Parser::exitPosCl = "<\ExitPosition>";
+tag Parser::sectionRadiusCl = "<\SectionRadius>";
 
 //balises fermantes d'un Dipole
-static tag Parser::dipoleCl ="<\Dipole>";
-static tag Parser::curvatureCl = "<\Curvature>";
-static tag Parser::magneticFieldCl = "<\MagneticField";
+tag Parser::dipoleCl ="<\Dipole>";
+tag Parser::curvatureCl = "<\Curvature>";
+tag Parser::magneticFieldCl = "<\MagneticField";
 
 //balise fermantes commune aux quadrupoles et aux fodo
-static tag Parser::focCoeffCl = "<\FocalizingCoefficient>";
+tag Parser::focCoeffCl = "<\FocalizingCoefficient>";
 
 //balises fermantes d'une FODO
-static tag Parser::fodoCl ="<\FODO>";
-static tag Parser::straightLengthCl = "<\StraightLenght>";
+tag Parser::fodoCl ="<\FODO>";
+tag Parser::straightLengthCl = "<\StraightLenght>";
 
 //balises fermantes d'un Quadrupole
-static tag Parser::quadrupoleCl ="<\Quadrupole>";
+tag Parser::quadrupoleCl ="<\Quadrupole>";
 
 //balises fermantes d'un StraightElement
-static tag Parser::straightElementCl ="<\StraightElement>";
+tag Parser::straightElementCl ="<\StraightElement>";
 
 //===========================================================création et renvoi d'un accélérateur=======================================
-Parser::extract() {
+Accelerator* Parser::extract() {
 
 	Accelerator* acc = new Accelerator;
 
@@ -100,10 +101,10 @@ Parser::extract() {
 	entry.open(nameOfFile.c_str());
 
 	//teste si l'association a bien pu se faire
-	if(not entry.fail()){
+	if(! entry.fail()){
 
 		//Tant qu'on n'est pas arrivé à la fin du fichier, on continue à le lire
-		while(not file.eof()){
+		while(! entry.eof()){
 
 			//tout se fait depuis ici
 			readFile(entry, *acc);
@@ -121,39 +122,33 @@ Parser::extract() {
 }
 
 //===========================================================lecture du fichier .xml====================================================
-Parser::readFile(ifstream& file, Accelerator& acc){
+void Parser::readFile(ifstream& file, Accelerator& acc){
 	try {
-
+		tag tmp1;
 		// on lit la balise qu'on doit traiter
-		tag tmp1 = readOneTag(file);
+		tmp1=readOneTag(file);
 
 		/*on teste si tmp1 correspond à une des balises suivantes :
 		 * 	- 	soit system
 		 * 	- 	soit un commentaire
 		 * 	-	sinon il y a un problème car on ne s'attend pas à autre chose à ce niveau-là
 		 */
-		switch(tmp1){
-
-			case system :
+		if(tmp1 == system){
 
 				readSystem(file, acc);
 				closingTag(file, systemCl);
-				break;
 
-			case comment :
+		}else if(tmp1 == comment){
 
 				jumpComment(file);
-				break;
-
+		}
 			/* si la variable tmp1 ne contient pas les balises voulues, c'est qu'une valeur
 			 * (celle contenue par la variable tmp1 donc)
 			 * n'a pas été récupérée comme il faut.
 			*/
-			default:
-
+		else{
 				throw ReadException("Values found outside of following tags : "+system+
 									"\n Value is : "+tmp1);
-				break;
 		}
 	}
 
@@ -163,7 +158,7 @@ Parser::readFile(ifstream& file, Accelerator& acc){
 }
 
 //==============================================================lecture de la balise system=============================================
-Parser::readSystem(ifstream& file, Accelerator& acc){
+void Parser::readSystem(ifstream& file, Accelerator& acc){
 
 	try {
 
@@ -175,29 +170,23 @@ Parser::readSystem(ifstream& file, Accelerator& acc){
 		 * 	- 	soit un commentaire
 		 * 	-	sinon il y a un problème car on ne s'attend pas à autre chose à ce niveau-là
 		 */
-		switch(tmp2){
-
-			case accelerator :
+		if(tmp2==accelerator){
 
 				buildAccelerator(file, acc);
-				break;
 
-			case comment :
+		}else if(tmp2==comment){
 
 				jumpComment(file);
-				break;
-
+		}
 			/* si la variable tmp2 ne contient pas les balises voulues, c'est qu'une valeur
 			 * (celle contenue par la variable tmp2 donc)
 			 * n'a pas été récupérée comme il faut.
 			*/
-			default:
-
+		else{
 				throw ReadException("Values found outside of following tags : "+accelerator+
 									"\n Value is : "+tmp2);
-				break;
 		}
-	}
+	}//try
 
 	catch(Exception const& ex){
 		cout<<ex.getMessage()<<endl;
@@ -205,7 +194,7 @@ Parser::readSystem(ifstream& file, Accelerator& acc){
 }
 
 //==========================================================fabrication de l'accélérateur===============================================
-Parser::buildAccelerator(ifstream& file, Accelerator& acc){
+void Parser::buildAccelerator(ifstream& file, Accelerator& acc){
 
 	try {
 
@@ -221,73 +210,54 @@ Parser::buildAccelerator(ifstream& file, Accelerator& acc){
 		 * 	- 	soit un commentaire
 		 * 	-	sinon il y a un problème car on ne s'attend pas à autre chose à ce niveau-là
 		 */
-		switch(tmp3){
-
-				case dipole :
+		if(tmp3==dipole){
 
 					acc.add(*buildDipole(file));
-					readClosingTag(file, dipoleCl);
+					closingTag(file, dipoleCl);
 					tmp3 = readOneTag(file);
-					if(tmp3 == acceleratorCl)
-						break;
-					else
-						continue;
+					//if(tmp3 == acceleratorCl){}
 
-				case fodo :
+		}else if(tmp3==fodo){
 
 					acc.add(*buildFODO(file));
-					readClosingTag(file, fodoCl);
+					closingTag(file, fodoCl);
 					tmp3 = readOneTag(file);
-					if(tmp3 == acceleratorCl)
-						break;
-					else
-						continue;
+					//if(tmp3 == acceleratorCl)
 
-				case particle :
+		}else if(tmp3==particle){
 
 					acc.add(*buildParticle(file));
-					readClosingTag(file, particleCl);
+					closingTag(file, particleCl);
 					tmp3 = readOneTag(file);
-					if(tmp3 == acceleratorCl)
-						break;
-					else
-						continue;;
+					//if(tmp3 == acceleratorCl)
 
-				case quadrupole :
+		}else if(tmp3==quadrupole){
 
 					acc.add(*buildQuadrupole(file));
-					readClosingTag(file, quadrupoleCl);
+					closingTag(file, quadrupoleCl);
 					tmp3 = readOneTag(file);
-					if(tmp3 == acceleratorCl)
-						break;
-					else
-						continue;
+					//if(tmp3 == acceleratorCl)
 
-				case straightElement :
+		}else if(tmp3==straightElement){
 
 					acc.add(*buildStraightElement(file));
-					readClosingTag(file, straightElementCl);
+					closingTag(file, straightElementCl);
 					tmp3 = readOneTag(file);
-					if(tmp3 == acceleratorCl)
-						break;
-					else
-						continue;
+					//if(tmp3 == acceleratorCl)
 
-				case comment :
+		}else if(tmp3==comment){
 
 					jumpComment(file);
-					break;
-
+		}
 				/* si la variable tmp3 ne contient pas les balises voulues, c'est qu'une valeur
 				 * (celle contenue par la variable tmp3 donc)
 				 * n'a pas été récupérée comme il faut.
 				*/
-				default:
+		else{
 
 					throw ReadException("Values found outside of following tags : "+dipole+fodo+particle+quadrupole+straightElement+
 										"\n Value is : "+tmp3);
-					break;
-		}//switch
+		}
 	}//try
 
 	catch(Exception const& ex){
@@ -314,53 +284,43 @@ Particle* Parser::buildParticle(ifstream& file){
 		 * 	- 	soit un commentaire
 		 * 	-	sinon il y a un problème car on ne s'attend pas à autre chose à ce niveau-là
 		 */
-		switch(tmp41){
-
-				case position :
+		if(tmp41==position){
 
 					po = readVector3D(file);
 					closingTag(file, positionCl);
-					break;
 
-				case mass :
+		}else if(tmp41==mass){
 
 					ma = readOneDouble(file);
 					closingTag(file, massCl);
-					break;
 
-				case charge :
+		}else if(tmp41==charge){
 
 					ch = readOneDouble(file);
 					closingTag(file, chargeCl);
-					break;
 
-				case energy :
+		}else if(tmp41==energy){
 
 					en = readOneDouble(file);
 					closingTag(file, energyCl);
-					break;
 
-				case direction :
+		}else if(tmp41==direction){
 
 					dir = readVector3D(file);
 					closingTag(file, directionCl);
-					break;
 
-				case comment :
+		}else if(tmp41==comment){
 
 					jumpComment(file);
-					break;
-
+		}
 				/* si la variable tmp41 ne contient pas les balises voulues, c'est qu'une valeur
 				 * (celle contenue par la variable tmp41 donc)
 				 * n'a pas été récupérée comme il faut.
 				*/
-				default:
-
+		else{
 					throw ReadException("Values found outside of following tags : "+position+mass+charge+energy+direction+
 										"\n Value is : "+tmp41);
-					break;
-		}//switch
+		}
 
 		//Construction d'une particule avec les varables récoltées.
 		Particle* p = new Particle(po,
@@ -380,7 +340,7 @@ Particle* Parser::buildParticle(ifstream& file){
 
 //===========================================================création d'un Dipole=======================================================
 /** Cf. header. */
-Diple* Parser::buildDipole(ifstream& file){
+Dipole* Parser::buildDipole(ifstream& file){
 	try {
 
 		//Initialsation des variables nécessaires à la construction d'un Dipole.
@@ -398,53 +358,44 @@ Diple* Parser::buildDipole(ifstream& file){
 		 * 	- 	soit un commentaire
 		 * 	-	sinon il y a un problème car on ne s'attend pas à autre chose à ce niveau-là
 		 */
-		switch(tmp42){
-
-				case entryPos :
+		if(tmp42==entryPos){
 
 					enp = readVector3D(file);
 					closingTag(file, entryPosCl);
-					break;
 
-				case exitPos :
+		}else if(tmp42==exitPos){
 
 					exp = readVector3D(file);
 					closingTag(file, exitPosCl);
-					break;
 
-				case sectionRadius :
+		}else if(tmp42==sectionRadius){
 
 					sr = readOneDouble(file);
 					closingTag(file, sectionRadiusCl);
-					break;
 
-				case curvature :
+		}else if(tmp42==curvature){
 
 					cu = readOneDouble(file);
 					closingTag(file, curvatureCl);
-					break;
 
-				case magneticField :
+		}else if(tmp42==magneticField){
 
 					mf = readVector3D(file);
 					closingTag(file, magneticFieldCl);
-					break;
 
-				case comment :
+		}else if(tmp42==comment){
 
 					jumpComment(file);
-					break;
-
+		}
 				/* si la variable tmp42 ne contient pas les balises voulues, c'est qu'une valeur
 				 * (celle contenue par la variable tmp42 donc)
 				 * n'a pas été récupérée comme il faut.
 				*/
-				default:
+		else{
 
 					throw ReadException("Values found outside of following tags : "+entryPos+exitPos+sectionRadius+curvature+magneticField+
 										"\n Value is : "+tmp42);
-					break;
-		}//switch
+		}
 
 		//Construction d'un dipole avec les variables récoltées.
 		Dipole* di = new Dipole(enp, exp, sr, cu, mf);
@@ -478,53 +429,44 @@ FODO* Parser::buildFODO(ifstream& file){
 		 * 	- 	soit un commentaire
 		 * 	-	sinon il y a un problème car on ne s'attend pas à autre chose à ce niveau-là
 		 */
-		switch(tmp43){
+		if(tmp43==entryPos){
 
-				case entryPos :
+				enp = readVector3D(file);
+				closingTag(file, entryPosCl);
 
-					enp = readVector3D(file);
-					closingTag(file, entryPosCl);
-					break;
+		}else if(tmp43==exitPos){
 
-				case exitPos :
+				exp = readVector3D(file);
+				closingTag(file, exitPosCl);
 
-					exp = readVector3D(file);
-					closingTag(file, exitPosCl);
-					break;
+		}else if(tmp43==sectionRadius){
 
-				case sectionRadius :
+				sr = readOneDouble(file);
+				closingTag(file, sectionRadiusCl);
 
-					sr = readOneDouble(file);
-					closingTag(file, sectionRadiusCl);
-					break;
+		}else if(tmp43==straightLength){
 
-				case straightLength :
+				sl = readOneDouble(file);
+				closingTag(file, straightLengthCl);
 
-					sl = readOneDouble(file);
-					closingTag(file, straightLengthCl);
-					break;
+		}else if(tmp43==focCoeff){
 
-				case focCoeff :
+				fc = readOneDouble(file);
+				closingTag(file, focCoeffCl);
 
-					fc = readOneDouble(file);
-					closingTag(file, focCoeffCl);
-					break;
+		}else if(tmp43==comment){
 
-				case comment :
-
-					jumpComment(file);
-					break;
-
+				jumpComment(file);
+		}
 				/* si la variable tmp43 ne contient pas les balises voulues, c'est qu'une valeur
 				 * (celle contenue par la variable tmp43 donc)
 				 * n'a pas été récupérée comme il faut.
 				*/
-				default:
+		else{
 
-					throw ReadException("Values found outside of following tags : "+entryPos+exitPos+sectionRadius+straightLength+focCoeff+
-										"\n Value is : "+tmp43);
-					break;
-		}//switch
+				throw ReadException("Values found outside of following tags : "+entryPos+exitPos+sectionRadius+straightLength+focCoeff+
+									"\n Value is : "+tmp43);
+		}
 
 		//Construction d'une FODO avec les variables récoltées.
 		FODO* fo = new FODO(enp, exp, sr, sl, fc);
@@ -558,47 +500,39 @@ Quadrupole* Parser::buildQuadrupole(ifstream& file){
 		 * 	- 	soit un commentaire
 		 * 	-	sinon il y a un problème car on ne s'attend pas à autre chose à ce niveau-là
 		 */
-		switch(tmp44){
+		if(tmp44==entryPos){
 
-				case entryPos :
+				enp = readVector3D(file);
+				closingTag(file, entryPosCl);
 
-					enp = readVector3D(file);
-					closingTag(file, entryPosCl);
-					break;
+		}else if(tmp44==exitPos){
 
-				case exitPos :
+				exp = readVector3D(file);
+				closingTag(file, exitPosCl);
 
-					exp = readVector3D(file);
-					closingTag(file, exitPosCl);
-					break;
+		}else if(tmp44==sectionRadius){
 
-				case sectionRadius :
+				sr = readOneDouble(file);
+				closingTag(file, sectionRadiusCl);
 
-					sr = readOneDouble(file);
-					closingTag(file, sectionRadiusCl);
-					break;
+		}else if(tmp44==focCoeff){
 
-				case focCoeff :
+				fc = readOneDouble(file);
+				closingTag(file, focCoeffCl);
 
-					fc = readOneDouble(file);
-					closingTag(file, focCoeffCl);
-					break;
+		}else if(tmp44==comment){
 
-				case comment :
-
-					jumpComment(file);
-					break;
-
+				jumpComment(file);
+		}
 				/* si la variable tmp44 ne contient pas les balises voulues, c'est qu'une valeur
 				 * (celle contenue par la variable tmp44 donc)
 				 * n'a pas été récupérée comme il faut.
 				*/
-				default:
+		else{
 
-					throw ReadException("Values found outside of following tags : "+entryPos+exitPos+sectionRadius+focCoeff+
-										"\n Value is : "+tmp44);
-					break;
-		}//switch
+				throw ReadException("Values found outside of following tags : "+entryPos+exitPos+sectionRadius+focCoeff+
+									"\n Value is : "+tmp44);
+		}
 
 		//Construction d'un Quadrupole avec les variables récoltées.
 		Quadrupole* qu = new Quadrupole(enp, exp, sr, fc);
@@ -630,42 +564,33 @@ StraightElement* Parser::buildStraightElement(ifstream& file){
 		 * 	- 	soit un commentaire
 		 * 	-	sinon il y a un problème car on ne s'attend pas à autre chose à ce niveau-là
 		 */
-		switch(tmp45){
+		if(tmp45==entryPos){
 
-				case entryPos :
+				enp = readVector3D(file);
+				closingTag(file, entryPosCl);
 
-					enp = readVector3D(file);
-					closingTag(file, entryPosCl);
-					break;
+		}else if(tmp45==exitPos){
 
-				case exitPos :
+				exp = readVector3D(file);
+				closingTag(file, exitPosCl);
 
-					exp = readVector3D(file);
-					closingTag(file, exitPosCl);
-					break;
+		}else if(tmp45==sectionRadius){
 
-				case sectionRadius :
+				sr = readOneDouble(file);
+				closingTag(file, sectionRadiusCl);
 
-					sr = readOneDouble(file);
-					closingTag(file, sectionRadiusCl);
-					break;
+		}else if(tmp45==comment){
 
-				case comment :
-
-					jumpComment(file);
-					break;
-
-				/* si la variable tmp45 ne contient pas les balises voulues, c'est qu'une valeur
+				jumpComment(file);
+		}				/* si la variable tmp45 ne contient pas les balises voulues, c'est qu'une valeur
 				 * (celle contenue par la variable tmp45 donc)
 				 * n'a pas été récupérée comme il faut.
 				*/
-				default:
+		else{
 
 					throw ReadException("Values found outside of following tags : "+entryPos+exitPos+sectionRadius+
 										"\n Value is : "+tmp45);
-					break;
-		}//switch
-
+		}
 		//Construction d'un StraightElement avec les variables récoltées.
 		StraightElement* se = new StraightElement(enp, exp, sr);
 
@@ -676,13 +601,15 @@ StraightElement* Parser::buildStraightElement(ifstream& file){
 	catch(Exception const& ex){
 		cout<<ex.getMessage()<<endl;
 	}
+}
 
 //=======================================================lecture atomique===============================================================
 
 /** Cf. header. */
+//TODO lire un double
 double Parser::readOneDouble(ifstream& file){
-	file>>ws;
 	double tmp;
+	file>>ws;
 	file>>tmp;
 	return tmp;
 }
@@ -691,7 +618,7 @@ double Parser::readOneDouble(ifstream& file){
 void Parser::readComma(ifstream& file){
 	char trash;
 	file>>ws;
-	file>>trash;
+	file.get(trash);
 }
 
 //===========================================================lecture moléculaire========================================================
@@ -712,34 +639,36 @@ Vector3D Parser::readVector3D(ifstream& file){
 tag Parser::readOneTag(ifstream& file){
 	tag tmp;
 	file>>ws;
-	file>>tag;
+	getline(file, tmp);
 	return tmp;
 }
 
 /** Cf. header. */
 void Parser::closingTag(ifstream& file, std::string ta){
 	tag tmp;
+	size_t found;
 	file>>ws;
-	file>>tmp;
+	getline(file,tmp);
 	//si on a pas de balise fermante (ici il devrait il y en avoir normalement une) alors on lance une exception
 	found=tmp.find(ta);
-	if(found() == string::npos)
-		throw ReadExceptionMessage("No closing tag "+ta+" found.");
+	if(found == string::npos)
+		throw ReadException("No closing tag "+ta+" found.");
 }
 //===========================================================lecture commentaire========================================================
 /**Cf. header. */
 void Parser::jumpComment(ifstream& file){
 	tag tmp;
+	size_t found;
 
 	do{
 		file>>ws;
-		file>>tmp;
+		getline(file,tmp);
 		found=tmp.find("-->");
 	}
-	while(found() == string::npos);
+	while(found == string::npos);
 
 	if(file.eof())
-		throw ReadExceptionMessage("No closing tag for comment found.");
+		throw ReadException("No closing tag for comment found.");
 
 }
 
