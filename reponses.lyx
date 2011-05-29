@@ -709,5 +709,132 @@ Comme tous ces propriétés changent pendant l'evolution de la simulation,
  nous les avons implémentés en tant que méthodes.
 \end_layout
 
+\begin_layout Section*
+Question P14.1
+\end_layout
+
+\begin_layout Standard
+Nous avons créé une classe Color qui implémente les couleurs données en
+ exemple.
+ Elle est en outre dotée de quelques méthodes pratiques (voir dans doxygen).
+\end_layout
+
+\begin_layout Standard
+Aucun objet héritant de la classe Printable n'hérite de cette classe, car
+ nous nous sommes concentrés sur l'interface graphique de GUI dans ce projet.
+\end_layout
+
+\begin_layout Section*
+Question P19.1
+\end_layout
+
+\begin_layout Standard
+Voici l'ensemble de balises (ouvrantes) que nous utilisons (dans l'ordre
+ d'apparition dans le fichier 
+\begin_inset Quotes eld
+\end_inset
+
+accelerator.xml
+\begin_inset Quotes erd
+\end_inset
+
+) :
+\end_layout
+
+\begin_layout Itemize
+<System>
+\end_layout
+
+\begin_layout Itemize
+<Accelerator>
+\end_layout
+
+\begin_layout Itemize
+<Particle>
+\end_layout
+
+\begin_layout Itemize
+<Position>
+\end_layout
+
+\begin_layout Itemize
+<Mass>
+\end_layout
+
+\begin_layout Itemize
+<Charge>
+\end_layout
+
+\begin_layout Itemize
+<Direction>
+\end_layout
+
+\begin_layout Itemize
+<Energy>
+\end_layout
+
+\begin_layout Itemize
+<FODO>
+\end_layout
+
+\begin_layout Itemize
+<EntryPosition>
+\end_layout
+
+\begin_layout Itemize
+<ExitPosition>
+\end_layout
+
+\begin_layout Itemize
+<SectionRadius>
+\end_layout
+
+\begin_layout Itemize
+<StraightLenght>
+\end_layout
+
+\begin_layout Itemize
+<FocalizingCoefficient>
+\end_layout
+
+\begin_layout Itemize
+<Dipole>
+\end_layout
+
+\begin_layout Itemize
+<Curvature>
+\end_layout
+
+\begin_layout Itemize
+<MagneticField>
+\end_layout
+
+\begin_layout Itemize
+<Quadrupole>
+\end_layout
+
+\begin_layout Itemize
+<StraightElement>
+\end_layout
+
+\begin_layout Standard
+Voici les balises pour les commentaires :
+\end_layout
+
+\begin_layout Itemize
+<! - - 
+\end_layout
+
+\begin_layout Itemize
+- - >
+\end_layout
+
+\begin_layout Standard
+Il n'y a donc pas de balises pour les constantes, car elles font partie
+ d'un namespace commun au projet.
+ Par ailleurs, l'aspect graphique de projet est séparé du reste du projet,
+ ce qui explique qu'il n'y ait pas de balise de type <Camera> ou <Oeil>.
+\end_layout
+
 \end_body
 \end_document
