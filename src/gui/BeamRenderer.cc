@@ -12,12 +12,9 @@
 namespace vhc {
 
 BeamRenderer::BeamRenderer() {
-	// TODO Auto-generated constructor stub
-
 }
 
 BeamRenderer::~BeamRenderer() {
-	// TODO Auto-generated destructor stub
 }
 
 void BeamRenderer::render(const Beam& beam) const {

@@ -58,18 +58,23 @@ public:
 	 *  ATTENTION: La delocation de memoire est sous la responsabilite de l'appelant. */
 	virtual Element* clone() const = 0;
 
+	/** Retourne vrai si la position donnee se situe avant la face d'entree de cet element. */
 	virtual bool isBefore(const Vector3D& position) const = 0;
 	bool isBefore(const Particle& particle) const;
 
+	/** Retourne vrai si la position donnee se situe a cote de cet element. */
 	virtual bool isBeside(const Vector3D& position) const = 0;
 	bool isBeside(const Particle& particle) const;
 
+	/** Retourne vrai si la position donnee se situe apres la face de sortie de cet element. */
 	virtual bool isAfter(const Vector3D& position) const = 0;
 	bool isAfter(const Particle& particle) const;
 
+	/** Retourne vrai si la position donnee se trouve a l'interieur de cet element (c'est-a-dire si elle n'est ni devnt ni derriere ni a cote de cet element). */
 	bool contains(const Vector3D& position) const;
 	bool contains(const Particle& particle) const;
 
+	/** Retourne un vecteur horizontal pointant en oppose de l'origine (correspond au vecteur u du complement mathemmatique). */
 	virtual Vector3D getHorizontalAt(const Vector3D& position) const = 0;
 
 	/** Retourne le champ magnetique, a l'interieur de cet element a la position donnee. */

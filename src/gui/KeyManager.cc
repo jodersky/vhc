@@ -42,8 +42,8 @@ void KeyManager::press(int key) {
 		case Qt::Key_Space:
 			stage.setRunning(!stage.isRunning());
 			break;
-		case Qt::Key_QuoteLeft:
-			stage.getBeamRenderer().setSpheresEnabled(! stage.getBeamRenderer().getSpheresEnabled());
+		case Qt::Key_0:
+			stage.getBeamRenderer()->setSpheresEnabled(! stage.getBeamRenderer()->getSpheresEnabled());
 			break;
 		default:
 			break;

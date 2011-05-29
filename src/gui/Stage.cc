@@ -21,10 +21,11 @@ Stage::Stage(QWidget* parent):
 		camera(),
 		keyManager(*this),
 		accelerator(NULL),
-		elementRenderer(),
-		beamRenderer(),
+		elementRenderer(new ElementRenderer),
+		beamRenderer(new BeamRenderer),
 		displayMode(FILL),
 		frameTime(0),
+		captured(false),
 		h(1E-12),
 		paused(true) {
 
@@ -39,6 +40,8 @@ Stage::Stage(QWidget* parent):
 
 Stage::~Stage() {
 	delete timer; timer = NULL;
+	delete elementRenderer; elementRenderer = NULL;
+	delete beamRenderer; beamRenderer = NULL;
 };
 
 void Stage::initializeGL () {
@@ -119,7 +122,7 @@ void Stage::paintGL() {
 		glEnable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
 		for (Accelerator::ElementCollection::const_iterator i = accelerator->getElements().begin(); i != accelerator->getElements().end(); ++i) {
-			elementRenderer.render(**i);
+			elementRenderer->render(**i);
 		}
 
 		glEnable(GL_DEPTH_TEST);
@@ -130,7 +133,7 @@ void Stage::paintGL() {
 		const Accelerator::BeamCollection& beams = accelerator->getBeams();
 
 		for (Accelerator::BeamCollection::const_iterator i = beams.begin(); i != beams.end(); ++i) {
-			beamRenderer.render(**i);
+			beamRenderer->render(**i);
 		}
 	}
 
@@ -154,13 +157,18 @@ void Stage::paintGL() {
 	frameTime = time.restart();
 }
 
+void Stage::mousePressEvent (QMouseEvent* event) {
+	captured = !captured;
+}
 
 void Stage::mouseMoveEvent(QMouseEvent* event) {
-	int dheading = -event->x() + center.x();
-	int dpitch = -event->y() + center.y();
-	camera.addHeading(1.0 * dheading * frameTime / 4000);
-	camera.addPitch(1.0 * dpitch * frameTime / 4000);
-	QCursor::setPos(QWidget::mapToGlobal(center));
+	if (captured) {
+		int dheading = -event->x() + center.x();
+		int dpitch = -event->y() + center.y();
+		camera.addHeading(1.0 * dheading * frameTime / 4000);
+		camera.addPitch(1.0 * dpitch * frameTime / 4000);
+		QCursor::setPos(QWidget::mapToGlobal(center));
+	}
 }
 
 void Stage::keyPressEvent (QKeyEvent* event) {
@@ -191,13 +199,35 @@ void Stage::setRunning(bool value) {
 	paused = !value;
 }
 
-ElementRenderer& Stage::getElementRenderer(){
+ElementRenderer* Stage::getElementRenderer() const {
 	return elementRenderer;
 }
 
+void Stage::setElementRenderer(ElementRenderer* value) {
+	elementRenderer = value;
+}
 
-BeamRenderer& Stage::getBeamRenderer() {;
+BeamRenderer* Stage::getBeamRenderer() const {
 	return beamRenderer;
+}
+
+void Stage::setBeamRenderer(BeamRenderer* value) {
+	beamRenderer = value;
+}
+
+Accelerator* Stage::getAccelerator() const {
+	return accelerator;
+}
+void Stage::setAccelerator(Accelerator* accelerator) {
+	this->accelerator = accelerator;
+}
+
+double Stage::getStep() const {
+	return h;
+}
+
+void Stage::setStep(double value) {
+	h = value;
 }
 
 }

@@ -193,7 +193,7 @@ int main(int argc, char *argv[])
 
     vhc::Stage window;
     Accelerator* acc = standard();
-    window.accelerator = acc;
+    window.setAccelerator(acc);
 
     window.setWindowTitle("Virtual Hadron Collider");
     window.resize(QSize(500, 500));

@@ -8,8 +8,6 @@
 #ifndef DOXYGEN_H_
 
 /**@mainpage
- * Page principale.
- * <b>tchigidididi</b>
  *
  */
 

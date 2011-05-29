@@ -13,9 +13,16 @@ namespace vhc {
 /** Contient des fonctions utilitaires. */
 namespace util {
 
+/** Mode de dessin. */
 enum DisplayMode {
+
+	/** Remplire. */
 	FILL = 0,
+
+	/** Grille. */
 	WIREFRAME = 1,
+
+	/** Points. */
 	POINTS = 2
 };
 

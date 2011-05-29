@@ -719,9 +719,57 @@ Nous avons créé une classe Color qui implémente les couleurs données en
  Elle est en outre dotée de quelques méthodes pratiques (voir dans doxygen).
 \end_layout
 
+\begin_layout Section*
+Question P15.1
+\end_layout
+
 \begin_layout Standard
-Aucun objet héritant de la classe Printable n'hérite de cette classe, car
- nous nous sommes concentrés sur l'interface graphique de GUI dans ce projet.
+Il faut comparer chaque particule a chaque autre.
+ Avec n particules il faut donc faire n tests.
+ La complexite est donc de 
+\begin_inset Formula $O(n^{2})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Question P16.1
+\end_layout
+
+\begin_layout Standard
+Au pire des cas, si tous les particules se retrouvent dans une case, la
+ complexites est de 
+\begin_inset Formula $O(n^{2})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section*
+Question P16.2
+\end_layout
+
+\begin_layout Standard
+Nous n'avons pas implémentés cette méthode mais une autre, voir la doc (SAPInter
+actor.h).
+\end_layout
+
+\begin_layout Section*
+Question P17.1
+\end_layout
+
+\begin_layout Standard
+Comme avant, au pire des cas la complexite est de 
+\begin_inset Formula $O(n^{2})$
+\end_inset
+
+.
+ En moyenne elle serait de 
+\begin_inset Formula $O(n\: log\: n)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section*
@@ -834,6 +882,17 @@ Il n'y a donc pas de balises pour les constantes, car elles font partie
  d'un namespace commun au projet.
  Par ailleurs, l'aspect graphique de projet est séparé du reste du projet,
  ce qui explique qu'il n'y ait pas de balise de type <Camera> ou <Oeil>.
+\end_layout
+
+\begin_layout Section*
+Question P19.2
+\end_layout
+
+\begin_layout Standard
+Comme il s'agit d'une méthode de fabrication qui n'a pour bute de créer
+ un accélérateur, la méthode prendrait en string le nom d'un fichier contenant
+ la description xml du systeme et renverrait un pointeur sur un accélérateur
+ aloué dynamiquement.
 \end_layout
 
 \end_body

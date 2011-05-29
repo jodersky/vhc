@@ -1,4 +1,5 @@
-
+#configuration pour Qt
+#
 TEMPLATE = app
 TARGET = 
 DESTDIR = $(BINDIR)/gui
@@ -16,4 +17,4 @@ QT += opengl
 
 # Input
 HEADERS += Camera.h ElementRenderer.h util.h  KeyManager.h Stage.h BeamRenderer.h Renderer.h
-SOURCES += Camera.cc ElementRenderer.cc util.cc KeyManager.cc Stage.cc BeamRenderer.cc Main.cc 
+SOURCES += Camera.cc ElementRenderer.cc util.cc KeyManager.cc Stage.cc BeamRenderer.cc simulation.cc 
