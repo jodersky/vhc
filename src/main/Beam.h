@@ -35,6 +35,8 @@ public:
 	/** Retourne tous les particules contenus dans ce faisceau. */
 	ParticleCollection& getParticles();
 
+	const ParticleCollection& getParticles() const;
+
 	/** Met a jour les particules en leur attribuant l'element dans lequel ils sont contenus.
 	 *  Contrairement a <code>Accelerator::initializeBeams()</code>, les elements consideres sont:
 	 *  - l'element actuel de la particule

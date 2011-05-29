@@ -12,17 +12,17 @@ using namespace std;
 namespace vhc {
 
 //TODO comment importer le tableau statique depuis le header?
-double Color::red[4] = {1,0,0,1};
-double Color::green[4] = {0,1,0,1};
-double Color::blue[4] = {0,0,1,1};
-double Color::turquoise[4] = {0,1,1,1};
-double Color::purple[4] = {1,0,1,1};
-double Color::yellow[4] = {1,1,0,1};
-double Color::white[4] = {1,1,1,1};
-double Color::black[4] = {0,0,0,1};
-double Color::grey[4] = {0.6,0.6,0.6,1};
+const double Color::red[] = {1,0,0,1};
+const double Color::green[] = {0,1,0,1};
+const double Color::blue[] = {0,0,1,1};
+const double Color::turquoise[] = {0,1,1,1};
+const double Color::purple[] = {1,0,1,1};
+const double Color::yellow[] = {1,1,0,1};
+const double Color::white[] = {1,1,1,1};
+const double Color::black[] = {0,0,0,1};
+const double Color::grey[] = {0.6,0.6,0.6,1};
 
-vector<double> Color::convertTabToVector(double const& tab[4]) {
+vector<double> Color::convertTabToVector(const double tab[]) {
 	vector <double> tmp;
 	for (unsigned int i(0); i < 4; ++i) {
 		tmp.push_back(tab[i]);
@@ -34,35 +34,35 @@ void Color::setColor(vector<double> const& co){
 	color = co;
 }
 
-void Color::setColor(string co) const {
+void Color::setColor(string co) {
 
 	switch(co){
 	case "red" :
-		color = convertTabToVector(red[4]);
+		color = convertTabToVector(red);
 		break;
 	case "green" :
-		color = convertTabToVector(green[4]);
+		color = convertTabToVector(green);
 		break;
 	case "blue" :
-		color = convertTabToVector(blue[4]);
+		color = convertTabToVector(blue);
 		break;
 	case "turquoise" :
-		color = convertTabToVector(turquoise[4]);
+		color = convertTabToVector(turquoise);
 		break;
 	case "purple" :
-		color = convertTabToVector(purple[4]);
+		color = convertTabToVector(purple);
 		break;
 	case "yellow" :
-		color = convertTabToVector(yellow[4]);
+		color = convertTabToVector(yellow);
 		break;
 	case "white" :
-		color = convertTabToVector(white[4]);
+		color = convertTabToVector(white);
 		break;
 	case "black" :
-		color = convertTabToVector(black[4]);
+		color = convertTabToVector(black);
 		break;
 	case "grey" :
-		color = convertTabToVector(grey[4]);
+		color = convertTabToVector(grey);
 		break;
 	default:
 		throw IllegalArgumentException("Color is not defined.");
@@ -71,46 +71,6 @@ void Color::setColor(string co) const {
 
 vector<double> Color::getColor() const {
 	return color;
-}
-
-string Color::getStringColor() const {
-
-	string tmp;
-
-	switch(color){
-	case convertTabToVector(red) :
-		tmp="red";
-		break;
-	case convertTabToVector(green) :
-		tmp="green";
-		break;
-	case convertTabToVector(blue) :
-		tmp="blue";
-		break;
-	case convertTabToVector(turquoise) :
-		break;
-		tmp="turquoise";
-	case convertTabToVector(purple) :
-		tmp="purple";
-		break;
-	case convertTabToVector(yellow) :
-		tmp="yellow";
-		break;
-	case convertTabToVector(white) :
-		tmp="white";
-		break;
-	case convertTabToVector(black) :
-		tmp="black";
-		break;
-	case convertTabToVector(grey) :
-		tmp="grey";
-		break;
-	default :
-		tmp="No valid color.";
-		break;
-	}
-
-	return tmp;
 }
 
 }

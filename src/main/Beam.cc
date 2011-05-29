@@ -67,6 +67,8 @@ Particle& Beam::getReferenceParticle() {
 
 Beam::ParticleCollection& Beam::getParticles() {return particles;}
 
+const Beam::ParticleCollection& Beam::getParticles() const {return particles;}
+
 void Beam::updateParticles() {
 	for (ParticleCollection::iterator i = particles.begin(); i != particles.end(); ++i) {
 		Particle& particle = **i;

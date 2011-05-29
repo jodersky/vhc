@@ -8,6 +8,7 @@
 #ifndef ACCELERATOR_H_
 #define ACCELERATOR_H_
 #include <list>
+#include <memory>
 #include "Vector3D.h"
 #include "Particle.h"
 #include "Beam.h"
@@ -29,8 +30,11 @@ public:
 	typedef ParticleCollection::iterator ParticleIterator;
 	typedef ElementCollection::iterator ElementIterator;
 
-	/** Cree un nouveau accelerateur vide. */
+	/** Cree un nouveau accelerateur vide, avec un interacteur de particules a force brute. */
 	Accelerator ();
+
+	/** Cree un nouveau accelerateur vide.*/
+	Accelerator (Interactor* interactor);
 
 	virtual ~Accelerator();
 
@@ -52,7 +56,7 @@ public:
 
 	/** Retourne la liste des particules contenus dans cet accelerateur.
 	 *  <b>ATTENTION:</b> les particules peuvent etre supprimes sans preavis par l'accelerateur! */
-	const ParticleCollection & getParticles() const;
+	std::auto_ptr<ParticleCollection> getParticles() const;
 
 	/** Retourne tous les faisceaux de cet accelerateur. */
 	const BeamCollection& getBeams() const;

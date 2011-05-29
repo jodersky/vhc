@@ -30,7 +30,6 @@ void BruteForceInteractor::applyInteractions() {
 		}
 	}
 }
-void BruteForceInteractor::acceleratorClosed() {}
 
 void BruteForceInteractor::react(const ParticleAddedEvent& event) {
 	particles.push_back(event.getParticle());

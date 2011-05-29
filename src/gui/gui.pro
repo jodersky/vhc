@@ -15,5 +15,5 @@ QT += opengl
 
 
 # Input
-HEADERS += Camera.h ElementRenderer.h util.h  KeyManager.h Stage.h ParticleRenderer.h Renderer.h
-SOURCES += Camera.cc ElementRenderer.cc util.cc KeyManager.cc Stage.cc ParticleRenderer.cc Main.cc 
+HEADERS += Camera.h ElementRenderer.h util.h  KeyManager.h Stage.h BeamRenderer.h Renderer.h
+SOURCES += Camera.cc ElementRenderer.cc util.cc KeyManager.cc Stage.cc BeamRenderer.cc Main.cc 

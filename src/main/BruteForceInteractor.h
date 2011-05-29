@@ -28,7 +28,6 @@ public:
 	virtual ~BruteForceInteractor();
 
 	virtual void applyInteractions();
-	virtual void acceleratorClosed();
 
 	/** Appelee lors de l'ajout d'une particule. Ajoute la particule au particules simules par cet interacteur. */
 	virtual void react(const ParticleAddedEvent& event);

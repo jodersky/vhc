@@ -81,10 +81,7 @@ int main() {
 	int steps = 1000;
 	double dt = 1E-11;
 
-	cout << "Simulating " << steps << " steps with " << accelerator->getParticles().size() << " particles in " << accelerator->getBeams().size() << " beams...";
-	for (Accelerator::BeamCollection::const_iterator i = accelerator->getBeams().begin(); i != accelerator->getBeams().end(); ++i) {
-		cout << (**i).getParticles().size();
-		}
+	cout << "Simulating " << steps << " steps with " << accelerator->getParticles()->size() << " particles in " << accelerator->getBeams().size() << " beams...";
 	cout.flush();
 	int t0 = clock();
 	for (int i = 0; i < steps; ++i) {
@@ -95,7 +92,7 @@ int main() {
 
 	cout << "Time taken: " << t1 << " ticks @ " << CLOCKS_PER_SEC << " ticks/s ~ " << 1.0 * t1 / CLOCKS_PER_SEC << "s" << endl;
 	cout << "Average: " << 1.0 * t1 / CLOCKS_PER_SEC / steps << " s/step" << endl;
-	cout << "Average: " << 1.0 * t1 / CLOCKS_PER_SEC / steps / accelerator->getParticles().size() << " s/step/particle" << endl;
+	cout << "Average: " << 1.0 * t1 / CLOCKS_PER_SEC / steps / accelerator->getParticles()->size() << " s/step/particle" << endl;
 
 	return 0;
 }

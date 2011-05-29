@@ -14,7 +14,7 @@
 #include "Camera.h"
 #include "KeyManager.h"
 #include "ElementRenderer.h"
-#include "ParticleRenderer.h"
+#include "BeamRenderer.h"
 #include "Element.h"
 #include "Accelerator.h"
 #include "util.h"
@@ -40,7 +40,7 @@ public:
 	void setRunning(bool value);
 
 	ElementRenderer& getElementRenderer();
-	ParticleRenderer& getParticleRenderer();
+	BeamRenderer& getBeamRenderer();
 
 
 	//TODO !!! temporary
@@ -67,7 +67,7 @@ private:
 	//graphics
 	Camera camera;
 	ElementRenderer elementRenderer;
-	ParticleRenderer particleRenderer;
+	BeamRenderer beamRenderer;
 	QPoint center;
 	util::DisplayMode displayMode;
 

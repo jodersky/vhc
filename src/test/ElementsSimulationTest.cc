@@ -72,8 +72,8 @@ int main() {
 		//test de simulation
 		for(unsigned int j(0); j<it; ++j){
 			va[i]->step(10E-11);
-			if(!(va[i]->getParticles().empty())){
-				cout<<"after "<<j+1<<" step :"<<endl << (va[i]->getParticles().front()->toString())<<endl;
+			if(!(va[i]->getParticles()->empty())){
+				cout<<"after "<<j+1<<" step :"<<endl << (va[i]->getParticles()->front()->toString())<<endl;
 			}
 		}
 

@@ -25,7 +25,7 @@ export BINDIR = $(BASEDIR)/bin
 #
 # CXXFLAGS += -Wall
 # CXXFLAGS += -ansi -pedantic -Wall   # pour les purs et durs
-CXXFLAGS += -g                      # pour debugger
+# CXXFLAGS += -g                      # pour debugger
 # CXXFLAGS += -pg                     # pour profiler
 # LDFLAGS  += -pg                     # pour profiler
  CXXFLAGS += -O2                     # pour optimiser la vitesse

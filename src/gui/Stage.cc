@@ -22,7 +22,7 @@ Stage::Stage(QWidget* parent):
 		keyManager(*this),
 		accelerator(NULL),
 		elementRenderer(),
-		particleRenderer(),
+		beamRenderer(),
 		displayMode(FILL),
 		frameTime(0),
 		h(1E-12),
@@ -79,11 +79,11 @@ void Stage::paintGL() {
 			QString("heading: ") + QString::number(camera.getHeading()),
 			QString("pitch: ") + QString::number(camera.getPitch()),
 			QString("-----accelerator-----"),
-			QString("Elements: ") + QString::number(accelerator->getElements().size()),
-			QString("Particles: ") + QString::number(accelerator->getParticles().size()),
-			QString("") + accelerator->getParticles().front()->toString().c_str()
+			QString("Elements: ") + QString::number(accelerator->getElements().size())
+			//QString("Particles: ") + QString::number(accelerator->getParticles().size()),
+			//QString("") + accelerator->getParticles().front()->toString().c_str()
 	};
-	displayText(text, 11);
+	displayText(text, 9);
 	//renderText(0,60,QString("") + accelerator->getParticle(0)->getElement()->magneticFieldAt(accelerator->getParticle(0)->getPosition()).toString().c_str());
 	//renderText(0,72,QString("") + accelerator->getParticle(0)->toString().c_str());
 	axes();
@@ -127,9 +127,10 @@ void Stage::paintGL() {
 
 		glColor3d(0, 0, 1);
 
-		Accelerator::ParticleCollection particles = accelerator->getParticles();
-		for (Accelerator::ParticleCollection::const_iterator i = particles.begin(); i != particles.end(); ++i) {
-			particleRenderer.render(**i);
+		const Accelerator::BeamCollection& beams = accelerator->getBeams();
+
+		for (Accelerator::BeamCollection::const_iterator i = beams.begin(); i != beams.end(); ++i) {
+			beamRenderer.render(**i);
 		}
 	}
 
@@ -194,8 +195,9 @@ ElementRenderer& Stage::getElementRenderer(){
 	return elementRenderer;
 }
 
-ParticleRenderer& Stage::getParticleRenderer() {;
-	return particleRenderer;
+
+BeamRenderer& Stage::getBeamRenderer() {;
+	return beamRenderer;
 }
 
 }

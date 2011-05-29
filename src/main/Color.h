@@ -28,8 +28,6 @@ public:
 	/** Retourne (sous forme de vector<double>) la couleur de cet objet. **/
 	vector<double> getColor() const;
 
-	/** Retourne (sous forme de string) la couleur de cet objet. **/
-	string getStringColor() const;
 
 	/** Affecte la couleur de l'objet selon l'argument de la fonction.(Ici un string) **/
 	void setColor(string color = "white");
@@ -41,16 +39,16 @@ public:
 protected:
 	vector<double> color;
 private:
-	vector<double> convertTabToVector(double const& tab[4]);
-	static double red[4];
-	static double green[4];
-	static double blue[4];
-	static double turquoise[4];
-	static double purple[4];
-	static double yellow[4];
-	static double white[4];
-	static double black[4];
-	static double grey[4];
+	vector<double> convertTabToVector(double tab[]);
+	static const double red[4];
+	static const double green[4];
+	static const double blue[4];
+	static const double turquoise[4];
+	static const double purple[4];
+	static const double yellow[4];
+	static const double white[4];
+	static const double black[4];
+	static const double grey[4];
 };
 
 }

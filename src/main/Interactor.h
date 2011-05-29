@@ -12,6 +12,8 @@
 
 namespace vhc {
 
+class Accelerator;
+
 /** Classe de base representant un moyen d'inclure les forces inter-particules dans la simulation.
  *  D'abord on souscrit un interacteur a une source d'evenements de paticules (typiquement des faisceaux).
  *  Lors de l'ajout d'une particule, l'interacteur a donc la possibilite d'inclure la particule dans
@@ -28,7 +30,7 @@ public:
 	virtual void applyInteractions() = 0;
 
 	/** Appelee quand l'accelerateur contenant cet interacteur est ferme. */
-	virtual void acceleratorClosed() = 0;
+	virtual void acceleratorClosed(const Accelerator& acc);
 
 	/** Appelee lors de l'ajout d'une particule. Ajoute typiquement la particule au particules simules par cet interacteur. */
 	virtual void react(const ParticleAddedEvent& event) = 0;

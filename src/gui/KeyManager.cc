@@ -43,7 +43,7 @@ void KeyManager::press(int key) {
 			stage.setRunning(!stage.isRunning());
 			break;
 		case Qt::Key_QuoteLeft:
-			stage.getParticleRenderer().enableDrawSpheres(!stage.getParticleRenderer().isDrawSpheresEnabled());
+			stage.getBeamRenderer().setSpheresEnabled(! stage.getBeamRenderer().getSpheresEnabled());
 			break;
 		default:
 			break;

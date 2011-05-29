@@ -24,6 +24,7 @@
 #include "CircularBeam.h"
 #include "Bunch.h"
 #include "events.h"
+#include "SAPInteractor.h"
 
 using namespace std;
 using namespace vhc;
@@ -130,7 +131,7 @@ Une particule :
 	Dipole e6 = Dipole(Vector3D(-3, 2, 0), Vector3D(-2, 3, 0), 0.1, 1, Vector3D(0, 0, B));
 	Element** e7 = FODO(e6.getExitPosition(), Vector3D(2, 3, 0), 0.1, 1.0, b);
 	Dipole e8 = Dipole(Vector3D(2, 3, 0), Vector3D(3, 2, 0), 0.1, 1, Vector3D(0, 0, B));
-	Accelerator* acc = new Accelerator();
+	Accelerator* acc = new Accelerator(new SAPInteractor);
 	//acc->add(e1);
 	for (int i = 0; i < 4; ++i) acc->add(e1[i][0]);
 	acc->add(e2);
@@ -168,8 +169,8 @@ Une particule :
 
 	Foo* foo = new Foo;
 	Bunch& bch = (Bunch&) acc->add(Bunch(ap1, 5, 1, stdDev, length, emittance, A_12, A_22));
-	bch.Publisher<ParticleAddedEvent>::subscribe(foo);
-	bch.Publisher<ParticleRemovedEvent>::subscribe(foo);
+	//bch.Publisher<ParticleAddedEvent>::subscribe(foo);
+	//bch.Publisher<ParticleRemovedEvent>::subscribe(foo);
 
 
 	acc->close();

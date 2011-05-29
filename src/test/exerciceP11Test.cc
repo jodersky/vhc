@@ -105,8 +105,8 @@ void makeTest(){
 
 	for(unsigned int j(0); j<it; ++j){
 		a->step(10E-11);
-		cout<<"after "<<j+1<<" step :"<<endl<<"part 1 :"<< (a->getParticles().front()->toString()) <<endl;
-		cout<<"after "<<j+1<<" step :"<<endl<<"part 2 :"<< (a->getParticles().back()->toString()) <<endl;
+		cout<<"after "<<j+1<<" step :"<<endl<<"part 1 :"<< (a->getParticles()->front()->toString()) <<endl;
+		cout<<"after "<<j+1<<" step :"<<endl<<"part 2 :"<< (a->getParticles()->back()->toString()) <<endl;
 	}
 }
 

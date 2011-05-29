@@ -15,15 +15,14 @@ using namespace std;
 
 namespace vhc {
 
-Accelerator::Accelerator():
+Accelerator::Accelerator(): elements(0), beams(0), allowLinear(false), closed(false), interactor(new BruteForceInteractor) {};
+
+Accelerator::Accelerator(Interactor* interactor):
 		elements(0),
 		beams(0),
 		allowLinear(false),
 		closed(false),
-		interactor(NULL)
-	{
-	interactor = new BruteForceInteractor;
-	};
+		interactor(interactor) {}
 
 Accelerator::~Accelerator() {
 	clear();
@@ -105,13 +104,12 @@ const Accelerator::BeamCollection& Accelerator::getBeams() const {
 	return beams;
 }
 
-//TODO the segmentation fault came from here! find a solution
-const Accelerator::ParticleCollection& Accelerator::getParticles() const {
-	ParticleCollection* particles = new ParticleCollection(0);
+auto_ptr<Accelerator::ParticleCollection> Accelerator::getParticles() const {
+	auto_ptr<ParticleCollection> particles(new ParticleCollection(0));
 	for (BeamCollection::const_iterator i = beams.begin(); i != beams.end(); ++i) {
 		particles->insert(particles->end(), (**i).getParticles().begin(), (**i).getParticles().end());
 	}
-	return *particles;
+	return particles;
 }
 
 void Accelerator::close() {
@@ -136,6 +134,7 @@ void Accelerator::close() {
 	}
 
 	initializeBeams();
+	interactor->acceleratorClosed(*this);
 
 	closed = true;
 
@@ -187,17 +186,17 @@ std::string Accelerator::toString() const {
 		}
 	}
 
-	const ParticleCollection& particles = getParticles();
+	auto_ptr<ParticleCollection> particles = getParticles();
 
-	if (particles.size() == 0) {
+	if (particles->size() == 0) {
 		s << "This accelerator doesn't contain any particle." << "\n";
-	} else if (particles.size() == 1) {
+	} else if (particles->size() == 1) {
 		s << "This accelerator contains the following particle :" << "\n";
-		s << particles.front()->toString() << "\n";
+		s << particles->front()->toString() << "\n";
 	}else{
-		s << "This accelerator contains the " << particles.size() << " following particles :"<<"\n";
-		for (ParticleCollection::const_iterator i = particles.begin(); i != particles.end(); ++i) {
-					s << (*i)->toString() << "\n";
+		s << "This accelerator contains the " << particles->size() << " following particles :"<<"\n";
+		for (ParticleCollection::const_iterator i = particles->begin(); i != particles->end(); ++i) {
+					s << (**i).toString() << "\n";
 		}
 	}
 
