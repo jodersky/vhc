@@ -12,9 +12,14 @@
 using namespace std;
 using namespace vhc;
 
+/* Ne marche pas. L'ouverture du fichier est impossible.
+ * Pourtant j'ai essayé en exercice le même bout de code
+ * [ que dans la méthode extract() ] pour ouvrir un fichier, et ça marchait....
+ * Je suspecte un problème avec la makefile.*/
+
 int main(){
 	try{
-		Parser pars("./simulation.xml");
+		Parser pars("./accelerator.xml");
 
 		Accelerator* a = pars.extract();
 

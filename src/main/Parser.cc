@@ -5,6 +5,7 @@
  *      Author: christian
  */
 #include <iostream>
+#include <fstream>
 #include <string>
 #include "Parser.h"
 #include "exceptions.h"
@@ -606,19 +607,22 @@ StraightElement* Parser::buildStraightElement(ifstream& file){
 //=======================================================lecture atomique===============================================================
 
 /** Cf. header. */
-//TODO lire un double
 double Parser::readOneDouble(ifstream& file){
-	double tmp;
-	file>>ws;
-	file>>tmp;
-	return tmp;
-}
 
-/** Cf. header. */
-void Parser::readComma(ifstream& file){
-	char trash;
+	double tmp;
+	char ex('x');
+	string str;
 	file>>ws;
-	file.get(trash);
+
+	do{
+		file.get(ex);
+		str=str+ex;
+
+	}while(ex != '<' && ',');
+
+	istringstream is(str);
+	is>>tmp;
+	return tmp;
 }
 
 //===========================================================lecture moléculaire========================================================
@@ -626,29 +630,46 @@ void Parser::readComma(ifstream& file){
 Vector3D Parser::readVector3D(ifstream& file){
 
 	double x = readOneDouble(file);
-	readComma(file);
 	double y = readOneDouble(file);
-	readComma(file);
 	double z = readOneDouble(file);
-	file>>ws;
 
 	return Vector3D(x,y,z);
 }
 
 /** Cf. header. */
 tag Parser::readOneTag(ifstream& file){
-	tag tmp;
-	file>>ws;
-	getline(file, tmp);
+
+	tag tmp("<");
+	char ex('x');
+
+	/* Lecture caractère par caractère du flot, et remplissage au fur et à mesure de la string,
+	*  jusqu'à la fin de la balise. */
+	do{
+		file>>ws;
+		file.get(ex);
+		tmp=tmp+ex;
+
+	}while(ex != '>');
+
 	return tmp;
 }
 
 /** Cf. header. */
 void Parser::closingTag(ifstream& file, std::string ta){
-	tag tmp;
+
+	tag tmp("<");
+	char ex('x');
 	size_t found;
-	file>>ws;
-	getline(file,tmp);
+
+	/* Lecture caractère par caractère du flot, et remplissage au fur et à mesure de la string,
+	*  jusqu'à la fin de la balise. */
+	do{
+		file>>ws;
+		file.get(ex);
+		tmp=tmp+ex;
+
+	}while(ex != '>');
+
 	//si on a pas de balise fermante (ici il devrait il y en avoir normalement une) alors on lance une exception
 	found=tmp.find(ta);
 	if(found == string::npos)
@@ -657,6 +678,7 @@ void Parser::closingTag(ifstream& file, std::string ta){
 //===========================================================lecture commentaire========================================================
 /**Cf. header. */
 void Parser::jumpComment(ifstream& file){
+
 	tag tmp;
 	size_t found;
 
