@@ -32,8 +32,12 @@ Interface graphique:
 ========================
 navigation: touches w,a,s,d pour bouger, souris pour changer tourner
 
+clique gauche: capturer/lacher la souris
+
 1: vue pleine
 2: vue grille
 3: vue points
 0: afficher points/spheres pour particules
+
+REMARQUE: nous avons constate des problemes avec le rendement graphique en salles CO. Ses probleme ne se manifestent que sur les machines virtuelles.
 

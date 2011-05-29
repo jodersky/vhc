@@ -1,9 +1,532 @@
-[26/02/2011 jakob] Creation de la classe `Vector3', essais divers.
-[01/03/2011] Discussion sur la structure du projet, conventions de style de code, mise en place d'un serveur SVN: https://svn.epfl.ch/svn/virtual-hadron-collider/.
-[02/03/2011 jakob] Repondu a la premiere question. Amelioration de la classe `Vector3'.
-[08/03/2011] Installation de linux et configuration de l'environement de developpement sur le portable de Christian.
-[08/03/2011] Traduction des commentaires en francais. Desormais, tout identificateur restera en anglais mais tous les commentaires seront ecris en francais.
-[10/03/2011 jakob] Definition de la classe particule.
-[12/03/2011 jakob] Mise en place d'un systeme de makefiles recursifs. Le makefile principale appelle des makefiles dans les differents repertoires source. Voir document "structure.pdf" pour plus de detailles.
-[13/03/2011 jakob] Creation d'un systeme de test automatise. Les fichiers test compiles sont executes par un script shell et leurs valeurs de retour indiquent leurs succes respectifs (0=PASSE). Ce script est aussi appele par make, via la commande `make test'.
-[../03/2011 christian] Premiers widgets (boutons, fenêtres, curseurs) sous QT.
+------------------------------------------------------------------------
+r1 | root | 2011-03-01 14:51:26 +0100 (Tue, 01 Mar 2011) | 1 line
+
+Initial structure
+------------------------------------------------------------------------
+r2 | jnodersk | 2011-03-01 18:03:20 +0100 (Tue, 01 Mar 2011) | 1 line
+
+Initial import.
+------------------------------------------------------------------------
+r3 | jnodersk | 2011-03-02 14:07:26 +0100 (Wed, 02 Mar 2011) | 1 line
+
+Created configuration file for doxygen `Doxyfile'. Modified Vector3.getUnit(), now throws exception when called on null vector.
+------------------------------------------------------------------------
+r4 | jnodersk | 2011-03-02 14:12:20 +0100 (Wed, 02 Mar 2011) | 1 line
+
+Modified svn ignore property to ignore `doc' and `Debug' directories.
+------------------------------------------------------------------------
+r5 | jnodersk | 2011-03-02 15:30:59 +0100 (Wed, 02 Mar 2011) | 1 line
+
+Added `reponses.lyx'.
+------------------------------------------------------------------------
+r6 | jnodersk | 2011-03-02 15:53:18 +0100 (Wed, 02 Mar 2011) | 1 line
+
+Made Vector3 static variables Null, i, j, k constant.
+------------------------------------------------------------------------
+r7 | jnodersk | 2011-03-02 15:55:03 +0100 (Wed, 02 Mar 2011) | 1 line
+
+Updated JOURNAL.
+------------------------------------------------------------------------
+r8 | jnodersk | 2011-03-05 20:35:05 +0100 (Sat, 05 Mar 2011) | 1 line
+
+Renamed `Vector3' to `Vector3D'.
+------------------------------------------------------------------------
+r9 | jnodersk | 2011-03-08 20:50:22 +0100 (Tue, 08 Mar 2011) | 1 line
+
+[FR] Traduit les commentaires en francais. Desormais tout commentaire sera ecrit en francais.
+------------------------------------------------------------------------
+r10 | jnodersk | 2011-03-08 21:36:26 +0100 (Tue, 08 Mar 2011) | 1 line
+
+Corrige une erreur dans la methode `getUnit()' de `Vector3D'.
+------------------------------------------------------------------------
+r11 | jnodersk | 2011-03-09 14:05:35 +0100 (Wed, 09 Mar 2011) | 1 line
+
+Ajout du fichier compile `REPONSES.pdf'.
+------------------------------------------------------------------------
+r12 | jnodersk | 2011-03-09 14:20:04 +0100 (Wed, 09 Mar 2011) | 1 line
+
+Traduit le commentaire de `vhc.cc' en francais.
+------------------------------------------------------------------------
+r13 | cdvazque | 2011-03-09 15:39:33 +0100 (Wed, 09 Mar 2011) | 1 line
+
+tests divers
+------------------------------------------------------------------------
+r14 | jnodersk | 2011-03-09 15:50:19 +0100 (Wed, 09 Mar 2011) | 1 line
+
+blabla
+------------------------------------------------------------------------
+r15 | jnodersk | 2011-03-09 15:51:21 +0100 (Wed, 09 Mar 2011) | 1 line
+
+supprime tests
+------------------------------------------------------------------------
+r16 | jnodersk | 2011-03-11 13:42:06 +0100 (Fri, 11 Mar 2011) | 1 line
+
+Mise a jour de `Vector3D'.
+------------------------------------------------------------------------
+r17 | jnodersk | 2011-03-11 21:13:06 +0100 (Fri, 11 Mar 2011) | 1 line
+
+Mise en place d'un systeme de Makefiles. Lancer `make all' _dans_le_repertoire_du_projet_ pour une compilation du projet.
+------------------------------------------------------------------------
+r18 | jnodersk | 2011-03-12 12:20:07 +0100 (Sat, 12 Mar 2011) | 1 line
+
+Reorganisation du repertoire source. Les sources principaux sont dans `src/main' et les tests dans `src/test'.
+------------------------------------------------------------------------
+r19 | jnodersk | 2011-03-12 12:24:05 +0100 (Sat, 12 Mar 2011) | 1 line
+
+suppression de residus de la reorganisation
+------------------------------------------------------------------------
+r20 | jnodersk | 2011-03-12 14:04:12 +0100 (Sat, 12 Mar 2011) | 1 line
+
+Ajout des cibles make dans eclipse. Ajout d'une explication sur la structure du projet (structure.pdf).
+------------------------------------------------------------------------
+r21 | jnodersk | 2011-03-13 15:25:15 +0100 (Sun, 13 Mar 2011) | 1 line
+
+Creation d'un systeme de test automatise.
+------------------------------------------------------------------------
+r22 | jnodersk | 2011-03-13 15:28:03 +0100 (Sun, 13 Mar 2011) | 1 line
+
+Mise a jour de `structure.pdf' et du Makefile, doc et test ne sont plus inclus dans all.
+------------------------------------------------------------------------
+r23 | jnodersk | 2011-03-13 16:34:13 +0100 (Sun, 13 Mar 2011) | 1 line
+
+Modification des makefiles.
+------------------------------------------------------------------------
+r24 | jnodersk | 2011-03-16 16:22:22 +0100 (Wed, 16 Mar 2011) | 1 line
+
+ajout de printable
+------------------------------------------------------------------------
+r25 | cdvazque | 2011-03-17 16:12:23 +0100 (Thu, 17 Mar 2011) | 1 line
+
+implémenté le produit mixte
+------------------------------------------------------------------------
+r26 | jnodersk | 2011-03-17 22:54:24 +0100 (Thu, 17 Mar 2011) | 6 lines
+
+-creation d'un espace de nom contenant des constantes physiques
+-changement du makefile des tests: les tests ne doivent plus etre manuellement ajoutes au makefile (a condition que le fichier s'appelle *Test.cc)
+-completion de la classe particule, j'ai toujours des questions sur l'implementation de l'energie, il faudrait en parler prochainement
+-repondu a la question 5.1 mais j'ai egalement des doutes
+-completion de la classe element
+-documentation divers
+------------------------------------------------------------------------
+r27 | jnodersk | 2011-03-17 22:54:46 +0100 (Thu, 17 Mar 2011) | 6 lines
+
+-creation d'un espace de nom contenant des constantes physiques
+-changement du makefile des tests: les tests ne doivent plus etre manuellement ajoutes au makefile (a condition que le fichier s'appelle *Test.cc)
+-completion de la classe particule, j'ai toujours des questions sur l'implementation de l'energie, il faudrait en parler prochainement
+-repondu a la question 5.1 mais j'ai egalement des doutes
+-completion de la classe element
+-documentation divers
+------------------------------------------------------------------------
+r28 | cdvazque | 2011-03-19 10:48:08 +0100 (Sat, 19 Mar 2011) | 3 lines
+
+Implémenté une méthode rotation vectorielle, à optimiser.
+Rajouté les accents dans les commentaires, mis à jour le journal.
+Subsiste une erreur dans le fichier Particule.h.
+------------------------------------------------------------------------
+r29 | cdvazque | 2011-03-22 07:43:46 +0100 (Tue, 22 Mar 2011) | 1 line
+
+Complété le fichier réponses, crée la classe courbe, modifié la fonction rotation vectorielle.
+------------------------------------------------------------------------
+r30 | jnodersk | 2011-03-22 11:19:28 +0100 (Tue, 22 Mar 2011) | 1 line
+
+genere pdf reponses
+------------------------------------------------------------------------
+r31 | jnodersk | 2011-03-22 14:39:41 +0100 (Tue, 22 Mar 2011) | 1 line
+
+resolu problemes avec veteurs
+------------------------------------------------------------------------
+r32 | jnodersk | 2011-03-22 16:01:48 +0100 (Tue, 22 Mar 2011) | 1 line
+
+Ajoute elements courbes et droits. Leur implementation est en cours...
+------------------------------------------------------------------------
+r33 | cdvazque | 2011-03-22 16:04:38 +0100 (Tue, 22 Mar 2011) | 1 line
+
+corrigé des réponses
+------------------------------------------------------------------------
+r34 | jnodersk | 2011-03-22 22:06:08 +0100 (Tue, 22 Mar 2011) | 1 line
+
+Modifie quelques problemes avec les elements. Element droits sont implementes, elements courbes pas encore mais j'ai l'idee sur papier.
+------------------------------------------------------------------------
+r35 | cdvazque | 2011-03-23 13:10:41 +0100 (Wed, 23 Mar 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r36 | cdvazque | 2011-03-23 13:12:05 +0100 (Wed, 23 Mar 2011) | 1 line
+
+Class Accelerator created. To be continued.
+------------------------------------------------------------------------
+r37 | cdvazque | 2011-03-23 13:13:21 +0100 (Wed, 23 Mar 2011) | 1 line
+
+Completed file reponses.lyx
+------------------------------------------------------------------------
+r38 | jnodersk | 2011-03-23 14:31:54 +0100 (Wed, 23 Mar 2011) | 1 line
+
+Implemente element courbe. Ajoute `virtual' a toutes les methodes virtuelles heritees.
+------------------------------------------------------------------------
+r39 | jnodersk | 2011-03-23 15:32:56 +0100 (Wed, 23 Mar 2011) | 1 line
+
+Resolu probleme avec construction de Element.
+------------------------------------------------------------------------
+r40 | jnodersk | 2011-03-23 15:46:29 +0100 (Wed, 23 Mar 2011) | 1 line
+
+Mofifie Straight et Curved en StraightElement et CurvedElement.
+------------------------------------------------------------------------
+r41 | jnodersk | 2011-03-24 12:10:15 +0100 (Thu, 24 Mar 2011) | 1 line
+
+Creation de CompositeElement, une classe representant des elements composes.
+------------------------------------------------------------------------
+r43 | jnodersk | 2011-03-24 20:29:58 +0100 (Thu, 24 Mar 2011) | 3 lines
+
+*Change `CompositeElement' en classe abstraite.
+*Commentaires divers.
+*Creation du repertoire src/gui pour tout code concernant l'interface graphique.
+------------------------------------------------------------------------
+r44 | jnodersk | 2011-03-24 21:30:11 +0100 (Thu, 24 Mar 2011) | 1 line
+
+Implementation d'un "framework" d'exceptions, c.f. `exceptions.h'.
+------------------------------------------------------------------------
+r45 | jnodersk | 2011-03-24 22:50:25 +0100 (Thu, 24 Mar 2011) | 3 lines
+
+*Implementation d'une methode d'affichage polymorphique d'elements.
+*Suppression des methodes set dans elements.
+*Mise en place d'un fichier test pour elements.
+------------------------------------------------------------------------
+r46 | jnodersk | 2011-03-24 23:16:40 +0100 (Thu, 24 Mar 2011) | 1 line
+
+Defini element electrique.
+------------------------------------------------------------------------
+r47 | jnodersk | 2011-03-24 23:18:55 +0100 (Thu, 24 Mar 2011) | 1 line
+
+Corrige erreurs dans ElectricElement (commit auparavant).
+------------------------------------------------------------------------
+r48 | cdvazque | 2011-03-27 16:55:09 +0200 (Sun, 27 Mar 2011) | 5 lines
+
+Updated 'Reponses'.
+New class Accelerator and related test file.
+Updated makefile from ./main
+few doxygen comments added
+
+------------------------------------------------------------------------
+r49 | jnodersk | 2011-03-28 19:36:20 +0200 (Mon, 28 Mar 2011) | 2 lines
+
+*Suppression de `MagneticElement' et `ElectricElement', les valeurs de B et E en fonction de la position sont definis dans `Element' et prennent comme valeur par defaut le vecteur nul.
+*Creation du dipole.
+------------------------------------------------------------------------
+r50 | jnodersk | 2011-03-28 19:39:39 +0200 (Mon, 28 Mar 2011) | 1 line
+
+Resolu quelques erreurs du dernier commit.
+------------------------------------------------------------------------
+r51 | jnodersk | 2011-03-29 19:15:43 +0200 (Tue, 29 Mar 2011) | 1 line
+
+Implementation de quadripole et de maille FODO.
+------------------------------------------------------------------------
+r52 | jnodersk | 2011-03-29 21:21:17 +0200 (Tue, 29 Mar 2011) | 1 line
+
+Modification de `ParticleTest'.
+------------------------------------------------------------------------
+r53 | jnodersk | 2011-03-30 20:40:50 +0200 (Wed, 30 Mar 2011) | 1 line
+
+Essais avec OpenGL
+------------------------------------------------------------------------
+r54 | jnodersk | 2011-03-31 16:55:08 +0200 (Thu, 31 Mar 2011) | 1 line
+
+Essais OpenGL
+------------------------------------------------------------------------
+r55 | jnodersk | 2011-04-02 21:41:50 +0200 (Sat, 02 Apr 2011) | 1 line
+
+Implemente le `Visitor Pattern' pour les elements.
+------------------------------------------------------------------------
+r56 | jnodersk | 2011-04-03 22:50:45 +0200 (Sun, 03 Apr 2011) | 1 line
+
+Essais graphiques, modifications du VisitorPattern.
+------------------------------------------------------------------------
+r57 | jnodersk | 2011-04-05 00:13:09 +0200 (Tue, 05 Apr 2011) | 1 line
+
+Continuation de l'interface graphique, changements du visitor pattern.
+------------------------------------------------------------------------
+r58 | jnodersk | 2011-04-05 21:02:15 +0200 (Tue, 05 Apr 2011) | 1 line
+
+foo
+------------------------------------------------------------------------
+r59 | jnodersk | 2011-04-05 21:07:27 +0200 (Tue, 05 Apr 2011) | 1 line
+
+
+------------------------------------------------------------------------
+r61 | jnodersk | 2011-04-06 15:07:59 +0200 (Wed, 06 Apr 2011) | 1 line
+
+Une camera qui fonctionne!
+------------------------------------------------------------------------
+r62 | cdvazque | 2011-04-06 15:35:06 +0200 (Wed, 06 Apr 2011) | 2 lines
+
+répondu à des questions
+
+------------------------------------------------------------------------
+r63 | jnodersk | 2011-04-06 17:03:36 +0200 (Wed, 06 Apr 2011) | 1 line
+
+Amelioration de la camera, mise en scene de plusieurs elements. Debut d'implementation de la `vraie' classe de rendement graphique.
+------------------------------------------------------------------------
+r64 | cdvazque | 2011-04-07 07:53:12 +0200 (Thu, 07 Apr 2011) | 1 line
+
+2 nouvelles méthodes add et killall
+------------------------------------------------------------------------
+r65 | jnodersk | 2011-04-12 19:42:39 +0200 (Tue, 12 Apr 2011) | 1 line
+
+Debut de creation d'une classe scene pour la simulation graphique.
+------------------------------------------------------------------------
+r66 | jnodersk | 2011-04-12 19:44:08 +0200 (Tue, 12 Apr 2011) | 1 line
+
+Modifictaion de svn:ignore dans gui
+------------------------------------------------------------------------
+r67 | jnodersk | 2011-04-12 22:16:56 +0200 (Tue, 12 Apr 2011) | 1 line
+
+Changements mineures dans la classe 'Accelerator'. Je me suis permis de faire ces changemenets car j'ai besoin de l'accelerateur pour la simulation graphique.
+------------------------------------------------------------------------
+r68 | jnodersk | 2011-04-12 23:07:01 +0200 (Tue, 12 Apr 2011) | 1 line
+
+Ajout de la methode 'copy()' pour chaque element.
+------------------------------------------------------------------------
+r69 | jnodersk | 2011-04-12 23:31:48 +0200 (Tue, 12 Apr 2011) | 1 line
+
+Renomme la methode 'copy()' a 'clone()'. Cette methode est declaree dans une classe abstraite 'Cloneable'
+------------------------------------------------------------------------
+r70 | jnodersk | 2011-04-13 00:09:47 +0200 (Wed, 13 Apr 2011) | 1 line
+
+Changements mineures de l'accelerateur. Les elements sont copies lors de leur ajout.
+------------------------------------------------------------------------
+r71 | jnodersk | 2011-04-13 00:38:46 +0200 (Wed, 13 Apr 2011) | 1 line
+
+Unites convertis en unites SI pour l'utilisation interne.
+------------------------------------------------------------------------
+r72 | jnodersk | 2011-04-13 02:10:05 +0200 (Wed, 13 Apr 2011) | 1 line
+
+Continuation de la classe Stage. On arrive maintenant a visualiser un accelerateur.
+------------------------------------------------------------------------
+r73 | jnodersk | 2011-04-13 15:26:54 +0200 (Wed, 13 Apr 2011) | 1 line
+
+version amelioree de l'interface graphique
+------------------------------------------------------------------------
+r74 | jnodersk | 2011-04-13 15:36:58 +0200 (Wed, 13 Apr 2011) | 1 line
+
+rajout de 'Cloneable', oublie auparavant
+------------------------------------------------------------------------
+r75 | jnodersk | 2011-04-15 17:48:34 +0200 (Fri, 15 Apr 2011) | 1 line
+
+Resolu probleme avec rendement a l'envers d'elements courbes. Interface graphique amelioree.
+------------------------------------------------------------------------
+r76 | jnodersk | 2011-04-16 18:12:04 +0200 (Sat, 16 Apr 2011) | 1 line
+
+Ajoute une classe abstraite 'Renderer' pour dessiner tout objet. Par consequent j'ai remarque une erreur de const-correctness dans le visitor pattern. J'ai donc modifie celui-ci, c'est a dire un visiteur ne peut pas changer un element (pas d'appel a des methodes non-const) ni etre change par un element.
+------------------------------------------------------------------------
+r77 | jnodersk | 2011-04-16 22:10:52 +0200 (Sat, 16 Apr 2011) | 1 line
+
+Amelioration de l'interface grap graphique.
+------------------------------------------------------------------------
+r78 | jnodersk | 2011-04-17 22:05:38 +0200 (Sun, 17 Apr 2011) | 1 line
+
+Migration de tous les implementations dans les fichier .h vers les fichiers .cc
+------------------------------------------------------------------------
+r79 | jnodersk | 2011-04-17 22:24:32 +0200 (Sun, 17 Apr 2011) | 1 line
+
+Repare erreur commise dans Vector3D, dans la revision precedente.
+------------------------------------------------------------------------
+r80 | jnodersk | 2011-04-17 22:51:10 +0200 (Sun, 17 Apr 2011) | 1 line
+
+Nettoyage dans gui.
+------------------------------------------------------------------------
+r81 | jnodersk | 2011-04-18 01:03:45 +0200 (Mon, 18 Apr 2011) | 1 line
+
+Ajoute possibilite de simuler!
+------------------------------------------------------------------------
+r82 | cdvazque | 2011-04-19 09:49:34 +0200 (Tue, 19 Apr 2011) | 1 line
+
+ajouté qq lignes de commentaire.
+------------------------------------------------------------------------
+r83 | jnodersk | 2011-04-19 17:49:14 +0200 (Tue, 19 Apr 2011) | 1 line
+
+Resolution de quelques bugs mineures.
+------------------------------------------------------------------------
+r84 | jnodersk | 2011-04-20 13:02:36 +0200 (Wed, 20 Apr 2011) | 1 line
+
+Reparation du quadrupole.
+------------------------------------------------------------------------
+r85 | cdvazque | 2011-04-21 07:54:15 +0200 (Thu, 21 Apr 2011) | 3 lines
+
+Mis à jour AccelTest et toString de Accelerator.
+Rjouté quelques commentaires (dans FODO).
+Crée un fichier P10ExerciceTest.
+------------------------------------------------------------------------
+r86 | jnodersk | 2011-04-24 15:31:11 +0200 (Sun, 24 Apr 2011) | 12 lines
+
+*Ajout d'un pointeur sur les element precedents.
+*Implementation de la methode 'close()' dans l'accelerateur.
+*Restructuration des methodes geometriques des elements.
+	-Ajout d'une methode isBefore(): determine si un point est contenu dans l'espace avant le plan de la face d'entree.
+	-Ajout d'une methode isBeside(): determine si un point est plus proche de la trajectoire ideal que le rayon de section.
+	-Ajout d'une methode isAfter(): determine si un point est contenu dans l'espace apres le plan de la face de sortie.
+	-Ajout d'une methode contains(): determine si un point est contenu dans l'element (contains = !(isBefore || isBeside || isAfter))
+	-La methode isPast() (passe_au_suivant selon projet) a ete supprimee, elle est a remplacer par isAfter().
+	-La methode hitWall() (heurte_bord selon projet) a ete supprimee, elle est a remplacer par isBeside().
+*Resolution d'un bug dans la methode isBeside() de StraightElement, avant une particule ne pouvait jamais heuter le bord!
+*Ajout des cibles gui et gui-build dans eclipse.
+
+------------------------------------------------------------------------
+r87 | jnodersk | 2011-04-24 19:41:29 +0200 (Sun, 24 Apr 2011) | 1 line
+
+Modification de la mise en page de toString
+------------------------------------------------------------------------
+r88 | jnodersk | 2011-04-24 19:42:21 +0200 (Sun, 24 Apr 2011) | 1 line
+
+Suppression du Makefile gui. On n'en a pas besoin car celui-ci est genere par qmake!
+------------------------------------------------------------------------
+r89 | jnodersk | 2011-04-25 12:23:20 +0200 (Mon, 25 Apr 2011) | 1 line
+
+Resolu quelques warinings, ajout de l'accelerateur donne en exemple.
+------------------------------------------------------------------------
+r90 | jnodersk | 2011-04-25 14:58:55 +0200 (Mon, 25 Apr 2011) | 2 lines
+
+*J'ai revu les 3 premier exercises du projet et modifie quelques reponses (jusqu'a P7.2 compris) et fichiers tests.
+*Rajoute la classe MutableVector3D pour representer des vecteurs mutables.
+------------------------------------------------------------------------
+r91 | jnodersk | 2011-05-01 16:07:41 +0200 (Sun, 01 May 2011) | 3 lines
+
+Changements importants dans l'accelerateur. Nous travaillons maintenant avec une list au lieu d'un vector. Ceci pour pouvoir supprimer une particule a temps constant qui aurait heurte le bord d'un element. On ne peut donc plus acceder a un element quelconque de la liste mais il faut l'iterer!
+Mais comme, de toutes facons, on ne fait que d'iterer sur une liste lors d'une simulation deterministe ceci convient. Peut-etre il faudra adapter cette conception pour une simulation monte-carlo.
+
+------------------------------------------------------------------------
+r92 | jnodersk | 2011-05-03 15:50:04 +0200 (Tue, 03 May 2011) | 1 line
+
+Repare bug dans la fermeture de l'accelerateur. Ajout d'un test de performance de l'accelerateur.
+------------------------------------------------------------------------
+r93 | cdvazque | 2011-05-03 17:37:07 +0200 (Tue, 03 May 2011) | 2 lines
+
+crée un nouveau dossier pour les exercices à rendre.
+Il faudrait recréer un makefile dans ce dossier exercice.
+------------------------------------------------------------------------
+r94 | cdvazque | 2011-05-04 16:05:32 +0200 (Wed, 04 May 2011) | 3 lines
+
+1)mis à jour le fichier acceltest
+2)modifié la methode applyforce dans particle.h pas l'ajout d'un asin
+3)déplacé le fichier exerciceP10 dans le dossier 'Test'
+------------------------------------------------------------------------
+r95 | jnodersk | 2011-05-04 17:13:27 +0200 (Wed, 04 May 2011) | 1 line
+
+Migration de la gestion des evenements clavier de Stage a KeyManager
+------------------------------------------------------------------------
+r96 | cdvazque | 2011-05-04 17:30:43 +0200 (Wed, 04 May 2011) | 3 lines
+
+1)créé le fichier ElementsSimulationTest
+2)mis a jour acceltest
+3)mis a jour exerciceP10test
+------------------------------------------------------------------------
+r97 | cdvazque | 2011-05-11 14:05:20 +0200 (Wed, 11 May 2011) | 1 line
+
+modifié le test sur la simulation dans des éléments séparés. (test ne fonctionne pas)
+------------------------------------------------------------------------
+r98 | jnodersk | 2011-05-11 16:59:00 +0200 (Wed, 11 May 2011) | 1 line
+
+Rajoute getHorizontalAt() pour tous les elements, en vue des faisceaux
+------------------------------------------------------------------------
+r99 | cdvazque | 2011-05-13 16:26:30 +0200 (Fri, 13 May 2011) | 6 lines
+
+Créé:
+exerciceP13
+Parser (.cc et .h)
+exerciceP11test
+Mis é jour:
+elementsimulationtest
+------------------------------------------------------------------------
+r100 | jnodersk | 2011-05-17 17:37:32 +0200 (Tue, 17 May 2011) | 1 line
+
+Implementation de faisceaux.
+------------------------------------------------------------------------
+r101 | cdvazque | 2011-05-18 07:38:32 +0200 (Wed, 18 May 2011) | 1 line
+
+Crée la classe Parser et le fichier d'essai simulation.cc
+------------------------------------------------------------------------
+r102 | jnodersk | 2011-05-19 10:33:16 +0200 (Thu, 19 May 2011) | 5 lines
+
+Migration des particules vers les faisceau.
+Il reste une subtilite a gerer: pour des raisons de compatibilite, un accelerateur contient toujours une methode getParticles(). Celle-ci renvoi une concatenation de tous les particules de tous les faisceaux de l'accelerateur.
+Or il y a un probleme d'allocation de la memoire avec cette methode (temporairement repare dans cette revision mais degeu!). Je vois deux solutions:
+1) changer tous les test qui appellent la methode getParticles()
+2) essayer de reparer le probleme d'allocation (difficile et je ne sais pas si c'est possible)
+------------------------------------------------------------------------
+r103 | jnodersk | 2011-05-23 18:19:06 +0200 (Mon, 23 May 2011) | 1 line
+
+Ajout des bunchs :)
+------------------------------------------------------------------------
+r104 | cdvazque | 2011-05-24 08:53:59 +0200 (Tue, 24 May 2011) | 10 lines
+
+1)mis à jour les test d'accélérateur et l'exercice P11
+
+2)rajouté une exception 'ReadException' que j'ai dotée d'une méthode 'addReadExceptionMessage' car il y a un endroit (dans la classe parseur) où une telle exception déjà existante est récupérée, mais il faudrait juste rajouter une information supplémentaire avant de la relancer pour un traitment à une niveau plus haut.
+
+3)mis à jour ou créé simulation.cc simulation.xml et classe Parseur
+
+j'ai rempli le fichier simulation.xml sur la base de l'exerciceP11, mais cela ne comile certainement plus depuis l'ajout des faisceaux, donc c'est encore à voir.
+
+dans la classe parseur, reste encore à voir comment inclure les constantes car on va en avoir besoin, et aussi comment construire l'accélérateur renvoyé par la méthode 'extract' contenant les éléments et particules...
+du reste la classe parseur est encore en plein chantier.
+------------------------------------------------------------------------
+r105 | jnodersk | 2011-05-24 16:25:00 +0200 (Tue, 24 May 2011) | 1 line
+
+Ajoute un modele de publisher/subscriber en vue des interactions entre particules.
+------------------------------------------------------------------------
+r106 | jnodersk | 2011-05-26 22:45:09 +0200 (Thu, 26 May 2011) | 3 lines
+
+*Creation des interacteurs, une maniere de gerer les interactions entre particules orientee evenement.
+*Completion de commentaires de tous les fichiers de main
+*Reponses aux questions
+------------------------------------------------------------------------
+r107 | jnodersk | 2011-05-26 23:26:27 +0200 (Thu, 26 May 2011) | 2 lines
+
+*Repare le dernier commit (oops :@)
+* Ajout d'encore plus de commentaires
+------------------------------------------------------------------------
+r108 | cdvazque | 2011-05-27 19:14:52 +0200 (Fri, 27 May 2011) | 1 line
+
+Mis à jour la classe parceur et le fichier xml.
+------------------------------------------------------------------------
+r109 | cdvazque | 2011-05-27 20:56:22 +0200 (Fri, 27 May 2011) | 1 line
+
+Créé la classe Color. A voir si on en fait hériter quelques classes filles de Printable (p.ex. les Particles) ...
+------------------------------------------------------------------------
+r110 | cdvazque | 2011-05-27 21:10:46 +0200 (Fri, 27 May 2011) | 1 line
+
+Corrigé quelques erreurs. reste encore à voir comment initialiser dans le .cc les tableaux de taille fixe statiques du header...=(
+------------------------------------------------------------------------
+r111 | cdvazque | 2011-05-28 17:13:39 +0200 (Sat, 28 May 2011) | 5 lines
+
+Mis à jour le parseur, et la fichier simulation.cc (renommé en simulation.cc et déplacé dans le dossier test).
+
+Modifié le fichier simulation.xml.
+
+La classe parseur ne compile pas ('undefined reference to'). Après consultation du forum, c'est peut-être un problème en rapport avec le makefile.
+------------------------------------------------------------------------
+r112 | cdvazque | 2011-05-28 19:26:04 +0200 (Sat, 28 May 2011) | 3 lines
+
+Corrigé quelques erreurs du parser. déplacé 'simulation.xml' dans dossier 'test'.
+
+Créé le fichier 'simulationTest.cc' qui ne marche pas du tout.
+------------------------------------------------------------------------
+r113 | cdvazque | 2011-05-29 12:56:33 +0200 (Sun, 29 May 2011) | 4 lines
+
+Mis à jour le parser.
+Renommé et déplacé le fichier ParserTest.cc
+Renommé et déplacé le fichier accelerator.xml
+
+------------------------------------------------------------------------
+r114 | cdvazque | 2011-05-29 13:23:10 +0200 (Sun, 29 May 2011) | 1 line
+
+Répondu aux questions p14.1 et p19.1
+------------------------------------------------------------------------
+r115 | jnodersk | 2011-05-29 22:09:19 +0200 (Sun, 29 May 2011) | 3 lines
+
+*Ajoute interactions avancees
+*Ecrit conception
+*Commentaires
+------------------------------------------------------------------------
+r116 | jnodersk | 2011-05-29 23:33:34 +0200 (Sun, 29 May 2011) | 1 line
+
+Plein de commentaires derniere minute, creation de readme.
+------------------------------------------------------------------------
