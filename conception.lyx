@@ -1,0 +1,594 @@
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Virtual Hadron Collider
+\begin_inset Newline newline
+\end_inset
+
+Conception
+\end_layout
+
+\begin_layout Author
+Jakob Odersky 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ Christian Vázquez
+\end_layout
+
+\begin_layout Part*
+Introduction
+\end_layout
+
+\begin_layout Standard
+Lors du projet nous avons suivi en général les indications données.
+ Quelques fois, nous avons tout de même suivi nos propres idées qui n'étaient
+ pas compatibles avec les propositions officielles.
+ Dans ce texte sont décris en bref nos propres idées et leur implication
+ sur la conception du projet.
+ Pour une documentation plus complète est détaillée, il est conseillé de
+ voir les commentaires du code ou la documentation générée par les commentaires
+ du code.
+\end_layout
+
+\begin_layout Part*
+Structure
+\end_layout
+
+\begin_layout Standard
+Le dosier du projet, nommé `vhc' (pour `Virtual Hadron Collider'), est structuré
+ de la manière suivante:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+vhc
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- bin
+\end_layout
+
+\begin_layout Plain Layout
+
+|   |-- gui
+\end_layout
+
+\begin_layout Plain Layout
+
+|   |-- main
+\end_layout
+
+\begin_layout Plain Layout
+
+|   `-- test
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- doc
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- Doxyfile
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- JOURNAL.txt
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- Makefile
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- CONCEPTION.pdf
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- REPONSES.pdf
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- README.txt
+\end_layout
+
+\begin_layout Plain Layout
+
+`-- src
+\end_layout
+
+\begin_layout Plain Layout
+
+    |-- gui
+\end_layout
+
+\begin_layout Plain Layout
+
+    |-- main
+\end_layout
+
+\begin_layout Plain Layout
+
+    `-- test
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+vhc
+\end_layout
+
+\begin_layout Standard
+Le répertoire principale (dit `de base') du projet est est `vhc'.
+ Dans celui-ci se trouvent les fichiers expliqués dans la description officielle
+ du projet.
+ Notamment:
+\end_layout
+
+\begin_layout Itemize
+JOURNAL
+\end_layout
+
+\begin_layout Itemize
+REPONSES
+\end_layout
+
+\begin_layout Itemize
+README
+\end_layout
+
+\begin_layout Itemize
+Makefile
+\end_layout
+
+\begin_layout Standard
+Il contient de plus le fichier `Doxyfile' utilisé pour générer de la documentati
+on du code source.
+\end_layout
+
+\begin_layout Section*
+src
+\end_layout
+
+\begin_layout Standard
+Ce répertoire contient tout le code source, donc les fichiers les plus important
+s du projet! Le code source est lui-meme reparti dans les sous-répertoires
+ suivantes:
+\end_layout
+
+\begin_layout Itemize
+main
+\begin_inset Newline newline
+\end_inset
+
+Contient le code source principale, c'est à dire tout les fichiers sources
+ du simulateur.
+\begin_inset Newline newline
+\end_inset
+
+Exemples: Vector3D.cc, Vector3D.h, Particle.cc, etc...
+\end_layout
+
+\begin_layout Itemize
+gui
+\begin_inset Newline newline
+\end_inset
+
+Contient le code relatif à l'interface graphique.
+\end_layout
+
+\begin_layout Itemize
+test
+\begin_inset Newline newline
+\end_inset
+
+Contient le code source des tests.
+ Les fichiers tests contenant une fonction `main' devraient se terminer
+ avec `Test'.
+\begin_inset Newline newline
+\end_inset
+
+Exemples: Vector3DTest.cc, etc...
+\end_layout
+
+\begin_layout Section*
+doc
+\end_layout
+
+\begin_layout Standard
+Contient de la documentation générée automatiquement par un outil comme
+ `doxygen'.
+\end_layout
+
+\begin_layout Section*
+bin
+\end_layout
+
+\begin_layout Standard
+Contient les fichiers binaires (i.e.
+ executables, objets, librairies etc...) compilés du code source.
+ La structure de ce répertoire est identique a celle de `src', c'est-à-dire
+ que les tests seront compilés dans `bin/test/' et les sources principaux
+ dans `bin/main/'.
+\end_layout
+
+\begin_layout Part*
+Makefiles
+\end_layout
+
+\begin_layout Standard
+Afin d'automatiser le processus de compilation, un Makefile est présent
+ dans le répertoire de base.
+ A cause de la compléxité du répertoire source, le Makefile est récursif.
+ Cela signifie que ce Makefile ne fait que de déléguer les commandes à deux
+ makefiles contenus dans les répertoires src/main et src/test.
+ Ainsi, lorsqu'on ajoute/supprime des fichiers des répertoires précédents,
+ il suffit de modifier le Makefile contenu dans le répertoire respectif.
+ En général, il ne faut pas modifer le Makefile de base.
+\end_layout
+
+\begin_layout Standard
+Voici les commandes make de base:
+\end_layout
+
+\begin_layout Itemize
+clean - supprime les fichiers générés
+\end_layout
+
+\begin_layout Itemize
+build - compile les sources principaux
+\end_layout
+
+\begin_layout Itemize
+test - lance tous les tests
+\end_layout
+
+\begin_layout Itemize
+gui - compile et lance l'interface graphique
+\end_layout
+
+\begin_layout Itemize
+doc - genere la documentation avec doxygen
+\end_layout
+
+\begin_layout Standard
+Pour plus d'informations voir les commantaires des Makefiles.
+\end_layout
+
+\begin_layout Part*
+Vecteurs
+\end_layout
+
+\begin_layout Standard
+En commencant par la base.
+ Nous avons choisi de garder un vecteur immuable.
+ Il n'a donc pas de méthodes non-const.
+ Ceci parait naturel pour un vecteur et facilite le raisonement sur la vie
+ d'une de ses instances.
+\end_layout
+
+\begin_layout Standard
+Pour des raisons d'efficacité, nous avons tout de même implémenté un vecteur
+ muable.
+ Celui-ci hérite d'un vecteur et défini en plus des méthodes non-const (tel
+ que +=).
+\end_layout
+
+\begin_layout Part*
+Eléments
+\end_layout
+
+\begin_layout Standard
+La hierarchie des éléments ressemble à celle proposée par la description
+ officielle du projet:
+\end_layout
+
+\begin_layout Standard
+Tout en haut il y a un élément abstrait 
+\emph on
+Element
+\emph default
+.
+ De celui-ci héritent les différents éléments géométriques: un droit 
+\emph on
+StraightElement
+\emph default
+, un courbé 
+\emph on
+CurvedElement
+\emph default
+ et un élément composé 
+\emph on
+CompositeElement
+\emph default
+.
+ Les éléments concrets sont donc définis en héritant d'un de ces trois éléments.
+\end_layout
+
+\begin_layout Standard
+Pour considérer les champs électriques et magnétiques, nous avons simplement
+ déclaré des méthodes virtuelle 
+\emph on
+getElectricFieldAt(const Vector3D& position) 
+\emph default
+et 
+\emph on
+getMagneticFieldAt(const Vector3D& position) 
+\emph default
+dans la classe de base
+\emph on
+ Element
+\emph default
+ qui renvoyent zéro pour tout position.
+ Les élements concrets peuvent donc redéfinir ces méthodes.
+\end_layout
+
+\begin_layout Standard
+Un autre aspect assez important est la détermination de la contenance d'un
+ particule dans un élément.
+ Comme nous avons décidés que nos éléments peuvent être décentrés (pas de
+ centre commun avec l'accélérateur) la méthode de détermination de passage
+ d'une particule, telle que proposée ne fonctionne plus.
+ Nous avons donc décidé de créer un système de positionement des particules
+ dans les élements.
+ Une particule peut être testée si elle est après, avant ou a côté d'un
+ élément.
+ Ceci facilite aussi la possibilité des particules de tourner à contre-sens:
+ ces particules n'ont qu'a vérifier si elles se situent avant leurs éléments
+ respectifs pour passer aux suivants.
+\end_layout
+
+\begin_layout Part*
+Faisceaux
+\end_layout
+
+\begin_layout Standard
+En créant un faisceau, l'utilisateur n'a pas besoin de se soucier dans quelle
+ élément se trouve une particule.
+ Il ne doit que l'ajouter à un accélérateur et il s'occupe du reste.
+\end_layout
+
+\begin_layout Standard
+Cette simplicité est possible grâce a notre conception de faisceaux.
+ Chaque faisceau à une méthode 
+\emph on
+initializeParticles() 
+\emph default
+qui initialise les particules du faisceau.
+ Ainsi, lorsqu'on ajoute un faisceau à l'accélerateur, celui-ci appelle
+ la méthode d'initialisation des faisceaux, positionne les particules dans
+ leurs éléments respectifs et supprime tous ceux qui ne sont pas contenus
+ dans un élément.
+\end_layout
+
+\begin_layout Part*
+Accélérateur
+\end_layout
+
+\begin_layout Standard
+Un accélérateur est l'objet principale d'un simulation.
+ Il contient tous les éléments et faisceaux de la simulation.
+ Afin de faciliter son utilisation, nous avons décidés q'un accélérateur
+ contiendrait et sera responsable pour toutes ses composantes.
+ Ainsi lorsqu'un élément ou une particule est ajoutée à un accélérateur,
+ celle-ci est copiée dedans.
+\end_layout
+
+\begin_layout Standard
+Pour garantir la validité d'un accélérateur, celui-ci est 
+\begin_inset Quotes eld
+\end_inset
+
+fermé
+\begin_inset Quotes erd
+\end_inset
+
+ avant une simulation.
+ Concrètement cela veut dire qu'après avoir ajouter des éléments dans un
+ accélérateur, une méthode est appelée pour vérifier sa continuité.
+\end_layout
+
+\begin_layout Part*
+Forces inter-particules
+\end_layout
+
+\begin_layout Standard
+Pour ajouter les forces interparticules à la simulation nous avons instauré
+ la notion d'
+\emph on
+interacteur
+\emph default
+.
+ Un interacteur (classe abstraite 
+\emph on
+Interactor
+\emph default
+) est un objet qui gère les interactions entre particules.
+ Chaque accélérateur en a un.
+ Concrètement un interacteur possède une méthode 
+\emph on
+applyInteractions()
+\emph default
+ qui applique tous les forces interparticules entre les particules gérés.
+ Or comme les particules d'un accélarateur varient sans cesse et sont souvant
+ supprimés, il faudrait un système plus efficace pour connaître les particules
+ à gérer que d'accéder directement aux particules de l'accélérateur.
+ Pour ceci, nous avons introduits le design pattern (motif de programmation?)
+ des publishers/listeners.
+\end_layout
+
+\begin_layout Standard
+Un 
+\emph on
+publisher
+\emph default
+ est une classe qui peut publier des évènements et un 
+\emph on
+listener
+\emph default
+ peut agir à la récéption d'un évènement.
+ De plus, un listener doit se souscrire à un publisher pour être informé
+ de ses évènements.
+ Ainsi, dans notre projet, un faisceaux est un publisher et un interacteur
+ un listener.
+ Ceci implique que lorsqu'une particule est ajoutée à un faisceau, l'interacteur
+ est informé et peut ajouter la particule à la collection des particules
+ à gérer.
+\end_layout
+
+\begin_layout Standard
+Cette conception donne de nombreux avantages.
+ Premièrement, il est facile de changer de type de détecteur.
+ On peut par exemple remplacer un détecteur force-brute avec un détecteur
+ plus sophistiqué en une ligne de code.
+ Deuxièmenent, il est très facile de concevoire ses propres détecteurs.
+ Il suffit de créer une classe héritant de 
+\emph on
+Interactor
+\emph default
+.
+ Troisièmement, grâce au motif publisher/listener, on peut créer un interacteur
+ qui choisit les particules à gérer.
+ Ceci permet doc de facilement transformer un interacteur gérant tous les
+ interactions particules en un interacteur ne gérant que les interactions
+ particules dans un faisceau.
+\end_layout
+
+\begin_layout Part*
+Interface graphique
+\end_layout
+
+\begin_layout Standard
+Notre projet utilise OpenGL et Qt pour l'interface graphique.
+ Pour ne pas rendre l'entièreté du projet dépendant de ces deux frameworks
+ nous avons utilisé une autre méthode que celle de la 
+\begin_inset Quotes eld
+\end_inset
+
+spécialisation graphique
+\begin_inset Quotes erd
+\end_inset
+
+ proposée.
+\end_layout
+
+\begin_layout Standard
+Nous avons créés des rendeur graphiques (
+\emph on
+Renderer
+\emph default
+).
+ Ces rendeurs sont spécialisés pour dessiner des objets d'un certain type.
+ Un rendeur de faisceaux, par exemple, peut dessiner des faisceaux.
+ Or, pour des hiérarchies de classes nécéssitant un traitement différent
+ pour chaque type concret d'instance (par exemple les éléments: un élément
+ droit ne peut pas être déssiné comme un élément courbe!), cette méthode
+ n'est pas très élégante et nécéssite une quantité énorme de code.
+\end_layout
+
+\begin_layout Standard
+Pour contourner cela nous avons donc implémenté le motif de programmation
+ des visiteurs.
+ C'est 
+\begin_inset Quotes eld
+\end_inset
+
+une manière de séparer un algorithme de la structure d'un objet
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+(http://fr.wikipedia.org/wiki/Visiteur_%28motif_de_conception%29)
+\end_layout
+
+\end_inset
+
+ et s'avère particulièrement utile pour des structures récursives, telles
+ que les éléments composés.
+ Concrètement cela signifie qu'un rendeur d'éléments est un visiteur d'éléments.
+ Voir les commentaires du code pour plus de detailles.
+\end_layout
+
+\begin_layout Part*
+Conclusion
+\end_layout
+
+\begin_layout Standard
+En conclusion, on remarque que nos déviations du projet ne sont pas dues
+ à cause d'un incompréhension où une difficulté à suivre ce qui était demandé,
+ mais uniquement pour ajouter de la fonctionalité et de faciliter l'extension
+ de notre projet par des tiers.
+\end_layout
+
+\end_body
+\end_document

@@ -62,7 +62,7 @@ Accelerator* makeStandard() {
 	double A_22 = 4;//E-19; // s² m-1 (dépend totalement de l'accélérateur)
 	double length = 300E-12 * constants::C;
 	double stdDev = 0.1;
-	acc->add(Bunch(p1, 50, 1, stdDev, length, emittance, A_12, A_22));
+	acc->add(Bunch(p1, 500, 1, stdDev, length, emittance, A_12, A_22));
 
 	return acc;
 }
