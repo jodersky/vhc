@@ -8,6 +8,8 @@
 #ifndef UTIL_H_
 #define UTIL_H_
 
+#include <GL/glu.h>
+
 namespace vhc {
 
 /** Contient des fonctions utilitaires. */

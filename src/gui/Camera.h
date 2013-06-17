@@ -10,6 +10,7 @@
 #include <cmath>
 #include <QtOpenGL>
 #include "Vector3D.h"
+#include <GL/glu.h>
 
 namespace vhc {
 

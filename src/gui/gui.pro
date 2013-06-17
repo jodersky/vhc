@@ -7,7 +7,7 @@ OBJECTS_DIR = $(BINDIR)/gui
 DEPENDPATH += .
 INCLUDEPATH += .
 INCLUDEPATH += $(SRCDIR)/main/
-LIBS += -L$(BINDIR)/main -lvhc
+LIBS += -L$(BINDIR)/main -lvhc -lGLU
 QT += opengl
 
 #CONFIG += DEBUG

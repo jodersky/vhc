@@ -5,6 +5,7 @@
  *      Author: jakob
  */
 #include <QtOpenGL>
+#include "util.h"
 
 namespace vhc {
 namespace util {
