@@ -1,7 +1,7 @@
 #configuration pour Qt
 #
 TEMPLATE = app
-TARGET = 
+TARGET = gui
 DESTDIR = $(BINDIR)/gui
 OBJECTS_DIR = $(BINDIR)/gui
 DEPENDPATH += .

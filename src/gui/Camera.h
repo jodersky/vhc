@@ -37,7 +37,7 @@ private:
 public:
 
 	Camera();
-	virtual ~Camera() {};
+	virtual ~Camera();
 
 	/** Applique les transformantions de cet camera au viewport OpenGl. */
 	void setView();
